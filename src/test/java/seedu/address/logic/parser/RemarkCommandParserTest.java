@@ -16,7 +16,7 @@ public class RemarkCommandParserTest {
     private RemarkCommandParser parser = new RemarkCommandParser();
 
     @Test
-    public void parse_indexProvided_Success() {
+    public void parse_indexProvided_success() {
 
         String input = INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_REMARK + "testing";
         assertParseSuccess(parser, input, new RemarkCommand(INDEX_FIRST_PERSON, new Remark("testing")));
@@ -24,7 +24,7 @@ public class RemarkCommandParserTest {
     }
 
     @Test
-    public void parse_argsMissing_Failed() {
+    public void parse_argsMissing_failed() {
         String input = RemarkCommand.COMMAND_WORD + " " + PREFIX_REMARK + "testing";
         assertParseFailure(parser, input, String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemarkCommand.MESSAGE_USAGE));
 

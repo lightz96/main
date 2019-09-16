@@ -103,9 +103,9 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_Remark() throws Exception {
+    public void parseCommand_remark_throwsParseException() throws Exception {
         Remark remark = new Remark("testing");
-        assertTrue(parser.parseCommand(RemarkCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + " " +
-                PREFIX_REMARK + remark.value) instanceof RemarkCommand);
+        assertTrue(parser.parseCommand(RemarkCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + " "
+                + PREFIX_REMARK + remark.value) instanceof RemarkCommand);
     }
 }
