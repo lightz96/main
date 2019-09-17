@@ -14,6 +14,7 @@ import seedu.address.model.person.Remark;
 
 /**
  * Changes the remarks of an existing person in the address book.
+ * @author j-lum-reused
  */
 public class RemarkCommand extends Command {
 

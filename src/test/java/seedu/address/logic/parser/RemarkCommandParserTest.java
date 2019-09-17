@@ -11,6 +11,10 @@ import org.junit.jupiter.api.Test;
 import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.model.person.Remark;
 
+
+/**
+ * @author j-lum-reused
+ */
 public class RemarkCommandParserTest {
 
     private RemarkCommandParser parser = new RemarkCommandParser();
