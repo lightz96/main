@@ -97,7 +97,7 @@ Format: `undo`
 
 NOTE: Undoable commands are commands that modify the data of THRIFT application.
 
-.List of undoable commands:
+.List of undoable commands[[Undoable]]:
 * <<Adding an expense: `add expense`, add expense>>
 * <<Adding an income: `add income`, add income>>
 * <<Deleting a Transaction: `delete`, delete>>
@@ -121,7 +121,7 @@ Expected output:
 
 === Redoing the undone command: `redo`
 
-Redo the undoable command that was previously undone by the user.
+Redo the <<Undoable, undoable command>> that was previously undone by the user.
 
 Format: `redo`
 
@@ -171,7 +171,7 @@ If you are especially conscious about having your data spied on, this function w
 
 *Q*: How do I transfer my data to another Computer?
 
-*A*: Install the application in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous THRIFT installation.
+*A*: Runs the application in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous THRIFT application.
 
 == Command summary
 * *Expense*:  `add expense n/EXPENSE_NAME c/COST [t/TAG]...` +
