@@ -14,9 +14,9 @@ import thrift.commons.exceptions.DataConversionException;
 import thrift.model.AddressBook;
 import thrift.model.ReadOnlyAddressBook;
 
-public class JsonAddressBookStorageTest {
+public class JsonThriftStorageTest {
     private static final Path TEST_DATA_FOLDER = Paths.get("src", "test", "data",
-            "JsonAddressBookStorageTest");
+            "JsonThriftStorageTest");
 
     @TempDir
     public Path testFolder;
@@ -27,7 +27,7 @@ public class JsonAddressBookStorageTest {
     }
 
     private java.util.Optional<ReadOnlyAddressBook> readAddressBook(String filePath) throws Exception {
-        return new JsonAddressBookStorage(Paths.get(filePath)).readAddressBook(addToTestDataPathIfNotNull(filePath));
+        return new JsonThriftStorage(Paths.get(filePath)).readAddressBook(addToTestDataPathIfNotNull(filePath));
     }
 
     private Path addToTestDataPathIfNotNull(String prefsFileInTestDataFolder) {
@@ -63,7 +63,7 @@ public class JsonAddressBookStorageTest {
     public void readAndSaveAddressBook_allInOrder_success() throws Exception {
         Path filePath = testFolder.resolve("TempAddressBook.json");
         AddressBook original = TypicalTransactions.getTypicalAddressBook();
-        JsonAddressBookStorage jsonAddressBookStorage = new JsonAddressBookStorage(filePath);
+        JsonThriftStorage jsonAddressBookStorage = new JsonThriftStorage(filePath);
 
         // Save in new file and read back
         jsonAddressBookStorage.saveAddressBook(original, filePath);
@@ -96,7 +96,7 @@ public class JsonAddressBookStorageTest {
      */
     private void saveAddressBook(ReadOnlyAddressBook addressBook, String filePath) {
         try {
-            new JsonAddressBookStorage(Paths.get(filePath))
+            new JsonThriftStorage(Paths.get(filePath))
                     .saveAddressBook(addressBook, addToTestDataPathIfNotNull(filePath));
         } catch (IOException ioe) {
             throw new AssertionError("There should not be an error writing to the file.", ioe);

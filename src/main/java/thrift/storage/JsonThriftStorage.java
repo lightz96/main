@@ -17,13 +17,13 @@ import thrift.model.ReadOnlyAddressBook;
 /**
  * A class to access AddressBook data stored as a json file on the hard disk.
  */
-public class JsonAddressBookStorage implements AddressBookStorage {
+public class JsonThriftStorage implements AddressBookStorage {
 
-    private static final Logger logger = LogsCenter.getLogger(JsonAddressBookStorage.class);
+    private static final Logger logger = LogsCenter.getLogger(JsonThriftStorage.class);
 
     private Path filePath;
 
-    public JsonAddressBookStorage(Path filePath) {
+    public JsonThriftStorage(Path filePath) {
         this.filePath = filePath;
     }
 

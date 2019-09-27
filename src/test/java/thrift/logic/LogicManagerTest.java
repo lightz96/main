@@ -20,7 +20,7 @@ import thrift.model.Model;
 import thrift.model.ModelManager;
 import thrift.model.ReadOnlyAddressBook;
 import thrift.model.UserPrefs;
-import thrift.storage.JsonAddressBookStorage;
+import thrift.storage.JsonThriftStorage;
 import thrift.storage.JsonUserPrefsStorage;
 import thrift.storage.StorageManager;
 
@@ -35,8 +35,8 @@ public class LogicManagerTest {
 
     @BeforeEach
     public void setUp() {
-        JsonAddressBookStorage addressBookStorage =
-                new JsonAddressBookStorage(temporaryFolder.resolve("addressBook.json"));
+        JsonThriftStorage addressBookStorage =
+                new JsonThriftStorage(temporaryFolder.resolve("addressBook.json"));
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(temporaryFolder.resolve("userPrefs.json"));
         StorageManager storage = new StorageManager(addressBookStorage, userPrefsStorage);
         logic = new LogicManager(model, storage);
@@ -121,8 +121,8 @@ public class LogicManagerTest {
     /**
      * A stub class to throw an {@code IOException} when the save method is called.
      */
-    private static class JsonAddressBookIoExceptionThrowingStub extends JsonAddressBookStorage {
-        private JsonAddressBookIoExceptionThrowingStub(Path filePath) {
+    private static class JsonThriftIoExceptionThrowingStub extends JsonThriftStorage {
+        private JsonThriftIoExceptionThrowingStub(Path filePath) {
             super(filePath);
         }
 
