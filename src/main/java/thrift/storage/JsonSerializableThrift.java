@@ -9,8 +9,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
 import thrift.commons.exceptions.IllegalValueException;
-import thrift.model.Thrift;
 import thrift.model.ReadOnlyAddressBook;
+import thrift.model.Thrift;
 import thrift.model.transaction.Transaction;
 
 /**

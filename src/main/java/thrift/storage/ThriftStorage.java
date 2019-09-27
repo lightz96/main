@@ -5,8 +5,8 @@ import java.nio.file.Path;
 import java.util.Optional;
 
 import thrift.commons.exceptions.DataConversionException;
-import thrift.model.Thrift;
 import thrift.model.ReadOnlyAddressBook;
+import thrift.model.Thrift;
 
 /**
  * Represents a storage for {@link Thrift}.

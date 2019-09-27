@@ -2,8 +2,8 @@ package thrift.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
-import thrift.model.Thrift;
 import thrift.model.Model;
+import thrift.model.Thrift;
 
 /**
  * Clears the address book.
