@@ -9,8 +9,7 @@ import thrift.model.transaction.Transaction;
 import thrift.model.transaction.TransactionList;
 
 /**
- * Wraps all data at the address-book level
- * Duplicates are not allowed (by .isSamePerson comparison)
+ * Wraps all data at the THRIFT level
  */
 public class AddressBook implements ReadOnlyAddressBook {
 

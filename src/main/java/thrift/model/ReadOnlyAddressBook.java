@@ -4,7 +4,7 @@ import javafx.collections.ObservableList;
 import thrift.model.transaction.Transaction;
 
 /**
- * Unmodifiable view of an address book
+ * Unmodifiable view of THRIFT.
  */
 public interface ReadOnlyAddressBook {
 

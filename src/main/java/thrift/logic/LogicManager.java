@@ -10,7 +10,7 @@ import thrift.commons.core.LogsCenter;
 import thrift.logic.commands.Command;
 import thrift.logic.commands.CommandResult;
 import thrift.logic.commands.exceptions.CommandException;
-import thrift.logic.parser.AddressBookParser;
+import thrift.logic.parser.ThriftParser;
 import thrift.logic.parser.exceptions.ParseException;
 import thrift.model.Model;
 import thrift.model.ReadOnlyAddressBook;
@@ -26,12 +26,12 @@ public class LogicManager implements Logic {
 
     private final Model model;
     private final Storage storage;
-    private final AddressBookParser addressBookParser;
+    private final ThriftParser thriftParser;
 
     public LogicManager(Model model, Storage storage) {
         this.model = model;
         this.storage = storage;
-        addressBookParser = new AddressBookParser();
+        thriftParser = new ThriftParser();
     }
 
     @Override
@@ -39,7 +39,7 @@ public class LogicManager implements Logic {
         logger.info("----------------[USER COMMAND][" + commandText + "]");
 
         CommandResult commandResult;
-        Command command = addressBookParser.parseCommand(commandText);
+        Command command = thriftParser.parseCommand(commandText);
         commandResult = command.execute(model);
 
         try {
