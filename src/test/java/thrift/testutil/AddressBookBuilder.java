@@ -21,7 +21,7 @@ public class AddressBookBuilder {
     }
 
     /**
-     * Adds a new {@code Person} to the {@code AddressBook} that we are building.
+     * Adds a new {@code Transaction} to the {@code AddressBook} that we are building.
      */
     public AddressBookBuilder withDescription(Transaction transaction) {
         addressBook.addTransaction(transaction);

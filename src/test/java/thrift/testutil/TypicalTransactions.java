@@ -10,7 +10,7 @@ import thrift.model.transaction.Income;
 import thrift.model.transaction.Transaction;
 
 /**
- * A utility class containing a list of {@code Person} objects to be used in tests.
+ * A utility class containing a list of {@code Transaction} objects to be used in tests.
  */
 public class TypicalTransactions {
 

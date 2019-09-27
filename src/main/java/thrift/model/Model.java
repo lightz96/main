@@ -71,7 +71,7 @@ public interface Model {
     void addExpense(Expense expense);
 
     /**
-     * Adds teh given income.
+     * Adds the given income.
      */
     void addIncome(Income income);
 

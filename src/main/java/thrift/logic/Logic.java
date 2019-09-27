@@ -31,8 +31,7 @@ public interface Logic {
      */
     ReadOnlyAddressBook getAddressBook();
 
-    /** Returns an unmodifiable view of the filtered list of transactions
-     * @return*/
+    /** Returns an unmodifiable view of the filtered list of transactions*/
     ObservableList<Transaction> getFilteredTransactionList();
 
     /**

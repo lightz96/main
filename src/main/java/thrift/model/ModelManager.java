@@ -121,7 +121,7 @@ public class ModelManager implements Model {
         addressBook.setTransaction(target, editedTransaction);
     }
 
-    //=========== Filtered Person List Accessors =============================================================
+    //=========== Filtered Transaction List Accessors =============================================================
 
     /**
      * Returns an unmodifiable view of the list of {@code Person} backed by the internal list of
