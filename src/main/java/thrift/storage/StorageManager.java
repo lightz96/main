@@ -17,13 +17,13 @@ import thrift.model.UserPrefs;
 public class StorageManager implements Storage {
 
     private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
-    private AddressBookStorage addressBookStorage;
+    private ThriftStorage thriftStorage;
     private UserPrefsStorage userPrefsStorage;
 
 
-    public StorageManager(AddressBookStorage addressBookStorage, UserPrefsStorage userPrefsStorage) {
+    public StorageManager(ThriftStorage thriftStorage, UserPrefsStorage userPrefsStorage) {
         super();
-        this.addressBookStorage = addressBookStorage;
+        this.thriftStorage = thriftStorage;
         this.userPrefsStorage = userPrefsStorage;
     }
 
@@ -49,29 +49,29 @@ public class StorageManager implements Storage {
 
     @Override
     public Path getAddressBookFilePath() {
-        return addressBookStorage.getAddressBookFilePath();
+        return thriftStorage.getAddressBookFilePath();
     }
 
     @Override
     public Optional<ReadOnlyAddressBook> readAddressBook() throws DataConversionException, IOException {
-        return readAddressBook(addressBookStorage.getAddressBookFilePath());
+        return readAddressBook(thriftStorage.getAddressBookFilePath());
     }
 
     @Override
     public Optional<ReadOnlyAddressBook> readAddressBook(Path filePath) throws DataConversionException, IOException {
         logger.fine("Attempting to read data from file: " + filePath);
-        return addressBookStorage.readAddressBook(filePath);
+        return thriftStorage.readAddressBook(filePath);
     }
 
     @Override
     public void saveAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
-        saveAddressBook(addressBook, addressBookStorage.getAddressBookFilePath());
+        saveAddressBook(addressBook, thriftStorage.getAddressBookFilePath());
     }
 
     @Override
     public void saveAddressBook(ReadOnlyAddressBook addressBook, Path filePath) throws IOException {
         logger.fine("Attempting to write to data file: " + filePath);
-        addressBookStorage.saveAddressBook(addressBook, filePath);
+        thriftStorage.saveAddressBook(addressBook, filePath);
     }
 
 }

@@ -22,7 +22,7 @@ import thrift.model.ReadOnlyAddressBook;
 import thrift.model.ReadOnlyUserPrefs;
 import thrift.model.UserPrefs;
 import thrift.model.util.SampleDataUtil;
-import thrift.storage.AddressBookStorage;
+import thrift.storage.ThriftStorage;
 import thrift.storage.JsonThriftStorage;
 import thrift.storage.JsonUserPrefsStorage;
 import thrift.storage.Storage;
@@ -56,8 +56,8 @@ public class MainApp extends Application {
 
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         UserPrefs userPrefs = initPrefs(userPrefsStorage);
-        AddressBookStorage addressBookStorage = new JsonThriftStorage(userPrefs.getAddressBookFilePath());
-        storage = new StorageManager(addressBookStorage, userPrefsStorage);
+        ThriftStorage thriftStorage = new JsonThriftStorage(userPrefs.getAddressBookFilePath());
+        storage = new StorageManager(thriftStorage, userPrefsStorage);
 
         initLogging(config);
 

@@ -11,7 +11,7 @@ import thrift.model.ReadOnlyAddressBook;
 /**
  * Represents a storage for {@link AddressBook}.
  */
-public interface AddressBookStorage {
+public interface ThriftStorage {
 
     /**
      * Returns the file path of the data file.

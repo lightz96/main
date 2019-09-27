@@ -15,9 +15,9 @@ import thrift.commons.util.JsonUtil;
 import thrift.model.ReadOnlyAddressBook;
 
 /**
- * A class to access AddressBook data stored as a json file on the hard disk.
+ * A class to access THRIFT data stored as a json file on the hard disk.
  */
-public class JsonThriftStorage implements AddressBookStorage {
+public class JsonThriftStorage implements ThriftStorage {
 
     private static final Logger logger = LogsCenter.getLogger(JsonThriftStorage.class);
 
