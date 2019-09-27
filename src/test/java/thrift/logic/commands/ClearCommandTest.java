@@ -4,7 +4,7 @@ import static thrift.logic.commands.CommandTestUtil.assertCommandSuccess;
 
 import org.junit.jupiter.api.Test;
 
-import thrift.model.AddressBook;
+import thrift.model.Thrift;
 import thrift.model.Model;
 import thrift.model.ModelManager;
 import thrift.model.UserPrefs;
@@ -24,7 +24,7 @@ public class ClearCommandTest {
     public void execute_nonEmptyAddressBook_success() {
         Model model = new ModelManager(TypicalTransactions.getTypicalAddressBook(), new UserPrefs());
         Model expectedModel = new ModelManager(TypicalTransactions.getTypicalAddressBook(), new UserPrefs());
-        expectedModel.setAddressBook(new AddressBook());
+        expectedModel.setThrift(new Thrift());
 
         assertCommandSuccess(new ClearCommand(), model, ClearCommand.MESSAGE_SUCCESS, expectedModel);
     }

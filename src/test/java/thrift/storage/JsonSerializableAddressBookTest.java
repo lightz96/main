@@ -10,7 +10,7 @@ import java.nio.file.Paths;
 
 //import thrift.commons.exceptions.IllegalValueException;
 //import thrift.commons.util.JsonUtil;
-//import thrift.model.AddressBook;
+//import thrift.model.Thrift;
 //import thrift.testutil.TypicalTransactions;
 
 public class JsonSerializableAddressBookTest {
@@ -27,8 +27,8 @@ public class JsonSerializableAddressBookTest {
     public void toModelType_typicalTransactionsFile_success() throws Exception {
         JsonSerializableThrift dataFromFile = JsonUtil.readJsonFile(TYPICAL_TRANSACTIONS_FILE,
                 JsonSerializableThrift.class).get();
-        AddressBook addressBookFromFile = dataFromFile.toModelType();
-        AddressBook typicalTransactionsAddressBook = TypicalTransactions.getTypicalAddressBook();
+        Thrift addressBookFromFile = dataFromFile.toModelType();
+        Thrift typicalTransactionsAddressBook = TypicalTransactions.getTypicalAddressBook();
         assertEquals(addressBookFromFile, typicalTransactionsAddressBook);
     }
      */

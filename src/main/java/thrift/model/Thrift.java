@@ -11,7 +11,7 @@ import thrift.model.transaction.TransactionList;
 /**
  * Wraps all data at the THRIFT level
  */
-public class AddressBook implements ReadOnlyAddressBook {
+public class Thrift implements ReadOnlyAddressBook {
 
     private final TransactionList transactions;
 
@@ -26,12 +26,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         transactions = new TransactionList();
     }
 
-    public AddressBook() {}
+    public Thrift() {}
 
     /**
-     * Creates an AddressBook using the Persons in the {@code toBeCopied}
+     * Creates an THRIFT using the Transaction in the {@code toBeCopied}
      */
-    public AddressBook(ReadOnlyAddressBook toBeCopied) {
+    public Thrift(ReadOnlyAddressBook toBeCopied) {
         this();
         resetData(toBeCopied);
     }
@@ -84,7 +84,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Removes {@code key} from this {@code AddressBook}.
+     * Removes {@code key} from this {@code Thrift}.
      * {@code key} must exist in the address book.
      */
     public void removeTransaction(Transaction key) {
@@ -107,8 +107,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof AddressBook // instanceof handles nulls
-                && transactions.equals(((AddressBook) other).transactions));
+                || (other instanceof Thrift // instanceof handles nulls
+                && transactions.equals(((Thrift) other).transactions));
     }
 
     @Override

@@ -33,7 +33,7 @@ public class DeleteCommandTest {
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_TRANSACTION_SUCCESS, transactionToDelete);
 
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        ModelManager expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
         expectedModel.deleteTransaction(transactionToDelete);
 
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
@@ -57,7 +57,7 @@ public class DeleteCommandTest {
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_TRANSACTION_SUCCESS, transactionToDelete);
 
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
         expectedModel.deleteTransaction(transactionToDelete);
         showNoTransaction(expectedModel);
 
@@ -70,7 +70,7 @@ public class DeleteCommandTest {
 
         Index outOfBoundIndex = TypicalIndexes.INDEX_SECOND_TRANSACTION;
         // ensures that outOfBoundIndex is still in bounds of address book list
-        assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getTransactionList().size());
+        assertTrue(outOfBoundIndex.getZeroBased() < model.getThrift().getTransactionList().size());
 
         DeleteCommand deleteCommand = new DeleteCommand(outOfBoundIndex);
 

@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 import thrift.commons.exceptions.DataConversionException;
-import thrift.model.AddressBook;
+import thrift.model.Thrift;
 import thrift.model.ReadOnlyAddressBook;
 
 public class JsonThriftStorageTest {
@@ -62,26 +62,26 @@ public class JsonThriftStorageTest {
     @Test
     public void readAndSaveAddressBook_allInOrder_success() throws Exception {
         Path filePath = testFolder.resolve("TempAddressBook.json");
-        AddressBook original = TypicalTransactions.getTypicalAddressBook();
+        Thrift original = TypicalTransactions.getTypicalAddressBook();
         JsonThriftStorage jsonAddressBookStorage = new JsonThriftStorage(filePath);
 
         // Save in new file and read back
         jsonAddressBookStorage.saveAddressBook(original, filePath);
         ReadOnlyAddressBook readBack = jsonAddressBookStorage.readAddressBook(filePath).get();
-        assertEquals(original, new AddressBook(readBack));
+        assertEquals(original, new Thrift(readBack));
 
         // Modify data, overwrite exiting file, and read back
         original.addTransaction(TypicalTransactions.LAKSA);
         original.removeTransaction(TypicalTransactions.PENANG_LAKSA);
         jsonAddressBookStorage.saveAddressBook(original, filePath);
         readBack = jsonAddressBookStorage.readAddressBook(filePath).get();
-        assertEquals(original, new AddressBook(readBack));
+        assertEquals(original, new Thrift(readBack));
 
         // Save and read without specifying file path
         original.addTransaction(TypicalTransactions.PENANG_LAKSA);
         jsonAddressBookStorage.saveAddressBook(original); // file path not specified
         readBack = jsonAddressBookStorage.readAddressBook().get(); // file path not specified
-        assertEquals(original, new AddressBook(readBack));
+        assertEquals(original, new Thrift(readBack));
 
     }
      */
@@ -105,6 +105,6 @@ public class JsonThriftStorageTest {
 
     @Test
     public void saveAddressBook_nullFilePath_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> saveAddressBook(new AddressBook(), null));
+        assertThrows(NullPointerException.class, () -> saveAddressBook(new Thrift(), null));
     }
 }

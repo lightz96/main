@@ -17,17 +17,17 @@ import thrift.model.transaction.Income;
 import thrift.model.transaction.Transaction;
 
 /**
- * Represents the in-memory model of the address book data.
+ * Represents the in-memory model of the THRIFT data.
  */
 public class ModelManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
-    private final AddressBook addressBook;
+    private final Thrift thrift;
     private final UserPrefs userPrefs;
     private final FilteredList<Transaction> filteredTransactions;
 
     /**
-     * Initializes a ModelManager with the given addressBook and userPrefs.
+     * Initializes a ModelManager with the given thrift and userPrefs.
      */
     public ModelManager(ReadOnlyAddressBook addressBook, ReadOnlyUserPrefs userPrefs) {
         super();
@@ -35,13 +35,13 @@ public class ModelManager implements Model {
 
         logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
 
-        this.addressBook = new AddressBook(addressBook);
+        this.thrift = new Thrift(addressBook);
         this.userPrefs = new UserPrefs(userPrefs);
-        filteredTransactions = new FilteredList<>(this.addressBook.getTransactionList());
+        filteredTransactions = new FilteredList<>(this.thrift.getTransactionList());
     }
 
     public ModelManager() {
-        this(new AddressBook(), new UserPrefs());
+        this(new Thrift(), new UserPrefs());
     }
 
     //=========== UserPrefs ==================================================================================
@@ -79,38 +79,38 @@ public class ModelManager implements Model {
         userPrefs.setAddressBookFilePath(addressBookFilePath);
     }
 
-    //=========== AddressBook ================================================================================
+    //=========== THRIFT ================================================================================
 
     @Override
-    public void setAddressBook(ReadOnlyAddressBook addressBook) {
-        this.addressBook.resetData(addressBook);
+    public void setThrift(ReadOnlyAddressBook thrift) {
+        this.thrift.resetData(thrift);
     }
 
     @Override
-    public ReadOnlyAddressBook getAddressBook() {
-        return addressBook;
+    public ReadOnlyAddressBook getThrift() {
+        return thrift;
     }
 
     @Override
     public boolean hasTransaction(Transaction t) {
         requireNonNull(t);
-        return addressBook.hasTransaction(t);
+        return thrift.hasTransaction(t);
     }
 
     @Override
     public void deleteTransaction(Transaction transaction) {
-        addressBook.removeTransaction(transaction);
+        thrift.removeTransaction(transaction);
     }
 
     @Override
     public void addExpense(Expense expense) {
-        addressBook.addTransaction(expense);
+        thrift.addTransaction(expense);
         updateFilteredTransactionList(PREDICATE_SHOW_ALL_TRANSACTIONS);
     }
 
     @Override
     public void addIncome(Income income) {
-        addressBook.addTransaction(income);
+        thrift.addTransaction(income);
         updateFilteredTransactionList(PREDICATE_SHOW_ALL_TRANSACTIONS);
     }
 
@@ -118,7 +118,7 @@ public class ModelManager implements Model {
     public void setTransaction(Transaction target, Transaction editedTransaction) {
         CollectionUtil.requireAllNonNull(target, editedTransaction);
 
-        addressBook.setTransaction(target, editedTransaction);
+        thrift.setTransaction(target, editedTransaction);
     }
 
     //=========== Filtered Transaction List Accessors =============================================================
@@ -153,7 +153,7 @@ public class ModelManager implements Model {
 
         // state check
         ModelManager other = (ModelManager) obj;
-        return addressBook.equals(other.addressBook)
+        return thrift.equals(other.thrift)
                 && userPrefs.equals(other.userPrefs)
                 && filteredTransactions.equals(other.filteredTransactions);
     }

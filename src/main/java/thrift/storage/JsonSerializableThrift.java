@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
 import thrift.commons.exceptions.IllegalValueException;
-import thrift.model.AddressBook;
+import thrift.model.Thrift;
 import thrift.model.ReadOnlyAddressBook;
 import thrift.model.transaction.Transaction;
 
@@ -40,17 +40,17 @@ class JsonSerializableThrift {
     }
 
     /**
-     * Converts this address book into the model's {@code AddressBook} object.
+     * Converts this THRIFT into the model's {@code Thrift} object.
      *
      * @throws IllegalValueException if there were any data constraints violated.
      */
-    public AddressBook toModelType() throws IllegalValueException {
-        AddressBook addressBook = new AddressBook();
+    public Thrift toModelType() throws IllegalValueException {
+        Thrift thrift = new Thrift();
         for (JsonAdaptedTransaction jsonAdaptedTransaction : transactions) {
             Transaction transaction = jsonAdaptedTransaction.toModelType();
-            addressBook.addTransaction(transaction);
+            thrift.addTransaction(transaction);
         }
-        return addressBook;
+        return thrift;
     }
 
 }

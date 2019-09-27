@@ -15,46 +15,46 @@ import javafx.collections.ObservableList;
 import thrift.model.transaction.Transaction;
 import thrift.testutil.TypicalTransactions;
 
-public class AddressBookTest {
+public class ThriftTest {
 
-    private final AddressBook addressBook = new AddressBook();
+    private final Thrift thrift = new Thrift();
 
     @Test
     public void constructor() {
-        assertEquals(Collections.emptyList(), addressBook.getTransactionList());
+        assertEquals(Collections.emptyList(), thrift.getTransactionList());
     }
 
     @Test
     public void resetData_null_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> addressBook.resetData(null));
+        assertThrows(NullPointerException.class, () -> thrift.resetData(null));
     }
 
     @Test
     public void resetData_withValidReadOnlyAddressBook_replacesData() {
-        AddressBook newData = TypicalTransactions.getTypicalAddressBook();
-        addressBook.resetData(newData);
-        assertEquals(newData, addressBook);
+        Thrift newData = TypicalTransactions.getTypicalAddressBook();
+        thrift.resetData(newData);
+        assertEquals(newData, thrift);
     }
 
     @Test
     public void hasTransaction_nullTransaction_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> addressBook.hasTransaction(null));
+        assertThrows(NullPointerException.class, () -> thrift.hasTransaction(null));
     }
 
     @Test
     public void hasTransaction_transactionNotInAddressBook_returnsFalse() {
-        assertFalse(addressBook.hasTransaction(TypicalTransactions.LAKSA));
+        assertFalse(thrift.hasTransaction(TypicalTransactions.LAKSA));
     }
 
     @Test
     public void hasTransaction_transactionInAddressBook_returnsTrue() {
-        addressBook.addTransaction(TypicalTransactions.LAKSA);
-        assertTrue(addressBook.hasTransaction(TypicalTransactions.LAKSA));
+        thrift.addTransaction(TypicalTransactions.LAKSA);
+        assertTrue(thrift.hasTransaction(TypicalTransactions.LAKSA));
     }
 
     @Test
     public void getPersonList_modifyList_throwsUnsupportedOperationException() {
-        assertThrows(UnsupportedOperationException.class, () -> addressBook.getTransactionList().remove(0));
+        assertThrows(UnsupportedOperationException.class, () -> thrift.getTransactionList().remove(0));
     }
 
     /**

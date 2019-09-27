@@ -12,7 +12,7 @@ import thrift.model.ReadOnlyUserPrefs;
 import thrift.model.UserPrefs;
 
 /**
- * Manages storage of AddressBook data in local storage.
+ * Manages storage of Thrift data in local storage.
  */
 public class StorageManager implements Storage {
 
@@ -45,7 +45,7 @@ public class StorageManager implements Storage {
     }
 
 
-    // ================ AddressBook methods ==============================
+    // ================ Thrift methods ==============================
 
     @Override
     public Path getAddressBookFilePath() {

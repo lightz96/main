@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import thrift.model.AddressBook;
+import thrift.model.Thrift;
 import thrift.model.ReadOnlyAddressBook;
 import thrift.model.tag.Tag;
 import thrift.model.transaction.Description;
@@ -15,7 +15,7 @@ import thrift.model.transaction.TransactionDate;
 import thrift.model.transaction.Value;
 
 /**
- * Contains utility methods for populating {@code AddressBook} with sample data.
+ * Contains utility methods for populating {@code Thrift} with sample data.
  */
 public class SampleDataUtil {
     public static Transaction[] getSampleTransaction() {
@@ -30,11 +30,11 @@ public class SampleDataUtil {
     }
 
     public static ReadOnlyAddressBook getSampleAddressBook() {
-        AddressBook sampleAb = new AddressBook();
+        Thrift sampleThrift = new Thrift();
         for (Transaction sampleTransaction : getSampleTransaction()) {
-            sampleAb.addTransaction(sampleTransaction);
+            sampleThrift.addTransaction(sampleTransaction);
         }
-        return sampleAb;
+        return sampleThrift;
     }
 
     /**

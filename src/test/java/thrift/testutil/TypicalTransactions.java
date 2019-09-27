@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import thrift.model.AddressBook;
+import thrift.model.Thrift;
 import thrift.model.transaction.Expense;
 import thrift.model.transaction.Income;
 import thrift.model.transaction.Transaction;
@@ -24,14 +24,14 @@ public class TypicalTransactions {
     private TypicalTransactions() {} // prevents instantiation
 
     /**
-     * Returns an {@code AddressBook} with all the typical persons.
+     * Returns an {@code Thrift} with all the typical persons.
      */
-    public static AddressBook getTypicalAddressBook() {
-        AddressBook ab = new AddressBook();
+    public static Thrift getTypicalAddressBook() {
+        Thrift thrift = new Thrift();
         for (Transaction transaction : getTypicalTransaction()) {
-            ab.addTransaction(transaction);
+            thrift.addTransaction(transaction);
         }
-        return ab;
+        return thrift;
     }
 
     public static List<Transaction> getTypicalTransaction() {

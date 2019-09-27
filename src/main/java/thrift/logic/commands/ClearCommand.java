@@ -2,7 +2,7 @@ package thrift.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
-import thrift.model.AddressBook;
+import thrift.model.Thrift;
 import thrift.model.Model;
 
 /**
@@ -17,7 +17,7 @@ public class ClearCommand extends Command {
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
-        model.setAddressBook(new AddressBook());
+        model.setThrift(new Thrift());
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }

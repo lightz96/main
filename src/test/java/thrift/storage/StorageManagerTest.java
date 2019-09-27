@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 import thrift.commons.core.GuiSettings;
-//import thrift.model.AddressBook;
+//import thrift.model.Thrift;
 //import thrift.model.ReadOnlyAddressBook;
 import thrift.model.UserPrefs;
 //import thrift.testutil.TypicalTransactions;
@@ -55,10 +55,10 @@ public class StorageManagerTest {
          * {@link JsonThriftStorage} class.
          * More extensive testing of UserPref saving/reading is done in {@link JsonThriftStorageTest} class.
          */ /*
-        AddressBook original = TypicalTransactions.getTypicalAddressBook();
+        Thrift original = TypicalTransactions.getTypicalAddressBook();
         storageManager.saveAddressBook(original);
         ReadOnlyAddressBook retrieved = storageManager.readAddressBook().get();
-        assertEquals(original, new AddressBook(retrieved));
+        assertEquals(original, new Thrift(retrieved));
     }
      */
 

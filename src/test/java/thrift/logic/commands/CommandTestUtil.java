@@ -13,7 +13,7 @@ import java.util.List;
 
 import thrift.commons.core.index.Index;
 import thrift.logic.commands.exceptions.CommandException;
-import thrift.model.AddressBook;
+import thrift.model.Thrift;
 import thrift.model.Model;
 import thrift.model.transaction.DescriptionContainsKeywordsPredicate;
 import thrift.model.transaction.Transaction;
@@ -96,11 +96,11 @@ public class CommandTestUtil {
         // we are unable to defensively copy the model for comparison later, so we can
         // only do so by copying its components.
 
-        AddressBook expectedAddressBook = new AddressBook(actualModel.getAddressBook());
+        Thrift expectedThrift = new Thrift(actualModel.getThrift());
         List<Transaction> expectedFilteredList = new ArrayList<>(actualModel.getFilteredTransactionList());
 
         assertThrows(CommandException.class, expectedMessage, () -> command.execute(actualModel));
-        assertEquals(expectedAddressBook, actualModel.getAddressBook());
+        assertEquals(expectedThrift, actualModel.getThrift());
         assertEquals(expectedFilteredList, actualModel.getFilteredTransactionList());
     }
     /**

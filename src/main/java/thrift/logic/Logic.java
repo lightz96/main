@@ -25,9 +25,9 @@ public interface Logic {
     CommandResult execute(String commandText) throws CommandException, ParseException;
 
     /**
-     * Returns the AddressBook.
+     * Returns the Thrift.
      *
-     * @see Model#getAddressBook()
+     * @see Model#getThrift()
      */
     ReadOnlyAddressBook getAddressBook();
 

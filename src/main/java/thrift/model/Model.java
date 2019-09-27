@@ -47,12 +47,12 @@ public interface Model {
     void setAddressBookFilePath(Path addressBookFilePath);
 
     /**
-     * Replaces address book data with the data in {@code addressBook}.
+     * Replaces THRIFT data with the data in {@code thrift}.
      */
-    void setAddressBook(ReadOnlyAddressBook addressBook);
+    void setThrift(ReadOnlyAddressBook thrift);
 
-    /** Returns the AddressBook */
-    ReadOnlyAddressBook getAddressBook();
+    /** Returns the THRIFT */
+    ReadOnlyAddressBook getThrift();
 
     /**
      * Returns true if a transaction with the same identity as {@code transaction} exists in the transactions list.

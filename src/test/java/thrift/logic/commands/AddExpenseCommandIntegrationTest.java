@@ -30,7 +30,7 @@ public class AddExpenseCommandIntegrationTest {
     public void execute_newExpense_success() {
         Expense validExpense = new ExpenseBuilder().build();
 
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
         expectedModel.addExpense(validExpense);
 
         assertCommandSuccess(new AddExpenseCommand(validExpense), model,
@@ -41,7 +41,7 @@ public class AddExpenseCommandIntegrationTest {
     public void execute_newIncome_success() {
         Income validIncome = new IncomeBuilder().build();
 
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
         expectedModel.addIncome(validIncome);
 
         assertCommandSuccess(new AddIncomeCommand(validIncome), model,
