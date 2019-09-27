@@ -17,7 +17,7 @@ import thrift.logic.Logic;
 import thrift.logic.LogicManager;
 import thrift.model.Model;
 import thrift.model.ModelManager;
-import thrift.model.ReadOnlyAddressBook;
+import thrift.model.ReadOnlyThrift;
 import thrift.model.ReadOnlyUserPrefs;
 import thrift.model.Thrift;
 import thrift.model.UserPrefs;
@@ -74,8 +74,8 @@ public class MainApp extends Application {
      * or an empty address book will be used instead if errors occur when reading {@code storage}'s address book.
      */
     private Model initModelManager(Storage storage, ReadOnlyUserPrefs userPrefs) {
-        Optional<ReadOnlyAddressBook> addressBookOptional;
-        ReadOnlyAddressBook initialData;
+        Optional<ReadOnlyThrift> addressBookOptional;
+        ReadOnlyThrift initialData;
         try {
             addressBookOptional = storage.readAddressBook();
             if (!addressBookOptional.isPresent()) {

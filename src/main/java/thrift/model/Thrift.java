@@ -11,7 +11,7 @@ import thrift.model.transaction.TransactionList;
 /**
  * Wraps all data at the THRIFT level
  */
-public class Thrift implements ReadOnlyAddressBook {
+public class Thrift implements ReadOnlyThrift {
 
     private final TransactionList transactions;
 
@@ -31,7 +31,7 @@ public class Thrift implements ReadOnlyAddressBook {
     /**
      * Creates an THRIFT using the Transaction in the {@code toBeCopied}
      */
-    public Thrift(ReadOnlyAddressBook toBeCopied) {
+    public Thrift(ReadOnlyThrift toBeCopied) {
         this();
         resetData(toBeCopied);
     }
@@ -48,7 +48,7 @@ public class Thrift implements ReadOnlyAddressBook {
     /**
      * Resets the existing data of this transactions list with {@code newData}.
      */
-    public void resetData(ReadOnlyAddressBook newData) {
+    public void resetData(ReadOnlyThrift newData) {
         requireNonNull(newData);
 
         setTransactionss(newData.getTransactionList());

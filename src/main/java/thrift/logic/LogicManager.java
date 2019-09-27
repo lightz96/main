@@ -13,7 +13,7 @@ import thrift.logic.commands.exceptions.CommandException;
 import thrift.logic.parser.ThriftParser;
 import thrift.logic.parser.exceptions.ParseException;
 import thrift.model.Model;
-import thrift.model.ReadOnlyAddressBook;
+import thrift.model.ReadOnlyThrift;
 import thrift.model.transaction.Transaction;
 import thrift.storage.Storage;
 
@@ -52,7 +52,7 @@ public class LogicManager implements Logic {
     }
 
     @Override
-    public ReadOnlyAddressBook getAddressBook() {
+    public ReadOnlyThrift getAddressBook() {
         return model.getThrift();
     }
 

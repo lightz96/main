@@ -11,7 +11,7 @@ import org.junit.jupiter.api.io.TempDir;
 
 import thrift.commons.core.GuiSettings;
 //import thrift.model.Thrift;
-//import thrift.model.ReadOnlyAddressBook;
+//import thrift.model.ReadOnlyThrift;
 import thrift.model.UserPrefs;
 //import thrift.testutil.TypicalTransactions;
 
@@ -57,7 +57,7 @@ public class StorageManagerTest {
          */ /*
         Thrift original = TypicalTransactions.getTypicalAddressBook();
         storageManager.saveAddressBook(original);
-        ReadOnlyAddressBook retrieved = storageManager.readAddressBook().get();
+        ReadOnlyThrift retrieved = storageManager.readAddressBook().get();
         assertEquals(original, new Thrift(retrieved));
     }
      */

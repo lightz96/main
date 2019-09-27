@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 import javafx.collections.ObservableList;
 import thrift.commons.core.GuiSettings;
 import thrift.model.Model;
-import thrift.model.ReadOnlyAddressBook;
+import thrift.model.ReadOnlyThrift;
 import thrift.model.ReadOnlyUserPrefs;
 import thrift.model.Thrift;
 import thrift.model.transaction.Expense;
@@ -111,12 +111,12 @@ public class AddExpenseCommandTest {
         }
 
         @Override
-        public void setThrift(ReadOnlyAddressBook newData) {
+        public void setThrift(ReadOnlyThrift newData) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public ReadOnlyAddressBook getThrift() {
+        public ReadOnlyThrift getThrift() {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -183,7 +183,7 @@ public class AddExpenseCommandTest {
         }
 
         @Override
-        public ReadOnlyAddressBook getThrift() {
+        public ReadOnlyThrift getThrift() {
             return new Thrift();
         }
     }

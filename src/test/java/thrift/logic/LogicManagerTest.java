@@ -18,7 +18,7 @@ import thrift.logic.commands.exceptions.CommandException;
 import thrift.logic.parser.exceptions.ParseException;
 import thrift.model.Model;
 import thrift.model.ModelManager;
-import thrift.model.ReadOnlyAddressBook;
+import thrift.model.ReadOnlyThrift;
 import thrift.model.UserPrefs;
 import thrift.storage.JsonThriftStorage;
 import thrift.storage.JsonUserPrefsStorage;
@@ -127,7 +127,7 @@ public class LogicManagerTest {
         }
 
         @Override
-        public void saveAddressBook(ReadOnlyAddressBook addressBook, Path filePath) throws IOException {
+        public void saveAddressBook(ReadOnlyThrift addressBook, Path filePath) throws IOException {
             throw DUMMY_IO_EXCEPTION;
         }
     }

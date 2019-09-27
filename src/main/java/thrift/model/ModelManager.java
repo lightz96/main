@@ -29,7 +29,7 @@ public class ModelManager implements Model {
     /**
      * Initializes a ModelManager with the given thrift and userPrefs.
      */
-    public ModelManager(ReadOnlyAddressBook addressBook, ReadOnlyUserPrefs userPrefs) {
+    public ModelManager(ReadOnlyThrift addressBook, ReadOnlyUserPrefs userPrefs) {
         super();
         requireAllNonNull(addressBook, userPrefs);
 
@@ -82,12 +82,12 @@ public class ModelManager implements Model {
     //=========== THRIFT ================================================================================
 
     @Override
-    public void setThrift(ReadOnlyAddressBook thrift) {
+    public void setThrift(ReadOnlyThrift thrift) {
         this.thrift.resetData(thrift);
     }
 
     @Override
-    public ReadOnlyAddressBook getThrift() {
+    public ReadOnlyThrift getThrift() {
         return thrift;
     }
 

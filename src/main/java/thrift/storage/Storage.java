@@ -5,7 +5,7 @@ import java.nio.file.Path;
 import java.util.Optional;
 
 import thrift.commons.exceptions.DataConversionException;
-import thrift.model.ReadOnlyAddressBook;
+import thrift.model.ReadOnlyThrift;
 import thrift.model.ReadOnlyUserPrefs;
 import thrift.model.UserPrefs;
 
@@ -24,9 +24,9 @@ public interface Storage extends ThriftStorage, UserPrefsStorage {
     Path getAddressBookFilePath();
 
     @Override
-    Optional<ReadOnlyAddressBook> readAddressBook() throws DataConversionException, IOException;
+    Optional<ReadOnlyThrift> readAddressBook() throws DataConversionException, IOException;
 
     @Override
-    void saveAddressBook(ReadOnlyAddressBook addressBook) throws IOException;
+    void saveAddressBook(ReadOnlyThrift addressBook) throws IOException;
 
 }

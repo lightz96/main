@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import thrift.model.ReadOnlyAddressBook;
+import thrift.model.ReadOnlyThrift;
 import thrift.model.Thrift;
 import thrift.model.tag.Tag;
 import thrift.model.transaction.Description;
@@ -29,7 +29,7 @@ public class SampleDataUtil {
         };
     }
 
-    public static ReadOnlyAddressBook getSampleAddressBook() {
+    public static ReadOnlyThrift getSampleAddressBook() {
         Thrift sampleThrift = new Thrift();
         for (Transaction sampleTransaction : getSampleTransaction()) {
             sampleThrift.addTransaction(sampleTransaction);

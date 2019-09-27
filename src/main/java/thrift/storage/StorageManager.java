@@ -7,7 +7,7 @@ import java.util.logging.Logger;
 
 import thrift.commons.core.LogsCenter;
 import thrift.commons.exceptions.DataConversionException;
-import thrift.model.ReadOnlyAddressBook;
+import thrift.model.ReadOnlyThrift;
 import thrift.model.ReadOnlyUserPrefs;
 import thrift.model.UserPrefs;
 
@@ -53,23 +53,23 @@ public class StorageManager implements Storage {
     }
 
     @Override
-    public Optional<ReadOnlyAddressBook> readAddressBook() throws DataConversionException, IOException {
+    public Optional<ReadOnlyThrift> readAddressBook() throws DataConversionException, IOException {
         return readAddressBook(thriftStorage.getAddressBookFilePath());
     }
 
     @Override
-    public Optional<ReadOnlyAddressBook> readAddressBook(Path filePath) throws DataConversionException, IOException {
+    public Optional<ReadOnlyThrift> readAddressBook(Path filePath) throws DataConversionException, IOException {
         logger.fine("Attempting to read data from file: " + filePath);
         return thriftStorage.readAddressBook(filePath);
     }
 
     @Override
-    public void saveAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
+    public void saveAddressBook(ReadOnlyThrift addressBook) throws IOException {
         saveAddressBook(addressBook, thriftStorage.getAddressBookFilePath());
     }
 
     @Override
-    public void saveAddressBook(ReadOnlyAddressBook addressBook, Path filePath) throws IOException {
+    public void saveAddressBook(ReadOnlyThrift addressBook, Path filePath) throws IOException {
         logger.fine("Attempting to write to data file: " + filePath);
         thriftStorage.saveAddressBook(addressBook, filePath);
     }

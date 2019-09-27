@@ -6,7 +6,7 @@ import thrift.model.transaction.Transaction;
 /**
  * Unmodifiable view of THRIFT.
  */
-public interface ReadOnlyAddressBook {
+public interface ReadOnlyThrift {
 
     /**
      * Returns an unmodifiable view of the transactions list.

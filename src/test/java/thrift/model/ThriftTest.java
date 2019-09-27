@@ -58,12 +58,12 @@ public class ThriftTest {
     }
 
     /**
-     * A stub ReadOnlyAddressBook whose transaction list can violate interface constraints.
+     * A stub ReadOnlyThrift whose transaction list can violate interface constraints.
      */
-    private static class AddressBookStub implements ReadOnlyAddressBook {
+    private static class ThriftStub implements ReadOnlyThrift {
         private final ObservableList<Transaction> transactions = FXCollections.observableArrayList();
 
-        AddressBookStub(Collection<Transaction> transactions) {
+        ThriftStub(Collection<Transaction> transactions) {
             this.transactions.setAll(transactions);
         }
 

@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 import thrift.commons.exceptions.DataConversionException;
-import thrift.model.ReadOnlyAddressBook;
+import thrift.model.ReadOnlyThrift;
 import thrift.model.Thrift;
 
 public class JsonThriftStorageTest {
@@ -26,7 +26,7 @@ public class JsonThriftStorageTest {
         assertThrows(NullPointerException.class, () -> readAddressBook(null));
     }
 
-    private java.util.Optional<ReadOnlyAddressBook> readAddressBook(String filePath) throws Exception {
+    private java.util.Optional<ReadOnlyThrift> readAddressBook(String filePath) throws Exception {
         return new JsonThriftStorage(Paths.get(filePath)).readAddressBook(addToTestDataPathIfNotNull(filePath));
     }
 
@@ -67,7 +67,7 @@ public class JsonThriftStorageTest {
 
         // Save in new file and read back
         jsonAddressBookStorage.saveAddressBook(original, filePath);
-        ReadOnlyAddressBook readBack = jsonAddressBookStorage.readAddressBook(filePath).get();
+        ReadOnlyThrift readBack = jsonAddressBookStorage.readAddressBook(filePath).get();
         assertEquals(original, new Thrift(readBack));
 
         // Modify data, overwrite exiting file, and read back
@@ -94,7 +94,7 @@ public class JsonThriftStorageTest {
     /**
      * Saves {@code addressBook} at the specified {@code filePath}.
      */
-    private void saveAddressBook(ReadOnlyAddressBook addressBook, String filePath) {
+    private void saveAddressBook(ReadOnlyThrift addressBook, String filePath) {
         try {
             new JsonThriftStorage(Paths.get(filePath))
                     .saveAddressBook(addressBook, addToTestDataPathIfNotNull(filePath));

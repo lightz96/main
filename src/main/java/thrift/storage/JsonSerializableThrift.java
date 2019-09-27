@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
 import thrift.commons.exceptions.IllegalValueException;
-import thrift.model.ReadOnlyAddressBook;
+import thrift.model.ReadOnlyThrift;
 import thrift.model.Thrift;
 import thrift.model.transaction.Transaction;
 
@@ -30,11 +30,11 @@ class JsonSerializableThrift {
     }
 
     /**
-     * Converts a given {@code ReadOnlyAddressBook} into this class for Jackson use.
+     * Converts a given {@code ReadOnlyThrift} into this class for Jackson use.
      *
      * @param source future changes to this will not affect the created {@code JsonSerializableThrift}.
      */
-    public JsonSerializableThrift(ReadOnlyAddressBook source) {
+    public JsonSerializableThrift(ReadOnlyThrift source) {
         transactions.addAll(source.getTransactionList().stream().map(JsonAdaptedTransaction::new)
                 .collect(Collectors.toList()));
     }

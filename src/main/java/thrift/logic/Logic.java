@@ -8,7 +8,7 @@ import thrift.logic.commands.CommandResult;
 import thrift.logic.commands.exceptions.CommandException;
 import thrift.logic.parser.exceptions.ParseException;
 import thrift.model.Model;
-import thrift.model.ReadOnlyAddressBook;
+import thrift.model.ReadOnlyThrift;
 import thrift.model.transaction.Transaction;
 
 /**
@@ -29,7 +29,7 @@ public interface Logic {
      *
      * @see Model#getThrift()
      */
-    ReadOnlyAddressBook getAddressBook();
+    ReadOnlyThrift getAddressBook();
 
     /** Returns an unmodifiable view of the filtered list of transactions*/
     ObservableList<Transaction> getFilteredTransactionList();

@@ -49,10 +49,10 @@ public interface Model {
     /**
      * Replaces THRIFT data with the data in {@code thrift}.
      */
-    void setThrift(ReadOnlyAddressBook thrift);
+    void setThrift(ReadOnlyThrift thrift);
 
     /** Returns the THRIFT */
-    ReadOnlyAddressBook getThrift();
+    ReadOnlyThrift getThrift();
 
     /**
      * Returns true if a transaction with the same identity as {@code transaction} exists in the transactions list.
