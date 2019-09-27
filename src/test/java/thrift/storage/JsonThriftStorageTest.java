@@ -43,18 +43,18 @@ public class JsonThriftStorageTest {
 
     @Test
     public void read_notJsonFormat_exceptionThrown() {
-        assertThrows(DataConversionException.class, () -> readAddressBook("notJsonFormatAddressBook.json"));
+        assertThrows(DataConversionException.class, () -> readAddressBook("notJsonFormatTransactionThrift.json"));
     }
 
     @Test
-    public void readAddressBook_invalidPersonAddressBook_throwDataConversionException() {
-        assertThrows(DataConversionException.class, () -> readAddressBook("invalidPersonAddressBook.json"));
+    public void readAddressBook_invalidTransactionThrift_throwDataConversionException() {
+        assertThrows(DataConversionException.class, () -> readAddressBook("invalidTransactionThrift.json"));
     }
 
     @Test
     public void readAddressBook_invalidAndValidPersonAddressBook_throwDataConversionException() {
         assertThrows(DataConversionException.class, ()
-            -> readAddressBook("invalidAndValidPersonAddressBook.json"));
+            -> readAddressBook("invalidAndValidTransactionThrift.json"));
     }
 
     /* TODO: Fix the bug where saving the pre-built transaction list and reading the pre-built transaction list do

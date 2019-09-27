@@ -13,14 +13,14 @@ import java.nio.file.Paths;
 //import thrift.model.Thrift;
 //import thrift.testutil.TypicalTransactions;
 
-public class JsonSerializableAddressBookTest {
+public class JsonSerializableThriftTest {
 
     private static final Path TEST_DATA_FOLDER = Paths.get("src", "test", "data",
             "JsonSerializableThriftTest");
     private static final Path TYPICAL_TRANSACTIONS_FILE = TEST_DATA_FOLDER.resolve(
-            "typicalTransactionsAddressBook.json");
+            "typicalTransactionThrift.json");
     private static final Path INVALID_TRANSACTIONS_FILE = TEST_DATA_FOLDER.resolve(
-            "invalidTransactionAddressBook.json");
+            "invalidTransactionThrift.json");
 
     /* TODO: Fix the test case when it is possible to read and parse from json file correctly.
     @Test
