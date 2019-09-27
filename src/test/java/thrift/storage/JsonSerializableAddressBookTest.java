@@ -16,7 +16,7 @@ import java.nio.file.Paths;
 public class JsonSerializableAddressBookTest {
 
     private static final Path TEST_DATA_FOLDER = Paths.get("src", "test", "data",
-            "JsonSerializableAddressBookTest");
+            "JsonSerializableThriftTest");
     private static final Path TYPICAL_TRANSACTIONS_FILE = TEST_DATA_FOLDER.resolve(
             "typicalTransactionsAddressBook.json");
     private static final Path INVALID_TRANSACTIONS_FILE = TEST_DATA_FOLDER.resolve(
