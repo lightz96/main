@@ -4,9 +4,9 @@ import static thrift.logic.commands.CommandTestUtil.assertCommandSuccess;
 
 import org.junit.jupiter.api.Test;
 
-import thrift.model.Thrift;
 import thrift.model.Model;
 import thrift.model.ModelManager;
+import thrift.model.Thrift;
 import thrift.model.UserPrefs;
 import thrift.testutil.TypicalTransactions;
 

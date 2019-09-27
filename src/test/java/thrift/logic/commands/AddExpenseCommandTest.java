@@ -15,10 +15,10 @@ import org.junit.jupiter.api.Test;
 
 import javafx.collections.ObservableList;
 import thrift.commons.core.GuiSettings;
-import thrift.model.Thrift;
 import thrift.model.Model;
 import thrift.model.ReadOnlyAddressBook;
 import thrift.model.ReadOnlyUserPrefs;
+import thrift.model.Thrift;
 import thrift.model.transaction.Expense;
 import thrift.model.transaction.Income;
 import thrift.model.transaction.Transaction;

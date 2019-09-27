@@ -13,8 +13,8 @@ import java.util.List;
 
 import thrift.commons.core.index.Index;
 import thrift.logic.commands.exceptions.CommandException;
-import thrift.model.Thrift;
 import thrift.model.Model;
+import thrift.model.Thrift;
 import thrift.model.transaction.DescriptionContainsKeywordsPredicate;
 import thrift.model.transaction.Transaction;
 import thrift.testutil.EditTransactionDescriptorBuilder;

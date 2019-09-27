@@ -11,8 +11,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 import thrift.commons.exceptions.DataConversionException;
-import thrift.model.Thrift;
 import thrift.model.ReadOnlyAddressBook;
+import thrift.model.Thrift;
 
 public class JsonThriftStorageTest {
     private static final Path TEST_DATA_FOLDER = Paths.get("src", "test", "data",
