@@ -6,24 +6,24 @@ import thrift.model.transaction.Transaction;
 /**
  * A utility class to help with building Addressbook objects.
  * Example usage: <br>
- *     {@code AddressBook ab = new AddressBookBuilder().withPerson("John", "Doe").build();}
+ *     {@code AddressBook ab = new ThriftBuilder().withPerson("John", "Doe").build();}
  */
-public class AddressBookBuilder {
+public class ThriftBuilder {
 
     private AddressBook addressBook;
 
-    public AddressBookBuilder() {
+    public ThriftBuilder() {
         addressBook = new AddressBook();
     }
 
-    public AddressBookBuilder(AddressBook addressBook) {
+    public ThriftBuilder(AddressBook addressBook) {
         this.addressBook = addressBook;
     }
 
     /**
      * Adds a new {@code Transaction} to the {@code AddressBook} that we are building.
      */
-    public AddressBookBuilder withDescription(Transaction transaction) {
+    public ThriftBuilder withDescription(Transaction transaction) {
         addressBook.addTransaction(transaction);
         return this;
     }

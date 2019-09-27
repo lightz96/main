@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 
 import thrift.commons.core.GuiSettings;
 import thrift.model.transaction.DescriptionContainsKeywordsPredicate;
-import thrift.testutil.AddressBookBuilder;
+import thrift.testutil.ThriftBuilder;
 import thrift.testutil.TypicalTransactions;
 
 public class ModelManagerTest {
@@ -78,7 +78,7 @@ public class ModelManagerTest {
 
     @Test
     public void equals() {
-        AddressBook addressBook = new AddressBookBuilder().withDescription(TypicalTransactions.LAKSA).build();
+        AddressBook addressBook = new ThriftBuilder().withDescription(TypicalTransactions.LAKSA).build();
         AddressBook differentAddressBook = new AddressBook();
         UserPrefs userPrefs = new UserPrefs();
 
