@@ -14,27 +14,27 @@ import thrift.model.ReadOnlyAddressBook;
 import thrift.model.transaction.Transaction;
 
 /**
- * An Immutable AddressBook that is serializable to JSON format.
+ * An Immutable THRIFT that is serializable to JSON format.
  */
-@JsonRootName(value = "addressbook")
-class JsonSerializableAddressBook {
+@JsonRootName(value = "thrift")
+class JsonSerializableThrift {
 
     private final List<JsonAdaptedTransaction> transactions = new ArrayList<>();
 
     /**
-     * Constructs a {@code JsonSerializableAddressBook} with the given transactions.
+     * Constructs a {@code JsonSerializableThrift} with the given transactions.
      */
     @JsonCreator
-    public JsonSerializableAddressBook(@JsonProperty("transactions") List<JsonAdaptedTransaction> transactions) {
+    public JsonSerializableThrift(@JsonProperty("transactions") List<JsonAdaptedTransaction> transactions) {
         this.transactions.addAll(transactions);
     }
 
     /**
      * Converts a given {@code ReadOnlyAddressBook} into this class for Jackson use.
      *
-     * @param source future changes to this will not affect the created {@code JsonSerializableAddressBook}.
+     * @param source future changes to this will not affect the created {@code JsonSerializableThrift}.
      */
-    public JsonSerializableAddressBook(ReadOnlyAddressBook source) {
+    public JsonSerializableThrift(ReadOnlyAddressBook source) {
         transactions.addAll(source.getTransactionList().stream().map(JsonAdaptedTransaction::new)
                 .collect(Collectors.toList()));
     }

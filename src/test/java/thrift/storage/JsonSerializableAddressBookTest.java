@@ -25,8 +25,8 @@ public class JsonSerializableAddressBookTest {
     /* TODO: Fix the test case when it is possible to read and parse from json file correctly.
     @Test
     public void toModelType_typicalTransactionsFile_success() throws Exception {
-        JsonSerializableAddressBook dataFromFile = JsonUtil.readJsonFile(TYPICAL_TRANSACTIONS_FILE,
-                JsonSerializableAddressBook.class).get();
+        JsonSerializableThrift dataFromFile = JsonUtil.readJsonFile(TYPICAL_TRANSACTIONS_FILE,
+                JsonSerializableThrift.class).get();
         AddressBook addressBookFromFile = dataFromFile.toModelType();
         AddressBook typicalTransactionsAddressBook = TypicalTransactions.getTypicalAddressBook();
         assertEquals(addressBookFromFile, typicalTransactionsAddressBook);
@@ -36,8 +36,8 @@ public class JsonSerializableAddressBookTest {
     /* TODO: Fix the test case when it is possible to read and parse from json file correctly.
     @Test
     public void toModelType_invalidTransactionFile_throwsIllegalValueException() throws Exception {
-        JsonSerializableAddressBook dataFromFile = JsonUtil.readJsonFile(INVALID_TRANSACTIONS_FILE,
-                JsonSerializableAddressBook.class).get();
+        JsonSerializableThrift dataFromFile = JsonUtil.readJsonFile(INVALID_TRANSACTIONS_FILE,
+                JsonSerializableThrift.class).get();
         assertThrows(IllegalValueException.class, dataFromFile::toModelType);
     }
      */
