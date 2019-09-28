@@ -29,7 +29,7 @@ public interface Logic {
      *
      * @see Model#getThrift()
      */
-    ReadOnlyThrift getAddressBook();
+    ReadOnlyThrift getThrift();
 
     /** Returns an unmodifiable view of the filtered list of transactions*/
     ObservableList<Transaction> getFilteredTransactionList();
@@ -37,7 +37,7 @@ public interface Logic {
     /**
      * Returns the user prefs' address book file path.
      */
-    Path getAddressBookFilePath();
+    Path getThriftFilePath();
 
     /**
      * Returns the user prefs' GUI settings.

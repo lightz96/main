@@ -39,12 +39,12 @@ public interface Model {
     /**
      * Returns the user prefs' THRIFT file path.
      */
-    Path getAddressBookFilePath();
+    Path getThriftFilePath();
 
     /**
      * Sets the user prefs' THRIFT file path.
      */
-    void setAddressBookFilePath(Path addressBookFilePath);
+    void setThriftFilePath(Path thriftFilePath);
 
     /**
      * Replaces THRIFT data with the data in {@code thrift}.

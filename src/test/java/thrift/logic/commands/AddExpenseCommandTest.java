@@ -91,12 +91,12 @@ public class AddExpenseCommandTest {
         }
 
         @Override
-        public Path getAddressBookFilePath() {
+        public Path getThriftFilePath() {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public void setAddressBookFilePath(Path addressBookFilePath) {
+        public void setThriftFilePath(Path thriftFilePath) {
             throw new AssertionError("This method should not be called.");
         }
 

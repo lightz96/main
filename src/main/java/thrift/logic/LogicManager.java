@@ -52,7 +52,7 @@ public class LogicManager implements Logic {
     }
 
     @Override
-    public ReadOnlyThrift getAddressBook() {
+    public ReadOnlyThrift getThrift() {
         return model.getThrift();
     }
 
@@ -62,8 +62,8 @@ public class LogicManager implements Logic {
     }
 
     @Override
-    public Path getAddressBookFilePath() {
-        return model.getAddressBookFilePath();
+    public Path getThriftFilePath() {
+        return model.getThriftFilePath();
     }
 
     @Override

@@ -29,13 +29,13 @@ public class ModelManager implements Model {
     /**
      * Initializes a ModelManager with the given thrift and userPrefs.
      */
-    public ModelManager(ReadOnlyThrift addressBook, ReadOnlyUserPrefs userPrefs) {
+    public ModelManager(ReadOnlyThrift thrift, ReadOnlyUserPrefs userPrefs) {
         super();
-        requireAllNonNull(addressBook, userPrefs);
+        requireAllNonNull(thrift, userPrefs);
 
-        logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
+        logger.fine("Initializing with THRIFT: " + thrift + " and user prefs " + userPrefs);
 
-        this.thrift = new Thrift(addressBook);
+        this.thrift = new Thrift(thrift);
         this.userPrefs = new UserPrefs(userPrefs);
         filteredTransactions = new FilteredList<>(this.thrift.getTransactionList());
     }
@@ -69,14 +69,14 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public Path getAddressBookFilePath() {
+    public Path getThriftFilePath() {
         return userPrefs.getThriftFilePath();
     }
 
     @Override
-    public void setAddressBookFilePath(Path addressBookFilePath) {
-        requireNonNull(addressBookFilePath);
-        userPrefs.setThriftFilePath(addressBookFilePath);
+    public void setThriftFilePath(Path thriftFilePath) {
+        requireNonNull(thriftFilePath);
+        userPrefs.setThriftFilePath(thriftFilePath);
     }
 
     //=========== THRIFT ================================================================================

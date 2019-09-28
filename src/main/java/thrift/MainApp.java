@@ -74,14 +74,14 @@ public class MainApp extends Application {
      * or an empty address book will be used instead if errors occur when reading {@code storage}'s address book.
      */
     private Model initModelManager(Storage storage, ReadOnlyUserPrefs userPrefs) {
-        Optional<ReadOnlyThrift> addressBookOptional;
+        Optional<ReadOnlyThrift> thriftOptional;
         ReadOnlyThrift initialData;
         try {
-            addressBookOptional = storage.readThrift();
-            if (!addressBookOptional.isPresent()) {
+            thriftOptional = storage.readThrift();
+            if (!thriftOptional.isPresent()) {
                 logger.info("Data file not found. Will be starting with a sample THRIFT");
             }
-            initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleThrift);
+            initialData = thriftOptional.orElseGet(SampleDataUtil::getSampleThrift);
         } catch (DataConversionException e) {
             logger.warning("Data file not in the correct format. Will be starting with an empty THRIFT");
             initialData = new Thrift();
