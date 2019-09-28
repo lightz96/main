@@ -125,7 +125,7 @@ public class ModelManager implements Model {
 
     /**
      * Returns an unmodifiable view of the list of {@code Transaction} backed by the internal list of
-     * {@code versionedAddressBook}
+     * {@code versionedThrift}
      */
     @Override
     public ObservableList<Transaction> getFilteredTransactionList() {

@@ -48,30 +48,30 @@ public class StorageManager implements Storage {
     // ================ Thrift methods ==============================
 
     @Override
-    public Path getAddressBookFilePath() {
-        return thriftStorage.getAddressBookFilePath();
+    public Path getThriftFilePath() {
+        return thriftStorage.getThriftFilePath();
     }
 
     @Override
-    public Optional<ReadOnlyThrift> readAddressBook() throws DataConversionException, IOException {
-        return readAddressBook(thriftStorage.getAddressBookFilePath());
+    public Optional<ReadOnlyThrift> readThrift() throws DataConversionException, IOException {
+        return readThrift(thriftStorage.getThriftFilePath());
     }
 
     @Override
-    public Optional<ReadOnlyThrift> readAddressBook(Path filePath) throws DataConversionException, IOException {
+    public Optional<ReadOnlyThrift> readThrift(Path filePath) throws DataConversionException, IOException {
         logger.fine("Attempting to read data from file: " + filePath);
-        return thriftStorage.readAddressBook(filePath);
+        return thriftStorage.readThrift(filePath);
     }
 
     @Override
-    public void saveAddressBook(ReadOnlyThrift addressBook) throws IOException {
-        saveAddressBook(addressBook, thriftStorage.getAddressBookFilePath());
+    public void saveThrift(ReadOnlyThrift thrift) throws IOException {
+        saveThrift(thrift, thriftStorage.getThriftFilePath());
     }
 
     @Override
-    public void saveAddressBook(ReadOnlyThrift addressBook, Path filePath) throws IOException {
+    public void saveThrift(ReadOnlyThrift thrift, Path filePath) throws IOException {
         logger.fine("Attempting to write to data file: " + filePath);
-        thriftStorage.saveAddressBook(addressBook, filePath);
+        thriftStorage.saveThrift(thrift, filePath);
     }
 
 }

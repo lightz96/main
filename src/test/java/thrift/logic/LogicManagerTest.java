@@ -127,7 +127,7 @@ public class LogicManagerTest {
         }
 
         @Override
-        public void saveAddressBook(ReadOnlyThrift addressBook, Path filePath) throws IOException {
+        public void saveThrift(ReadOnlyThrift thrift, Path filePath) throws IOException {
             throw DUMMY_IO_EXCEPTION;
         }
     }

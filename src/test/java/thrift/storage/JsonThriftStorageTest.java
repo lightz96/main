@@ -27,7 +27,7 @@ public class JsonThriftStorageTest {
     }
 
     private java.util.Optional<ReadOnlyThrift> readAddressBook(String filePath) throws Exception {
-        return new JsonThriftStorage(Paths.get(filePath)).readAddressBook(addToTestDataPathIfNotNull(filePath));
+        return new JsonThriftStorage(Paths.get(filePath)).readThrift(addToTestDataPathIfNotNull(filePath));
     }
 
     private Path addToTestDataPathIfNotNull(String prefsFileInTestDataFolder) {
@@ -97,7 +97,7 @@ public class JsonThriftStorageTest {
     private void saveAddressBook(ReadOnlyThrift addressBook, String filePath) {
         try {
             new JsonThriftStorage(Paths.get(filePath))
-                    .saveAddressBook(addressBook, addToTestDataPathIfNotNull(filePath));
+                    .saveThrift(addressBook, addToTestDataPathIfNotNull(filePath));
         } catch (IOException ioe) {
             throw new AssertionError("There should not be an error writing to the file.", ioe);
         }

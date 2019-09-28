@@ -27,32 +27,32 @@ public class JsonThriftStorage implements ThriftStorage {
         this.filePath = filePath;
     }
 
-    public Path getAddressBookFilePath() {
+    public Path getThriftFilePath() {
         return filePath;
     }
 
     @Override
-    public Optional<ReadOnlyThrift> readAddressBook() throws DataConversionException {
-        return readAddressBook(filePath);
+    public Optional<ReadOnlyThrift> readThrift() throws DataConversionException {
+        return readThrift(filePath);
     }
 
     /**
-     * Similar to {@link #readAddressBook()}.
+     * Similar to {@link #readThrift()}.
      *
      * @param filePath location of the data. Cannot be null.
      * @throws DataConversionException if the file is not in the correct format.
      */
-    public Optional<ReadOnlyThrift> readAddressBook(Path filePath) throws DataConversionException {
+    public Optional<ReadOnlyThrift> readThrift(Path filePath) throws DataConversionException {
         requireNonNull(filePath);
 
-        Optional<JsonSerializableThrift> jsonAddressBook = JsonUtil.readJsonFile(
+        Optional<JsonSerializableThrift> jsonThrift = JsonUtil.readJsonFile(
                 filePath, JsonSerializableThrift.class);
-        if (!jsonAddressBook.isPresent()) {
+        if (!jsonThrift.isPresent()) {
             return Optional.empty();
         }
 
         try {
-            return Optional.of(jsonAddressBook.get().toModelType());
+            return Optional.of(jsonThrift.get().toModelType());
         } catch (IllegalValueException ive) {
             logger.info("Illegal values found in " + filePath + ": " + ive.getMessage());
             throw new DataConversionException(ive);
@@ -60,21 +60,21 @@ public class JsonThriftStorage implements ThriftStorage {
     }
 
     @Override
-    public void saveAddressBook(ReadOnlyThrift addressBook) throws IOException {
-        saveAddressBook(addressBook, filePath);
+    public void saveThrift(ReadOnlyThrift thrift) throws IOException {
+        saveThrift(thrift, filePath);
     }
 
     /**
-     * Similar to {@link #saveAddressBook(ReadOnlyThrift)}.
+     * Similar to {@link #saveThrift(ReadOnlyThrift)}.
      *
      * @param filePath location of the data. Cannot be null.
      */
-    public void saveAddressBook(ReadOnlyThrift addressBook, Path filePath) throws IOException {
-        requireNonNull(addressBook);
+    public void saveThrift(ReadOnlyThrift thrift, Path filePath) throws IOException {
+        requireNonNull(thrift);
         requireNonNull(filePath);
 
         FileUtil.createIfMissing(filePath);
-        JsonUtil.saveJsonFile(new JsonSerializableThrift(addressBook), filePath);
+        JsonUtil.saveJsonFile(new JsonSerializableThrift(thrift), filePath);
     }
 
 }

@@ -7,7 +7,7 @@ import thrift.model.Model;
 import thrift.model.transaction.Expense;
 
 /**
- * Adds an expense transaction to the address book.
+ * Adds an expense transaction to the THRIFT.
  */
 public class AddExpenseCommand extends Command {
 

@@ -21,12 +21,12 @@ public interface Storage extends ThriftStorage, UserPrefsStorage {
     void saveUserPrefs(ReadOnlyUserPrefs userPrefs) throws IOException;
 
     @Override
-    Path getAddressBookFilePath();
+    Path getThriftFilePath();
 
     @Override
-    Optional<ReadOnlyThrift> readAddressBook() throws DataConversionException, IOException;
+    Optional<ReadOnlyThrift> readThrift() throws DataConversionException, IOException;
 
     @Override
-    void saveAddressBook(ReadOnlyThrift addressBook) throws IOException;
+    void saveThrift(ReadOnlyThrift thrift) throws IOException;
 
 }

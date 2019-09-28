@@ -29,7 +29,7 @@ public class SampleDataUtil {
         };
     }
 
-    public static ReadOnlyThrift getSampleAddressBook() {
+    public static ReadOnlyThrift getSampleThrift() {
         Thrift sampleThrift = new Thrift();
         for (Transaction sampleTransaction : getSampleTransaction()) {
             sampleThrift.addTransaction(sampleTransaction);

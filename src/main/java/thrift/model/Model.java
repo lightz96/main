@@ -37,12 +37,12 @@ public interface Model {
     void setGuiSettings(GuiSettings guiSettings);
 
     /**
-     * Returns the user prefs' address book file path.
+     * Returns the user prefs' THRIFT file path.
      */
     Path getAddressBookFilePath();
 
     /**
-     * Sets the user prefs' address book file path.
+     * Sets the user prefs' THRIFT file path.
      */
     void setAddressBookFilePath(Path addressBookFilePath);
 
@@ -51,7 +51,7 @@ public interface Model {
      */
     void setThrift(ReadOnlyThrift thrift);
 
-    /** Returns the THRIFT */
+    /** Returns THRIFT */
     ReadOnlyThrift getThrift();
 
     /**

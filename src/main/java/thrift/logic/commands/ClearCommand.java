@@ -6,12 +6,12 @@ import thrift.model.Model;
 import thrift.model.Thrift;
 
 /**
- * Clears the address book.
+ * Clears the THRIFT.
  */
 public class ClearCommand extends Command {
 
     public static final String COMMAND_WORD = "clear";
-    public static final String MESSAGE_SUCCESS = "Address book has been cleared!";
+    public static final String MESSAGE_SUCCESS = "THRIFT has been cleared!";
 
 
     @Override

@@ -77,11 +77,11 @@ public class MainApp extends Application {
         Optional<ReadOnlyThrift> addressBookOptional;
         ReadOnlyThrift initialData;
         try {
-            addressBookOptional = storage.readAddressBook();
+            addressBookOptional = storage.readThrift();
             if (!addressBookOptional.isPresent()) {
                 logger.info("Data file not found. Will be starting with a sample THRIFT");
             }
-            initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
+            initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleThrift);
         } catch (DataConversionException e) {
             logger.warning("Data file not in the correct format. Will be starting with an empty THRIFT");
             initialData = new Thrift();

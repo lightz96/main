@@ -41,7 +41,7 @@ public class Thrift implements ReadOnlyThrift {
     /**
      * Replaces the contents of the transaction list with {@code transactions}.
      */
-    public void setTransactionss(List<Transaction> transactions) {
+    public void setTransactions(List<Transaction> transactions) {
         this.transactions.setTransactions(transactions);
     }
 
@@ -51,13 +51,13 @@ public class Thrift implements ReadOnlyThrift {
     public void resetData(ReadOnlyThrift newData) {
         requireNonNull(newData);
 
-        setTransactionss(newData.getTransactionList());
+        setTransactions(newData.getTransactionList());
     }
 
     //// transaction-level operations
 
     /**
-     * Adds a transaction to the address book.
+     * Adds a transaction to THRIFT.
      */
     public void addTransaction(Transaction t) {
         transactions.add(t);
@@ -65,9 +65,9 @@ public class Thrift implements ReadOnlyThrift {
 
     /**
      * Replaces the given transaction {@code target} in the list with {@code editedTransaction}.
-     * {@code target} must exist in the address book.
-     * The transaction identity of {@code editedTransaction} must not be the same as another existing transaction in the
-     * address book.
+     * {@code target} must exist in THRIFT.
+     * The transaction identity of {@code editedTransaction} must not be the same as another existing transaction in
+     * THRIFT.
      */
     public void setTransaction(Transaction target, Transaction editedTransaction) {
         requireNonNull(editedTransaction);
@@ -85,7 +85,7 @@ public class Thrift implements ReadOnlyThrift {
 
     /**
      * Removes {@code key} from this {@code Thrift}.
-     * {@code key} must exist in the address book.
+     * {@code key} must exist in THRIFT.
      */
     public void removeTransaction(Transaction key) {
         transactions.remove(key);

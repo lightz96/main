@@ -16,7 +16,7 @@ public interface ThriftStorage {
     /**
      * Returns the file path of the data file.
      */
-    Path getAddressBookFilePath();
+    Path getThriftFilePath();
 
     /**
      * Returns Thrift data as a {@link ReadOnlyThrift}.
@@ -24,23 +24,23 @@ public interface ThriftStorage {
      * @throws DataConversionException if the data in storage is not in the expected format.
      * @throws IOException if there was any problem when reading from the storage.
      */
-    Optional<ReadOnlyThrift> readAddressBook() throws DataConversionException, IOException;
+    Optional<ReadOnlyThrift> readThrift() throws DataConversionException, IOException;
 
     /**
-     * @see #getAddressBookFilePath()
+     * @see #getThriftFilePath()
      */
-    Optional<ReadOnlyThrift> readAddressBook(Path filePath) throws DataConversionException, IOException;
+    Optional<ReadOnlyThrift> readThrift(Path filePath) throws DataConversionException, IOException;
 
     /**
      * Saves the given {@link ReadOnlyThrift} to the storage.
-     * @param addressBook cannot be null.
+     * @param thrift cannot be null.
      * @throws IOException if there was any problem writing to the file.
      */
-    void saveAddressBook(ReadOnlyThrift addressBook) throws IOException;
+    void saveThrift(ReadOnlyThrift thrift) throws IOException;
 
     /**
-     * @see #saveAddressBook(ReadOnlyThrift)
+     * @see #saveThrift(ReadOnlyThrift)
      */
-    void saveAddressBook(ReadOnlyThrift addressBook, Path filePath) throws IOException;
+    void saveThrift(ReadOnlyThrift thrift, Path filePath) throws IOException;
 
 }
