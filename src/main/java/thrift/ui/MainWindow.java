@@ -42,7 +42,7 @@ public class MainWindow extends UiPart<Stage> {
     private MenuItem helpMenuItem;
 
     @FXML
-    private StackPane personListPanelPlaceholder;
+    private StackPane transactionListPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -108,7 +108,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     void fillInnerParts() {
         transactionListPanel = new TransactionListPanel(logic.getFilteredTransactionList());
-        personListPanelPlaceholder.getChildren().add(transactionListPanel.getRoot());
+        transactionListPanelPlaceholder.getChildren().add(transactionListPanel.getRoot());
 
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
