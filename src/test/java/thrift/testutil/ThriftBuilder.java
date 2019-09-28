@@ -23,7 +23,7 @@ public class ThriftBuilder {
     /**
      * Adds a new {@code Transaction} to the {@code Thrift} that we are building.
      */
-    public ThriftBuilder withDescription(Transaction transaction) {
+    public ThriftBuilder withTransaction(Transaction transaction) {
         thrift.addTransaction(transaction);
         return this;
     }

@@ -78,7 +78,7 @@ public class ModelManagerTest {
 
     @Test
     public void equals() {
-        Thrift thrift = new ThriftBuilder().withDescription(TypicalTransactions.LAKSA).build();
+        Thrift thrift = new ThriftBuilder().withTransaction(TypicalTransactions.LAKSA).build();
         Thrift differentThrift = new Thrift();
         UserPrefs userPrefs = new UserPrefs();
 
