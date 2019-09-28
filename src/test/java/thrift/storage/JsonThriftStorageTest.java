@@ -22,11 +22,11 @@ public class JsonThriftStorageTest {
     public Path testFolder;
 
     @Test
-    public void readAddressBook_nullFilePath_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> readAddressBook(null));
+    public void readThrift_nullFilePath_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> readThrift(null));
     }
 
-    private java.util.Optional<ReadOnlyThrift> readAddressBook(String filePath) throws Exception {
+    private java.util.Optional<ReadOnlyThrift> readThrift(String filePath) throws Exception {
         return new JsonThriftStorage(Paths.get(filePath)).readThrift(addToTestDataPathIfNotNull(filePath));
     }
 
@@ -38,73 +38,73 @@ public class JsonThriftStorageTest {
 
     @Test
     public void read_missingFile_emptyResult() throws Exception {
-        assertFalse(readAddressBook("NonExistentFile.json").isPresent());
+        assertFalse(readThrift("NonExistentFile.json").isPresent());
     }
 
     @Test
     public void read_notJsonFormat_exceptionThrown() {
-        assertThrows(DataConversionException.class, () -> readAddressBook("notJsonFormatTransactionThrift.json"));
+        assertThrows(DataConversionException.class, () -> readThrift("notJsonFormatTransactionThrift.json"));
     }
 
     @Test
-    public void readAddressBook_invalidTransactionThrift_throwDataConversionException() {
-        assertThrows(DataConversionException.class, () -> readAddressBook("invalidTransactionThrift.json"));
+    public void readThrift_invalidTransactionThrift_throwDataConversionException() {
+        assertThrows(DataConversionException.class, () -> readThrift("invalidTransactionThrift.json"));
     }
 
     @Test
-    public void readAddressBook_invalidAndValidPersonAddressBook_throwDataConversionException() {
+    public void readThrift_invalidAndValidTransactionThrift_throwDataConversionException() {
         assertThrows(DataConversionException.class, ()
-            -> readAddressBook("invalidAndValidTransactionThrift.json"));
+            -> readThrift("invalidAndValidTransactionThrift.json"));
     }
 
     /* TODO: Fix the bug where saving the pre-built transaction list and reading the pre-built transaction list do
     *        not pass the assertEquals() on line 73.
     @Test
-    public void readAndSaveAddressBook_allInOrder_success() throws Exception {
-        Path filePath = testFolder.resolve("TempAddressBook.json");
-        Thrift original = TypicalTransactions.getTypicalAddressBook();
-        JsonThriftStorage jsonAddressBookStorage = new JsonThriftStorage(filePath);
+    public void readAndSaveThrift_allInOrder_success() throws Exception {
+        Path filePath = testFolder.resolve("TempThrift.json");
+        Thrift original = TypicalTransactions.getTypicalThrift();
+        JsonThriftStorage jsonThriftStorage = new JsonThriftStorage(filePath);
 
         // Save in new file and read back
-        jsonAddressBookStorage.saveAddressBook(original, filePath);
-        ReadOnlyThrift readBack = jsonAddressBookStorage.readAddressBook(filePath).get();
+        jsonThriftStorage.saveThrift(original, filePath);
+        ReadOnlyThrift readBack = jsonThriftStorage.readThrift(filePath).get();
         assertEquals(original, new Thrift(readBack));
 
         // Modify data, overwrite exiting file, and read back
         original.addTransaction(TypicalTransactions.LAKSA);
         original.removeTransaction(TypicalTransactions.PENANG_LAKSA);
-        jsonAddressBookStorage.saveAddressBook(original, filePath);
-        readBack = jsonAddressBookStorage.readAddressBook(filePath).get();
+        jsonThriftStorage.saveThrift(original, filePath);
+        readBack = jsonThriftStorage.readThrift(filePath).get();
         assertEquals(original, new Thrift(readBack));
 
         // Save and read without specifying file path
         original.addTransaction(TypicalTransactions.PENANG_LAKSA);
-        jsonAddressBookStorage.saveAddressBook(original); // file path not specified
-        readBack = jsonAddressBookStorage.readAddressBook().get(); // file path not specified
+        jsonThriftStorage.saveThrift(original); // file path not specified
+        readBack = jsonThriftStorage.readThrift().get(); // file path not specified
         assertEquals(original, new Thrift(readBack));
 
     }
      */
 
     @Test
-    public void saveAddressBook_nullAddressBook_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> saveAddressBook(null, "SomeFile.json"));
+    public void saveThrift_nullThrift_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> saveThrift(null, "SomeFile.json"));
     }
 
     /**
-     * Saves {@code addressBook} at the specified {@code filePath}.
+     * Saves {@code thrift} at the specified {@code filePath}.
      */
-    private void saveAddressBook(ReadOnlyThrift addressBook, String filePath) {
+    private void saveThrift(ReadOnlyThrift thrift, String filePath) {
         try {
             new JsonThriftStorage(Paths.get(filePath))
-                    .saveThrift(addressBook, addToTestDataPathIfNotNull(filePath));
+                    .saveThrift(thrift, addToTestDataPathIfNotNull(filePath));
         } catch (IOException ioe) {
             throw new AssertionError("There should not be an error writing to the file.", ioe);
         }
     }
 
     @Test
-    public void saveAddressBook_nullFilePath_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> saveAddressBook(new Thrift(), null));
+    public void saveThrift_nullFilePath_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> saveThrift(new Thrift(), null));
     }
 }

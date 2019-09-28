@@ -13,7 +13,7 @@ import thrift.testutil.TypicalTransactions;
 public class ClearCommandTest {
 
     @Test
-    public void execute_emptyAddressBook_success() {
+    public void execute_emptyThift_success() {
         Model model = new ModelManager();
         Model expectedModel = new ModelManager();
 
@@ -21,9 +21,9 @@ public class ClearCommandTest {
     }
 
     @Test
-    public void execute_nonEmptyAddressBook_success() {
-        Model model = new ModelManager(TypicalTransactions.getTypicalAddressBook(), new UserPrefs());
-        Model expectedModel = new ModelManager(TypicalTransactions.getTypicalAddressBook(), new UserPrefs());
+    public void execute_nonEmptyThrift_success() {
+        Model model = new ModelManager(TypicalTransactions.getTypicalThrift(), new UserPrefs());
+        Model expectedModel = new ModelManager(TypicalTransactions.getTypicalThrift(), new UserPrefs());
         expectedModel.setThrift(new Thrift());
 
         assertCommandSuccess(new ClearCommand(), model, ClearCommand.MESSAGE_SUCCESS, expectedModel);

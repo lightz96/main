@@ -26,7 +26,7 @@ public class TypicalTransactions {
     /**
      * Returns an {@code Thrift} with all the typical persons.
      */
-    public static Thrift getTypicalAddressBook() {
+    public static Thrift getTypicalThrift() {
         Thrift thrift = new Thrift();
         for (Transaction transaction : getTypicalTransaction()) {
             thrift.addTransaction(transaction);

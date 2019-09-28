@@ -33,7 +33,7 @@ public class AddExpenseCommandTest {
 
     @Test
     public void execute_expenseAcceptedByModel_addSuccessful() throws Exception {
-        ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
+        ModelStubAcceptingTransactionAdded modelStub = new ModelStubAcceptingTransactionAdded();
         Expense validExpense = new ExpenseBuilder().build();
 
         CommandResult commandResult = new AddExpenseCommand(validExpense).execute(modelStub);
@@ -167,7 +167,7 @@ public class AddExpenseCommandTest {
     /**
      * A Model stub that always accept the transaction being added.
      */
-    private class ModelStubAcceptingPersonAdded extends ModelStub {
+    private class ModelStubAcceptingTransactionAdded extends ModelStub {
         final ArrayList<Transaction> transactionsAdded = new ArrayList<>();
 
         @Override

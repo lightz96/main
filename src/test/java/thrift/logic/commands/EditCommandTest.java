@@ -25,7 +25,7 @@ import thrift.testutil.TypicalTransactions;
  */
 public class EditCommandTest {
 
-    private Model model = new ModelManager(TypicalTransactions.getTypicalAddressBook(), new UserPrefs());
+    private Model model = new ModelManager(TypicalTransactions.getTypicalThrift(), new UserPrefs());
 
     @Test
     public void execute_allFieldsSpecifiedUnfilteredList_success() {

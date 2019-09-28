@@ -60,19 +60,19 @@ public class ModelManagerTest {
     }
 
     @Test
-    public void setAddressBookFilePath_nullPath_throwsNullPointerException() {
+    public void setThriftFilePath_nullPath_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> modelManager.setThriftFilePath(null));
     }
 
     @Test
-    public void setAddressBookFilePath_validPath_setsAddressBookFilePath() {
+    public void setThriftFilePath_validPath_setsThriftFilePath() {
         Path path = Paths.get("address/book/file/path");
         modelManager.setThriftFilePath(path);
         assertEquals(path, modelManager.getThriftFilePath());
     }
 
     @Test
-    public void getFilteredPersonList_modifyList_throwsUnsupportedOperationException() {
+    public void getFilteredTransactionList_modifyList_throwsUnsupportedOperationException() {
         assertThrows(UnsupportedOperationException.class, () -> modelManager.getFilteredTransactionList().remove(0));
     }
 

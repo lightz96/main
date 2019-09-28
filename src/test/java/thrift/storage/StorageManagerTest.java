@@ -49,21 +49,21 @@ public class StorageManagerTest {
 
     /* TODO: Fix the test case when it is possible to read and parse from json file correctly.
     @Test
-    public void addressBookReadSave() throws Exception {
+    public void thriftReadSave() throws Exception {
         /*
          * Note: This is an integration test that verifies the StorageManager is properly wired to the
          * {@link JsonThriftStorage} class.
          * More extensive testing of UserPref saving/reading is done in {@link JsonThriftStorageTest} class.
          */ /*
-        Thrift original = TypicalTransactions.getTypicalAddressBook();
-        storageManager.saveAddressBook(original);
-        ReadOnlyThrift retrieved = storageManager.readAddressBook().get();
+        Thrift original = TypicalTransactions.getTypicalThrift();
+        storageManager.saveThrift(original);
+        ReadOnlyThrift retrieved = storageManager.readThrift().get();
         assertEquals(original, new Thrift(retrieved));
     }
      */
 
     @Test
-    public void getAddressBookFilePath() {
+    public void getThriftFilePath() {
         assertNotNull(storageManager.getThriftFilePath());
     }
 

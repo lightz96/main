@@ -23,7 +23,7 @@ public class AddExpenseCommandIntegrationTest {
 
     @BeforeEach
     public void setUp() {
-        model = new ModelManager(TypicalTransactions.getTypicalAddressBook(), new UserPrefs());
+        model = new ModelManager(TypicalTransactions.getTypicalThrift(), new UserPrefs());
     }
 
     @Test

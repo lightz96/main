@@ -4,7 +4,7 @@ import thrift.model.Thrift;
 import thrift.model.transaction.Transaction;
 
 /**
- * A utility class to help with building Addressbook objects.
+ * A utility class to help with building Thrift objects.
  * Example usage: <br>
  *     {@code Thrift ab = new ThriftBuilder().withPerson("John", "Doe").build();}
  */

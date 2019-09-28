@@ -30,8 +30,8 @@ public class ThriftTest {
     }
 
     @Test
-    public void resetData_withValidReadOnlyAddressBook_replacesData() {
-        Thrift newData = TypicalTransactions.getTypicalAddressBook();
+    public void resetData_withValidReadOnlyThrift_replacesData() {
+        Thrift newData = TypicalTransactions.getTypicalThrift();
         thrift.resetData(newData);
         assertEquals(newData, thrift);
     }
@@ -42,18 +42,18 @@ public class ThriftTest {
     }
 
     @Test
-    public void hasTransaction_transactionNotInAddressBook_returnsFalse() {
+    public void hasTransaction_transactionNotInThrift_returnsFalse() {
         assertFalse(thrift.hasTransaction(TypicalTransactions.LAKSA));
     }
 
     @Test
-    public void hasTransaction_transactionInAddressBook_returnsTrue() {
+    public void hasTransaction_transactionInThrift_returnsTrue() {
         thrift.addTransaction(TypicalTransactions.LAKSA);
         assertTrue(thrift.hasTransaction(TypicalTransactions.LAKSA));
     }
 
     @Test
-    public void getPersonList_modifyList_throwsUnsupportedOperationException() {
+    public void getTransactionList_modifyList_throwsUnsupportedOperationException() {
         assertThrows(UnsupportedOperationException.class, () -> thrift.getTransactionList().remove(0));
     }
 

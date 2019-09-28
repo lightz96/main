@@ -27,9 +27,9 @@ public class JsonSerializableThriftTest {
     public void toModelType_typicalTransactionsFile_success() throws Exception {
         JsonSerializableThrift dataFromFile = JsonUtil.readJsonFile(TYPICAL_TRANSACTIONS_FILE,
                 JsonSerializableThrift.class).get();
-        Thrift addressBookFromFile = dataFromFile.toModelType();
-        Thrift typicalTransactionsAddressBook = TypicalTransactions.getTypicalAddressBook();
-        assertEquals(addressBookFromFile, typicalTransactionsAddressBook);
+        Thrift thriftFromFile = dataFromFile.toModelType();
+        Thrift typicalTransactionsThrift = TypicalTransactions.getTypicalThrift();
+        assertEquals(thriftFromFile, typicalTransactionsThrift);
     }
      */
 
