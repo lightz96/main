@@ -69,7 +69,7 @@ public class DeleteCommandTest {
         showTransactionAtIndex(model, TypicalIndexes.INDEX_FIRST_TRANSACTION);
 
         Index outOfBoundIndex = TypicalIndexes.INDEX_SECOND_TRANSACTION;
-        // ensures that outOfBoundIndex is still in bounds of address book list
+        // ensures that outOfBoundIndex is still in bounds of thrift list
         assertTrue(outOfBoundIndex.getZeroBased() < model.getThrift().getTransactionList().size());
 
         DeleteCommand deleteCommand = new DeleteCommand(outOfBoundIndex);

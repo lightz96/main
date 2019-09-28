@@ -35,7 +35,7 @@ public interface Logic {
     ObservableList<Transaction> getFilteredTransactionList();
 
     /**
-     * Returns the user prefs' address book file path.
+     * Returns the user prefs' thrift file path.
      */
     Path getThriftFilePath();
 

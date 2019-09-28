@@ -36,14 +36,14 @@ public class ModelManagerTest {
     @Test
     public void setUserPrefs_validUserPrefs_copiesUserPrefs() {
         UserPrefs userPrefs = new UserPrefs();
-        userPrefs.setThriftFilePath(Paths.get("address/book/file/path"));
+        userPrefs.setThriftFilePath(Paths.get("thrift/file/path"));
         userPrefs.setGuiSettings(new GuiSettings(1, 2, 3, 4));
         modelManager.setUserPrefs(userPrefs);
         assertEquals(userPrefs, modelManager.getUserPrefs());
 
         // Modifying userPrefs should not modify modelManager's userPrefs
         UserPrefs oldUserPrefs = new UserPrefs(userPrefs);
-        userPrefs.setThriftFilePath(Paths.get("new/address/book/file/path"));
+        userPrefs.setThriftFilePath(Paths.get("new/thrift/file/path"));
         assertEquals(oldUserPrefs, modelManager.getUserPrefs());
     }
 
@@ -66,7 +66,7 @@ public class ModelManagerTest {
 
     @Test
     public void setThriftFilePath_validPath_setsThriftFilePath() {
-        Path path = Paths.get("address/book/file/path");
+        Path path = Paths.get("thrift/file/path");
         modelManager.setThriftFilePath(path);
         assertEquals(path, modelManager.getThriftFilePath());
     }

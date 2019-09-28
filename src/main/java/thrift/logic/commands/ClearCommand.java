@@ -6,7 +6,7 @@ import thrift.model.Model;
 import thrift.model.Thrift;
 
 /**
- * Clears the THRIFT.
+ * Clears THRIFT.
  */
 public class ClearCommand extends Command {
 
