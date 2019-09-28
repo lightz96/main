@@ -56,7 +56,7 @@ public class MainApp extends Application {
 
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         UserPrefs userPrefs = initPrefs(userPrefsStorage);
-        ThriftStorage thriftStorage = new JsonThriftStorage(userPrefs.getAddressBookFilePath());
+        ThriftStorage thriftStorage = new JsonThriftStorage(userPrefs.getThriftFilePath());
         storage = new StorageManager(thriftStorage, userPrefsStorage);
 
         initLogging(config);
