@@ -926,7 +926,9 @@ These instructions only provide a starting point for testers to work on; testers
    Expected: Food tag is added back to the first transaction in the list.
 .. Test case: `untag i/1 t/FOOD`, then `undo` and redo the undone command using `redo` +
    Expected: Food tag is removed from the first transaction in the list.
-.. Test case: `untag i/1 t/LUNCH`, then `undo`. Next, use `clone i/1` to clone transaction, then try to redo the undone command using `redo` +
+.. Test case: `untag i/1 t/LUNCH`, then `undo`. Next, use `clone i/1` to clone transaction, then redo the undone command using `redo` +
+   Expected: No changes. Message shown in the status message indicating that there are no available commands for user to redo.
+.. Test case: `list`, then redo the undone command using `redo` +
    Expected: No changes. Message shown in the status message indicating that there are no available commands for user to redo.
 
 === Showing help window
