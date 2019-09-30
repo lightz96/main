@@ -6,13 +6,16 @@ import org.junit.jupiter.api.Test;
 
 import thrift.model.Model;
 import thrift.model.ModelManager;
+import thrift.model.PastUndoableCommands;
 import thrift.model.UserPrefs;
 import thrift.testutil.TypicalTransactions;
 
 public class UndoCommandTest {
 
-    private Model model = new ModelManager(TypicalTransactions.getTypicalThrift(), new UserPrefs());
-    private Model expectedModel = new ModelManager(TypicalTransactions.getTypicalThrift(), new UserPrefs());
+    private Model model = new ModelManager(TypicalTransactions.getTypicalThrift(), new UserPrefs(),
+            new PastUndoableCommands());
+    private Model expectedModel = new ModelManager(TypicalTransactions.getTypicalThrift(), new UserPrefs(),
+            new PastUndoableCommands());
 
     @Test
     public void execute() {
