@@ -13,7 +13,10 @@ import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 
 import thrift.commons.core.GuiSettings;
+import thrift.logic.commands.AddExpenseCommand;
 import thrift.model.transaction.DescriptionContainsKeywordsPredicate;
+import thrift.model.transaction.Expense;
+import thrift.testutil.ExpenseBuilder;
 import thrift.testutil.ThriftBuilder;
 import thrift.testutil.TypicalTransactions;
 
@@ -74,6 +77,14 @@ public class ModelManagerTest {
     @Test
     public void getFilteredTransactionList_modifyList_throwsUnsupportedOperationException() {
         assertThrows(UnsupportedOperationException.class, () -> modelManager.getFilteredTransactionList().remove(0));
+    }
+
+    @Test
+    public void keepTrackCommands_addCommand_success() {
+        Expense expense = new ExpenseBuilder().build();
+        AddExpenseCommand addExpenseCommand = new AddExpenseCommand(expense);
+        modelManager.keepTrackCommands(addExpenseCommand);
+        assertEquals(addExpenseCommand, modelManager.getPreviousUndoableCommand());
     }
 
     @Test

@@ -12,7 +12,7 @@ import javafx.collections.transformation.FilteredList;
 import thrift.commons.core.GuiSettings;
 import thrift.commons.core.LogsCenter;
 import thrift.commons.util.CollectionUtil;
-import thrift.logic.commands.Command;
+import thrift.logic.commands.Undoable;
 import thrift.model.transaction.Expense;
 import thrift.model.transaction.Income;
 import thrift.model.transaction.Transaction;
@@ -162,8 +162,15 @@ public class ModelManager implements Model {
     }
 
     //=========== Past Commands History =============================================================
-    public void keepTrackCommands(Command command) {
+    public void keepTrackCommands(Undoable command) {
         pastUndoableCommands.addPastCommand(command);
     }
 
+    public Undoable getPreviousUndoableCommand() {
+        return pastUndoableCommands.getCommandToUndo();
+    }
+
+    public boolean hasUndoableCommand() {
+        return !pastUndoableCommands.isEmpty();
+    }
 }

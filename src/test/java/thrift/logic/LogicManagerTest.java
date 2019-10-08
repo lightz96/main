@@ -66,6 +66,7 @@ public class LogicManagerTest {
         assertThrows(UnsupportedOperationException.class, () -> logic.getFilteredTransactionList().remove(0));
     }
 
+
     /**
      * Executes the command and confirms that
      * - no exceptions are thrown <br>

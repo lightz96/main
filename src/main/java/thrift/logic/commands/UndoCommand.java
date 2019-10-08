@@ -15,12 +15,18 @@ public class UndoCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Undo the previous undoable command"
             + "Example: " + COMMAND_WORD;
 
-    public static final String MESSAGE_SUCCESS = "Undo command created successfully";
+    public static final String MESSAGE_SUCCESS = "Undo successfully";
+
+    public static final String NO_UNDOABLE_COMMAND = "No valid command to undo";
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-
-        return new CommandResult(MESSAGE_SUCCESS);
+        if (model.hasUndoableCommand()) {
+            Undoable command = model.getPreviousUndoableCommand();
+            command.undo(model);
+            return new CommandResult(MESSAGE_SUCCESS);
+        }
+        throw new CommandException(NO_UNDOABLE_COMMAND);
     }
 }
