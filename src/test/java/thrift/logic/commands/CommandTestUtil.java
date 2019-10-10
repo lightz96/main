@@ -127,7 +127,7 @@ public class CommandTestUtil {
     }
 
     /**
-     * Undo the given {@code command} to check if the {@code model} matches {@code expectedModel}.
+     * Executes undo for the given {@code command} and confirms that the {@code model} matches {@code expectedModel}.
      *
      * @param command is the command that you want to perform undo
      * @param model is the actual model
