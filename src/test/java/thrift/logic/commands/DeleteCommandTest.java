@@ -1,14 +1,11 @@
 package thrift.logic.commands;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static thrift.logic.commands.CommandTestUtil.assertCommandFailure;
 import static thrift.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static thrift.logic.commands.CommandTestUtil.assertUndoCommandSuccess;
 import static thrift.logic.commands.CommandTestUtil.showTransactionAtIndex;
-
-import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
@@ -22,7 +19,6 @@ import thrift.model.UserPrefs;
 import thrift.model.transaction.Expense;
 import thrift.model.transaction.Income;
 import thrift.model.transaction.Transaction;
-import thrift.testutil.ExpenseBuilder;
 import thrift.testutil.TypicalIndexes;
 import thrift.testutil.TypicalTransactions;
 
@@ -138,23 +134,23 @@ public class DeleteCommandTest {
                 new PastUndoableCommands());
 
         Transaction transactionToDelete = model.getFilteredTransactionList()
-                .get(TypicalIndexes.INDEX_THIRD_TRANSACTION.getZeroBased());
+                .get(TypicalIndexes.INDEX_SECOND_TRANSACTION.getZeroBased());
 
         //ensure that the third transaction is an income.
         assertTrue(transactionToDelete instanceof Income);
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_TRANSACTION_SUCCESS, transactionToDelete);
         expectedModel.deleteTransaction(transactionToDelete);
-        DeleteCommand deleteCommand = new DeleteCommand(TypicalIndexes.INDEX_FIRST_TRANSACTION);
+        DeleteCommand deleteCommand = new DeleteCommand(TypicalIndexes.INDEX_SECOND_TRANSACTION);
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
 
-        expectedModel.addExpense((Income) transactionToDelete, TypicalIndexes.INDEX_THIRD_TRANSACTION);
+        expectedModel.addIncome((Income) transactionToDelete, TypicalIndexes.INDEX_SECOND_TRANSACTION);
         assertUndoCommandSuccess(deleteCommand, model, expectedModel);
     }
 
-        /**
-         * Updates {@code model}'s filtered list to show no one.
-         */
+    /**
+     * Updates {@code model}'s filtered list to show no one.
+     */
     private void showNoTransaction(Model model) {
         model.updateFilteredTransactionList(p -> false);
 

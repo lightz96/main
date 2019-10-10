@@ -126,6 +126,13 @@ public class CommandTestUtil {
         assertEquals(1, model.getFilteredTransactionList().size());
     }
 
+    /**
+     * Undo the given {@code command} to check if the {@code model} matches {@code expectedModel}.
+     *
+     * @param command is the command that you want to perform undo
+     * @param model is the actual model
+     * @param expectedModel is the expected model to compare with
+     */
     public static void assertUndoCommandSuccess(Undoable command, Model model, Model expectedModel) {
         command.undo(model);
         assertEquals(model, expectedModel);
