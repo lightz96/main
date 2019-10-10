@@ -126,4 +126,9 @@ public class CommandTestUtil {
         assertEquals(1, model.getFilteredTransactionList().size());
     }
 
+    public static void assertUndoCommandSuccess(Undoable command, Model model, Model expectedModel) {
+        command.undo(model);
+        assertEquals(model, expectedModel);
+    }
+
 }

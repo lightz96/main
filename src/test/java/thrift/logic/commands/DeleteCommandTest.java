@@ -1,20 +1,28 @@
 package thrift.logic.commands;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static thrift.logic.commands.CommandTestUtil.assertCommandFailure;
 import static thrift.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static thrift.logic.commands.CommandTestUtil.assertUndoCommandSuccess;
 import static thrift.logic.commands.CommandTestUtil.showTransactionAtIndex;
+
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
 import thrift.commons.core.Messages;
 import thrift.commons.core.index.Index;
+import thrift.logic.commands.exceptions.CommandException;
 import thrift.model.Model;
 import thrift.model.ModelManager;
 import thrift.model.PastUndoableCommands;
 import thrift.model.UserPrefs;
+import thrift.model.transaction.Expense;
+import thrift.model.transaction.Income;
 import thrift.model.transaction.Transaction;
+import thrift.testutil.ExpenseBuilder;
 import thrift.testutil.TypicalIndexes;
 import thrift.testutil.TypicalTransactions;
 
@@ -103,9 +111,50 @@ public class DeleteCommandTest {
         assertFalse(deleteFirstCommand.equals(deleteSecondCommand));
     }
 
-    /**
-     * Updates {@code model}'s filtered list to show no one.
-     */
+    @Test
+    public void undo_undoDeleteExpense_success() throws CommandException {
+        Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs(),
+                new PastUndoableCommands());
+
+        Transaction transactionToDelete = model.getFilteredTransactionList()
+                .get(TypicalIndexes.INDEX_FIRST_TRANSACTION.getZeroBased());
+
+        //ensure that the first transaction is an expense.
+        assertTrue(transactionToDelete instanceof Expense);
+
+        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_TRANSACTION_SUCCESS, transactionToDelete);
+        expectedModel.deleteTransaction(transactionToDelete);
+
+        DeleteCommand deleteCommand = new DeleteCommand(TypicalIndexes.INDEX_FIRST_TRANSACTION);
+        assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
+
+        expectedModel.addExpense((Expense) transactionToDelete, TypicalIndexes.INDEX_FIRST_TRANSACTION);
+        assertUndoCommandSuccess(deleteCommand, model, expectedModel);
+    }
+
+    @Test
+    public void undo_undoDeleteIncome_success() throws CommandException {
+        Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs(),
+                new PastUndoableCommands());
+
+        Transaction transactionToDelete = model.getFilteredTransactionList()
+                .get(TypicalIndexes.INDEX_THIRD_TRANSACTION.getZeroBased());
+
+        //ensure that the third transaction is an income.
+        assertTrue(transactionToDelete instanceof Income);
+
+        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_TRANSACTION_SUCCESS, transactionToDelete);
+        expectedModel.deleteTransaction(transactionToDelete);
+        DeleteCommand deleteCommand = new DeleteCommand(TypicalIndexes.INDEX_FIRST_TRANSACTION);
+        assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
+
+        expectedModel.addExpense((Income) transactionToDelete, TypicalIndexes.INDEX_THIRD_TRANSACTION);
+        assertUndoCommandSuccess(deleteCommand, model, expectedModel);
+    }
+
+        /**
+         * Updates {@code model}'s filtered list to show no one.
+         */
     private void showNoTransaction(Model model) {
         model.updateFilteredTransactionList(p -> false);
 
