@@ -56,7 +56,7 @@ public class AddIncomeCommand extends Command implements Undoable {
     @Override
     public void undo(Model model) {
         List<Transaction> transactionList = model.getThrift().getTransactionList();
-        assert transactionList.size() < 0 : "No transactions in the list";
+        assert transactionList.size() > 0 : "No transactions in the list";
         Transaction transactionToDelete = transactionList.get(transactionList.size() - 1);
         model.deleteTransaction(transactionToDelete);
     }
