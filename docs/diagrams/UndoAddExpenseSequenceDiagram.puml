@@ -1,0 +1,102 @@
+@startuml
+!include style.puml
+
+box Logic LOGIC_COLOR_T1
+participant "LogicManager" as LogicManager LOGIC_COLOR
+participant "ThriftParser" as ThriftParser LOGIC_COLOR
+participant "UndoCommand" as UndoCommand LOGIC_COLOR
+participant "AddExpenseCommand" as AddExpenseCommand LOGIC_COLOR
+participant "CommandResult" as CommandResult LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant "Model" as Model LOGIC_COLOR
+participant "PastUndoableCommand" as PastUndoableCommand LOGIC_COLOR
+participant "Thrift" as Thrift LOGIC_COLOR
+participant "TransactionList" as TransactionList LOGIC_COLOR
+end box
+
+[-> LogicManager : execute("undo")
+activate LogicManager
+
+LogicManager -> ThriftParser : parseCommand("undo")
+activate ThriftParser
+
+create UndoCommand
+ThriftParser -> UndoCommand
+activate UndoCommand
+
+UndoCommand --> ThriftParser
+deactivate UndoCommand
+
+ThriftParser --> LogicManager
+deactivate ThriftParser
+
+LogicManager -> UndoCommand : execute()
+activate UndoCommand
+
+UndoCommand -> Model : getPreviousUndoableCommand()
+activate Model
+
+Model -> PastUndoableCommand : getCommandToUndo()
+activate PastUndoableCommand
+
+PastUndoableCommand --> Model
+deactivate PastUndoableCommand
+
+Model --> UndoCommand
+deactivate Model
+
+UndoCommand -> AddExpenseCommand : undo()
+activate AddExpenseCommand
+
+AddExpenseCommand -> Model : getThrift()
+activate Model
+
+Model --> AddExpenseCommand
+deactivate Model
+
+AddExpenseCommand -> Thrift : getTransactionList()
+activate Thrift
+
+Thrift --> AddExpenseCommand
+deactivate Thrift
+
+AddExpenseCommand -> Model : deleteTransaction(t)
+activate Model
+
+Model -> Thrift : removeTransaction(t)
+activate Thrift
+
+Thrift -> TransactionList : remove(t)
+activate TransactionList
+
+TransactionList --> Thrift
+deactivate TransactionList
+
+Thrift --> Model
+deactivate Thrift
+
+Model --> AddExpenseCommand
+deactivate Model
+
+AddExpenseCommand --> UndoCommand
+deactivate AddExpenseCommand
+destroy AddExpenseCommand
+
+create CommandResult
+UndoCommand -> CommandResult
+activate CommandResult
+
+CommandResult --> UndoCommand
+deactivate CommandResult
+
+UndoCommand --> LogicManager : result
+deactivate UndoCommand
+UndoCommand -[hidden]-> LogicManager : result
+destroy UndoCommand
+
+
+[<-- LogicManager
+deactivate LogicManager
+@enduml
