@@ -11,10 +11,8 @@ import thrift.model.Model;
 import thrift.model.ModelManager;
 import thrift.model.PastUndoableCommands;
 import thrift.model.UserPrefs;
-import thrift.model.transaction.Expense;
 import thrift.model.transaction.Income;
 import thrift.model.transaction.Transaction;
-import thrift.testutil.ExpenseBuilder;
 import thrift.testutil.IncomeBuilder;
 import thrift.testutil.TypicalTransactions;
 
