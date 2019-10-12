@@ -196,6 +196,16 @@ public class AddIncomeCommandTest {
         public boolean hasUndoableCommand() {
             throw new AssertionError("This method should not be called.");
         }
+
+        @Override
+        public Undoable getUndoneCommand() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean hasUndoneCommand() {
+            throw new AssertionError("This method should not be called.");
+        }
     }
 
     /**

@@ -62,7 +62,7 @@ public class PastUndoableCommands {
      *
      * @param command is the undoable command to be tracked
      */
-    public void addUndoneCommand(Undoable command) {
+    private void addUndoneCommand(Undoable command) {
         redoStack.push(command);
     }
 

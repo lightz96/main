@@ -127,4 +127,18 @@ public interface Model {
      * @return true if there is undoable command, else false.
      */
     boolean hasUndoableCommand();
+
+    /**
+     * Returns the undone command.
+     *
+     * @return undone command
+     */
+    Undoable getUndoneCommand();
+
+    /**
+     * Checks if there is any undone command to redo.
+     *
+     * @return true if there is undone command, else false.
+     */
+    boolean hasUndoneCommand();
 }

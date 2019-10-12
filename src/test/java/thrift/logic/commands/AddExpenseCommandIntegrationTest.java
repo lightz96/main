@@ -44,7 +44,6 @@ public class AddExpenseCommandIntegrationTest {
         Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs(), new PastUndoableCommands());
 
         Expense validExpense = new ExpenseBuilder().build();
-
         model.addExpense(validExpense);
         AddExpenseCommand addExpenseCommand = new AddExpenseCommand(validExpense);
         model.keepTrackCommands(addExpenseCommand);
@@ -55,6 +54,32 @@ public class AddExpenseCommandIntegrationTest {
         undoable.undo(model);
         Transaction transactionToDelete = expectedModel.getLastTransactionFromThrift();
         expectedModel.deleteTransaction(transactionToDelete);
+        assertEquals(expectedModel, model);
+    }
+
+    @Test
+    public void redo_redoAddExpense_success() throws CommandException {
+        Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs(), new PastUndoableCommands());
+
+        //add expense to THIRFT
+        Expense validExpense = new ExpenseBuilder().build();
+        model.addExpense(validExpense);
+        AddExpenseCommand addExpenseCommand = new AddExpenseCommand(validExpense);
+        model.keepTrackCommands(addExpenseCommand);
+        expectedModel.addExpense(validExpense);
+        assertEquals(expectedModel, model);
+
+        //undo add_expense command
+        Undoable undoable = model.getPreviousUndoableCommand();
+        undoable.undo(model);
+        Transaction transactionToDelete = expectedModel.getLastTransactionFromThrift();
+        expectedModel.deleteTransaction(transactionToDelete);
+        assertEquals(expectedModel, model);
+
+        //redo add_expense command
+        undoable = model.getUndoneCommand();
+        undoable.redo(model);
+        expectedModel.addExpense(validExpense);
         assertEquals(expectedModel, model);
     }
 

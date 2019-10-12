@@ -22,7 +22,11 @@ public class RedoCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-
-        return new CommandResult(MESSAGE_SUCCESS);
+        if (model.hasUndoneCommand()) {
+            Undoable undoable = model.getUndoneCommand();
+            undoable.redo(model);
+            return new CommandResult(MESSAGE_SUCCESS);
+        }
+        throw new CommandException(NO_REDOABLE_COMMAND);
     }
 }

@@ -179,15 +179,28 @@ public class ModelManager implements Model {
     }
 
     //=========== Past Commands History =============================================================
+    @Override
     public void keepTrackCommands(Undoable command) {
         pastUndoableCommands.addPastCommand(command);
     }
 
+    @Override
     public Undoable getPreviousUndoableCommand() {
         return pastUndoableCommands.getCommandToUndo();
     }
 
+    @Override
     public boolean hasUndoableCommand() {
         return pastUndoableCommands.hasUndoCommand();
+    }
+
+    @Override
+    public Undoable getUndoneCommand() {
+        return pastUndoableCommands.getCommandToRedo();
+    }
+
+    @Override
+    public boolean hasUndoneCommand() {
+        return pastUndoableCommands.hasRedoCommand();
     }
 }
