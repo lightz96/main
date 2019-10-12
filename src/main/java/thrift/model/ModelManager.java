@@ -107,6 +107,12 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public void deleteLastTransaction() {
+        thrift.removeLastTransaction();
+        updateFilteredTransactionList(PREDICATE_SHOW_ALL_TRANSACTIONS);
+    }
+
+    @Override
     public void addExpense(Expense expense) {
         thrift.addTransaction(expense);
         updateFilteredTransactionList(PREDICATE_SHOW_ALL_TRANSACTIONS);
@@ -134,11 +140,6 @@ public class ModelManager implements Model {
     public void setTransaction(Transaction target, Transaction updatedTransaction) {
         CollectionUtil.requireAllNonNull(target, updatedTransaction);
         thrift.setTransaction(target, updatedTransaction);
-    }
-
-    @Override
-    public Transaction getLastTransactionFromThrift() {
-        return thrift.getLastTransaction();
     }
 
     //=========== Filtered Transaction List Accessors =============================================================

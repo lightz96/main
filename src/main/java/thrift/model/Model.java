@@ -68,6 +68,11 @@ public interface Model {
     void deleteTransaction(Transaction transaction);
 
     /**
+     * Deletes the last transaction in the full transaction list.
+     */
+    void deleteLastTransaction();
+
+    /**
      * Adds the given expense.
      */
     void addExpense(Expense expense);
@@ -92,13 +97,6 @@ public interface Model {
      * {@code target} must exist in the transactions list.
      */
     void setTransaction(Transaction target, Transaction updatedTransaction);
-
-    /**
-     * Gets the last transaction from thrift's transaction list
-     *
-     * @return the last transaction from thrift's transaction list
-     */
-    Transaction getLastTransactionFromThrift();
 
     /** Returns an unmodifiable view of the filtered transaction list */
     ObservableList<Transaction> getFilteredTransactionList();

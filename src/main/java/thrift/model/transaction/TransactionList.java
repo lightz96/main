@@ -74,6 +74,13 @@ public class TransactionList implements Iterable<Transaction> {
         }
     }
 
+    /**
+     * Remove the last transaction from the list.
+     */
+    public void removeLast() {
+        internalList.remove(internalList.size() - 1);
+    }
+
     public void setTransactions(TransactionList replacement) {
         requireNonNull(replacement);
         internalList.setAll(replacement.internalList);
@@ -85,15 +92,6 @@ public class TransactionList implements Iterable<Transaction> {
     public void setTransactions(List<Transaction> transactions) {
         requireAllNonNull(transactions);
         internalList.setAll(transactions);
-    }
-
-    /**
-     * Retrieve the last transaction.
-     *
-     * @return the last transaction
-     */
-    public Transaction getLast() {
-        return internalList.get(internalList.size() - 1);
     }
 
     /**

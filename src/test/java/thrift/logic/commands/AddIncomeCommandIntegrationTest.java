@@ -12,7 +12,6 @@ import thrift.model.ModelManager;
 import thrift.model.PastUndoableCommands;
 import thrift.model.UserPrefs;
 import thrift.model.transaction.Income;
-import thrift.model.transaction.Transaction;
 import thrift.testutil.IncomeBuilder;
 import thrift.testutil.TypicalTransactions;
 
@@ -53,8 +52,7 @@ public class AddIncomeCommandIntegrationTest {
 
         Undoable undoable = model.getPreviousUndoableCommand();
         undoable.undo(model);
-        Transaction transactionToDelete = expectedModel.getLastTransactionFromThrift();
-        expectedModel.deleteTransaction(transactionToDelete);
+        expectedModel.deleteLastTransaction();
         assertEquals(expectedModel, model);
     }
 
@@ -73,8 +71,7 @@ public class AddIncomeCommandIntegrationTest {
         //undo add_income command
         Undoable undoable = model.getPreviousUndoableCommand();
         undoable.undo(model);
-        Transaction transactionToDelete = expectedModel.getLastTransactionFromThrift();
-        expectedModel.deleteTransaction(transactionToDelete);
+        expectedModel.deleteLastTransaction();
         assertEquals(expectedModel, model);
 
         //redo add_income command

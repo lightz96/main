@@ -187,12 +187,12 @@ public class AddIncomeCommandTest {
         }
 
         @Override
-        public void setTransaction(Transaction target, Transaction updatedTransaction) {
+        public void deleteLastTransaction() {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public Transaction getLastTransactionFromThrift() {
+        public void setTransaction(Transaction target, Transaction updatedTransaction) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -310,15 +310,15 @@ public class AddIncomeCommandTest {
         }
 
         @Override
-        public Transaction getLastTransactionFromThrift() {
-            return thriftStub.getLastTransaction();
-        }
-
-        @Override
         public Undoable getUndoneCommand() {
             Undoable undoable = redoCommandStack.pop();
             undoableCommandStack.push(undoable);
             return undoable;
+        }
+
+        @Override
+        public void deleteLastTransaction() {
+            thriftStub.removeLastTransaction();
         }
     }
 
@@ -343,8 +343,8 @@ public class AddIncomeCommandTest {
         }
 
         @Override
-        public Transaction getLastTransaction() {
-            return transactionsAdded.get(transactionsAdded.size() - 1);
+        public void removeLastTransaction() {
+            transactionsAdded.remove(transactionsAdded.size() - 1);
         }
     }
 }
