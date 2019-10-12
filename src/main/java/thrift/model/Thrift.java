@@ -108,6 +108,13 @@ public class Thrift implements ReadOnlyThrift {
     }
 
     //// util methods
+
+    /**
+     * Returns an Optional that contains the {@link Index} of the {@code transaction}.
+     *
+     * @param transaction is the transaction that you are interested in its index in the full transaction list.
+     * @return an Optional containing the index of the transaction.
+     */
     public Optional<Index> getTransactionIndex(Transaction transaction) {
         requireNonNull(transaction);
         return transactions.getIndex(transaction);

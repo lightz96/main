@@ -63,10 +63,10 @@ public interface Model {
     boolean hasTransaction(Transaction transaction);
 
     /**
-     * Get the {@link Index} of the {@code transaction} in full transaction list.
+     * Returns an Optional that contains the {@link Index} of the {@code transaction}.
      *
      * @param transaction is the transaction that you are interested in its index in the full transaction list.
-     * @return {@link Index} of the {@code transaction} in full transaction list.
+     * @return an Optional containing the index of the transaction.
      */
     Optional<Index> getIndexInFullTransactionList(Transaction transaction);
 

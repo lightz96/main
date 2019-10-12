@@ -11,6 +11,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.Stack;
 import java.util.function.Predicate;
 
@@ -179,6 +180,11 @@ public class AddExpenseCommandTest {
 
         @Override
         public boolean hasTransaction(Transaction transaction) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public Optional<Index> getIndexInFullTransactionList(Transaction transaction) {
             throw new AssertionError("This method should not be called.");
         }
 

@@ -7,8 +7,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
-import javax.swing.text.html.Option;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import thrift.commons.core.index.Index;
@@ -97,6 +95,12 @@ public class TransactionList implements Iterable<Transaction> {
         internalList.setAll(transactions);
     }
 
+    /**
+     * Returns an Optional that contains the {@link Index} of the {@code transaction}.
+     *
+     * @param transaction is the transaction that you are interested in its index in the full transaction list.
+     * @return an Optional containing the index of the transaction.
+     */
     public Optional<Index> getIndex(Transaction transaction) {
         requireNonNull(transaction);
         for (int i = 0; i < internalList.size(); i++) {
