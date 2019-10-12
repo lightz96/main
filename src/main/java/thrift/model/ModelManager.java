@@ -188,6 +188,6 @@ public class ModelManager implements Model {
     }
 
     public boolean hasUndoableCommand() {
-        return !pastUndoableCommands.isEmpty();
+        return pastUndoableCommands.hasUndoCommand();
     }
 }

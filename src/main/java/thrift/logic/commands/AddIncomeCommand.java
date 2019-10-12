@@ -60,4 +60,9 @@ public class AddIncomeCommand extends Command implements Undoable {
         assert transactionToDelete == toAdd : "Incorrect expense";
         model.deleteTransaction(transactionToDelete);
     }
+
+    @Override
+    public void redo(Model model) {
+
+    }
 }
