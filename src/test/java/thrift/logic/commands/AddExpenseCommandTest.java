@@ -205,6 +205,11 @@ public class AddExpenseCommandTest {
         }
 
         @Override
+        public Transaction getLastTransactionFromThrift() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public ObservableList<Transaction> getFilteredTransactionList() {
             throw new AssertionError("This method should not be called.");
         }
