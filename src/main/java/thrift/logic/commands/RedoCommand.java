@@ -15,7 +15,7 @@ public class RedoCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Redo undone command"
             + "Example: " + COMMAND_WORD;
 
-    public static final String MESSAGE_SUCCESS = "Redo successfully";
+    public static final String MESSAGE_SUCCESS = "Redo successful";
 
     public static final String NO_REDOABLE_COMMAND = "No valid command to redo";
 

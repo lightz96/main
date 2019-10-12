@@ -194,7 +194,6 @@ public class AddExpenseCommandTest {
         @Override
         public Transaction getLastTransactionFromThrift() {
             throw new AssertionError("This method should not be called.");
-
         }
 
         @Override
