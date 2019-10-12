@@ -49,10 +49,15 @@ public class AddExpenseCommandTest {
     @Test
     public void undo_undoSuccessful() {
         ModelStubUndoAddExpenses modelStub = new ModelStubUndoAddExpenses();
+
         Expense validExpense = new ExpenseBuilder().build();
+
         modelStub.addExpense(validExpense);
         AddExpenseCommand addExpenseCommand = new AddExpenseCommand(validExpense);
         modelStub.keepTrackCommands(addExpenseCommand);
+        assertEquals(1, modelStub.getThrift().getTransactionList().size());
+        assertFalse(modelStub.undoableCommandStack.isEmpty());
+
         Undoable undoable = modelStub.getPreviousUndoableCommand();
         undoable.undo(modelStub);
         assertEquals(0, modelStub.getThrift().getTransactionList().size());
@@ -163,6 +168,12 @@ public class AddExpenseCommandTest {
         }
 
         @Override
+        public Transaction getLastTransactionFromThrift() {
+            throw new AssertionError("This method should not be called.");
+
+        }
+
+        @Override
         public ObservableList<Transaction> getFilteredTransactionList() {
             throw new AssertionError("This method should not be called.");
         }
@@ -265,6 +276,11 @@ public class AddExpenseCommandTest {
         public void deleteTransaction(Transaction transaction) {
             thriftStub.removeTransaction(transaction);
         }
+
+        @Override
+        public Transaction getLastTransactionFromThrift() {
+            return thriftStub.getLastTransaction();
+        }
     }
 
     /**
@@ -285,6 +301,11 @@ public class AddExpenseCommandTest {
         @Override
         public ObservableList<Transaction> getTransactionList() {
             return FXCollections.observableArrayList(transactionsAdded);
+        }
+
+        @Override
+        public Transaction getLastTransaction() {
+            return transactionsAdded.get(transactionsAdded.size() - 1);
         }
     }
 }

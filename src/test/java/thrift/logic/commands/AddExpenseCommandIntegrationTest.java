@@ -3,11 +3,10 @@ package thrift.logic.commands;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static thrift.logic.commands.CommandTestUtil.assertCommandSuccess;
 
-import java.util.List;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import thrift.logic.commands.exceptions.CommandException;
 import thrift.model.Model;
 import thrift.model.ModelManager;
 import thrift.model.PastUndoableCommands;
@@ -41,18 +40,21 @@ public class AddExpenseCommandIntegrationTest {
     }
 
     @Test
-    public void undo_success() {
+    public void undo_undoAddExpense_success() throws CommandException {
         Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs(), new PastUndoableCommands());
 
         Expense validExpense = new ExpenseBuilder().build();
 
         model.addExpense(validExpense);
-        List<Transaction> lastShownList = model.getThrift().getTransactionList();
-        assertEquals(validExpense, lastShownList.get(lastShownList.size() - 1));
+        AddExpenseCommand addExpenseCommand = new AddExpenseCommand(validExpense);
+        model.keepTrackCommands(addExpenseCommand);
+        expectedModel.addExpense(validExpense);
+        assertEquals(expectedModel, model);
 
-        Transaction transactionToDelete = lastShownList.get(lastShownList.size() - 1);
-        model.deleteTransaction(transactionToDelete);
-
+        Undoable undoable = model.getPreviousUndoableCommand();
+        undoable.undo(model);
+        Transaction transactionToDelete = expectedModel.getLastTransactionFromThrift();
+        expectedModel.deleteTransaction(transactionToDelete);
         assertEquals(expectedModel, model);
     }
 

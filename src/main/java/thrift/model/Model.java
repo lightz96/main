@@ -93,6 +93,13 @@ public interface Model {
      */
     void setTransaction(Transaction target, Transaction updatedTransaction);
 
+    /**
+     * Gets the last transaction from thrift's transaction list
+     *
+     * @return the last transaction from thrift's transaction list
+     */
+    Transaction getLastTransactionFromThrift();
+
     /** Returns an unmodifiable view of the filtered transaction list */
     ObservableList<Transaction> getFilteredTransactionList();
 

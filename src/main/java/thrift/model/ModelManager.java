@@ -136,6 +136,11 @@ public class ModelManager implements Model {
         thrift.setTransaction(target, updatedTransaction);
     }
 
+    @Override
+    public Transaction getLastTransactionFromThrift() {
+        return thrift.getLastTransaction();
+    }
+
     //=========== Filtered Transaction List Accessors =============================================================
 
     /**
