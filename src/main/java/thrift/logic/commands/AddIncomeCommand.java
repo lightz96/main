@@ -63,6 +63,7 @@ public class AddIncomeCommand extends Command implements Undoable {
 
     @Override
     public void redo(Model model) {
-
+        requireNonNull(model);
+        model.addIncome(toAdd);
     }
 }

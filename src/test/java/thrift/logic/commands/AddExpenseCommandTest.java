@@ -3,6 +3,7 @@ package thrift.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static thrift.testutil.Assert.assertThrows;
 
@@ -76,13 +77,13 @@ public class AddExpenseCommandTest {
         assertFalse(modelStub.undoableCommandStack.isEmpty());
 
         Undoable undoable = modelStub.getPreviousUndoableCommand();
-        assertTrue(undoable == addExpenseCommand);
+        assertSame(undoable, addExpenseCommand);
         undoable.undo(modelStub);
         assertEquals(0, modelStub.getThrift().getTransactionList().size());
         assertTrue(modelStub.undoableCommandStack.isEmpty());
 
         undoable = modelStub.getUndoneCommand();
-        assertTrue(undoable == addExpenseCommand);
+        assertSame(undoable, addExpenseCommand);
         undoable.redo(modelStub);
         assertEquals(1, modelStub.getThrift().getTransactionList().size());
         assertFalse(modelStub.undoableCommandStack.isEmpty());
