@@ -1,6 +1,7 @@
 package thrift.model;
 
 import java.nio.file.Path;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
@@ -60,6 +61,14 @@ public interface Model {
      * Returns true if a transaction with the same identity as {@code transaction} exists in the transactions list.
      */
     boolean hasTransaction(Transaction transaction);
+
+    /**
+     * Get the {@link Index} of the {@code transaction} in full transaction list.
+     *
+     * @param transaction is the transaction that you are interested in its index in the full transaction list.
+     * @return {@link Index} of the {@code transaction} in full transaction list.
+     */
+    Optional<Index> getIndexInFullTransactionList(Transaction transaction);
 
     /**
      * Deletes the given transaction.

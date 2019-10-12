@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static thrift.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
+import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -99,6 +100,11 @@ public class ModelManager implements Model {
     public boolean hasTransaction(Transaction t) {
         requireNonNull(t);
         return thrift.hasTransaction(t);
+    }
+
+    @Override
+    public Optional<Index> getIndexInFullTransactionList(Transaction transaction) {
+        return thrift.getTransactionIndex(transaction);
     }
 
     @Override

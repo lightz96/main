@@ -5,6 +5,9 @@ import static thrift.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
+
+import javax.swing.text.html.Option;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -92,6 +95,16 @@ public class TransactionList implements Iterable<Transaction> {
     public void setTransactions(List<Transaction> transactions) {
         requireAllNonNull(transactions);
         internalList.setAll(transactions);
+    }
+
+    public Optional<Index> getIndex(Transaction transaction) {
+        requireNonNull(transaction);
+        for (int i = 0; i < internalList.size(); i++) {
+            if (transaction == internalList.get(i)) {
+                return Optional.of(Index.fromZeroBased(i));
+            }
+        }
+        return Optional.empty();
     }
 
     /**
