@@ -157,7 +157,10 @@ public class UpdateCommand extends Command implements Undoable {
 
     @Override
     public void redo(Model model) {
-
+        requireNonNull(model);
+        requireNonNull(transactionToUpdate);
+        requireNonNull(updatedTransaction);
+        model.setTransaction(transactionToUpdate, updatedTransaction);
     }
 
     /**
