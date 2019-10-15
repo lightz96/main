@@ -193,7 +193,7 @@ public class UpdateCommandTest {
         expectedModel.setTransaction(updatedTransaction, lastTransaction);
         assertUndoCommandSuccess(updateCommand, model, expectedModel);
 
-        //tesst redo
+        //test redo
         expectedModel.setTransaction(lastTransaction, updatedTransaction);
         assertRedoCommandSuccess(updateCommand, model, expectedModel);
     }
