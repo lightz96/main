@@ -147,6 +147,7 @@ public class TagCommand extends Command implements Undoable {
 
     @Override
     public void redo(Model model) {
-
+        requireAllNonNull(model, actualIndex, updatedTransaction, transactionToTag);
+        model.setTransactionWithIndex(actualIndex, updatedTransaction);
     }
 }

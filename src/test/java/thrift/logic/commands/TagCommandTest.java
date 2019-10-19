@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static thrift.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static thrift.logic.commands.CommandTestUtil.assertRedoCommandSuccess;
 import static thrift.logic.commands.CommandTestUtil.assertUndoCommandSuccess;
 
 import java.util.HashSet;
@@ -84,6 +85,42 @@ class TagCommandTest {
         //tests undo command
         expectedModel.setTransactionWithIndex(indexLastTransaction, lastTransaction);
         assertUndoCommandSuccess(tagCommand, model, expectedModel);
+    }
+
+    @Test
+    void redo_redoTag_success() {
+        Model model = new ModelManager(TypicalTransactions.getTypicalThrift(), new UserPrefs(),
+                new PastUndoableCommands());
+        Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs(),
+                new PastUndoableCommands());
+
+        Index indexLastTransaction = Index.fromOneBased(model.getFilteredTransactionList().size());
+        Transaction lastTransaction = model.getFilteredTransactionList().get(indexLastTransaction.getZeroBased());
+        //assuming that it is tagging the transaction with non-duplicate tag
+        Set<Tag> tagSet = new TagSetBuilder("Food", "Recommended").build();
+        Set<Tag> updatedTags = new HashSet<Tag>(lastTransaction.getTags());
+        for (Tag newTag : tagSet) {
+            updatedTags.add(newTag);
+        }
+        Expense updatedTransaction = new Expense(lastTransaction.getDescription(), lastTransaction.getValue(),
+                lastTransaction.getRemark(), lastTransaction.getDate(), updatedTags);
+        String expectedMessageOriginal = String.format(TagCommand.MESSAGE_ORIGINAL_TRANSACTION, lastTransaction);
+        String expectedMessageUpdated = String.format(TagCommand.MESSAGE_TAG_TRANSACTION_SUCCESS,
+                updatedTransaction);
+
+        //tests tag command
+        TagCommand tagCommand = new TagCommand(indexLastTransaction, tagSet);
+        expectedModel.setTransactionWithIndex(indexLastTransaction, updatedTransaction);
+        assertCommandSuccess(tagCommand, model, expectedMessageUpdated + expectedMessageOriginal,
+                expectedModel);
+
+        //tests undo command
+        expectedModel.setTransactionWithIndex(indexLastTransaction, lastTransaction);
+        assertUndoCommandSuccess(tagCommand, model, expectedModel);
+
+        //tests redo command
+        expectedModel.setTransactionWithIndex(indexLastTransaction, updatedTransaction);
+        assertRedoCommandSuccess(tagCommand, model, expectedModel);
     }
 
 
