@@ -102,7 +102,7 @@ class TagCommandTest {
         for (Tag newTag : tagSet) {
             updatedTags.add(newTag);
         }
-        Expense updatedTransaction = new Expense(lastTransaction.getDescription(), lastTransaction.getValue(),
+        Transaction updatedTransaction = new Expense(lastTransaction.getDescription(), lastTransaction.getValue(),
                 lastTransaction.getRemark(), lastTransaction.getDate(), updatedTags);
         String expectedMessageOriginal = String.format(TagCommand.MESSAGE_ORIGINAL_TRANSACTION, lastTransaction);
         String expectedMessageUpdated = String.format(TagCommand.MESSAGE_TAG_TRANSACTION_SUCCESS,

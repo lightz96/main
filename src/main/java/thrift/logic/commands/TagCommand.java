@@ -63,9 +63,9 @@ public class TagCommand extends Command implements Undoable {
         this.index = index;
         this.tagSet = tagSet;
         existedTags = new StringBuilder();
-        actualIndex = null;
-        transactionToTag = null;
-        updatedTransaction = null;
+        this.actualIndex = null;
+        this.transactionToTag = null;
+        this.updatedTransaction = null;
     }
 
     @Override
