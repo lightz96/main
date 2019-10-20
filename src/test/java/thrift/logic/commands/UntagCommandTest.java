@@ -11,9 +11,7 @@ import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
-import thrift.model.tag.Tag;
 import thrift.commons.core.index.Index;
-import thrift.logic.commands.exceptions.CommandException;
 import thrift.model.Model;
 import thrift.model.ModelManager;
 import thrift.model.PastUndoableCommands;
@@ -21,7 +19,6 @@ import thrift.model.UserPrefs;
 import thrift.model.tag.Tag;
 import thrift.model.transaction.Expense;
 import thrift.model.transaction.Transaction;
-import thrift.testutil.ExpenseBuilder;
 import thrift.testutil.TagSetBuilder;
 import thrift.testutil.TypicalIndexes;
 import thrift.testutil.TypicalTransactions;
