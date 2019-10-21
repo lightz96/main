@@ -9,7 +9,7 @@ public class HelpCommand extends NonScrollingCommand {
 
     public static final String COMMAND_WORD = "help";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows program usage instructions. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows program usage instructions.\n"
             + "Parameters: [COMMAND]\n"
             + "Example: " + COMMAND_WORD + " " + AddExpenseCommand.COMMAND_WORD;
 
@@ -28,5 +28,12 @@ public class HelpCommand extends NonScrollingCommand {
         } else {
             return new CommandResult(commandUsage);
         }
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof HelpCommand // instanceof handles nulls
+                && commandUsage.equals(((HelpCommand) other).commandUsage)); // state check
     }
 }
