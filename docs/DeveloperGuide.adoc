@@ -281,8 +281,8 @@ The underlying data structure of undo and redo feature are implemented in `**Pas
 * `PastUndoableCommands#getCommandToRedo()` -- Retrieves undone commands from `RedoStack` for user to perform redo.
 * `PastUndoableCommands#hasRedoCommand()` -- Checks if there are any commands to perform redo.
 
-The function wrappers to these methods are `Model#keepTrackCommands(Undoable command)`, `Model#getPreviousUndoableCommand()`, `hasUndoableCommand()`,
-`Model#getUndoneCommand()` and `hasUndoneCommand()` respectively.
+The function wrappers to these methods are `Model#keepTrackCommands(Undoable command)`, `Model#getPreviousUndoableCommand()`, `Model#hasUndoableCommand()`,
+`Model#getUndoneCommand()` and `Model#hasUndoneCommand()` respectively.
 
 NOTE: Undoable commands are *add_expense*, *add_income*, *clone*, *delete*, *tag*, *untag*, *update*.
 
@@ -300,31 +300,35 @@ Step 2. The user executes *add_expense n/Laksa v/4* to add laksa to the transact
 The `LogicManager` invokes the method `Model#keepTrackCommands(Undoable undoable)` to keep track of the `AddExpenseCommand` object
 that was used to add laksa. This `AddExpenseCommand` object is pushed into `UndoStack`.
 
-image::UndoAndRedo/addExpense.PNG[align="center"]
+image::UndoAndRedo/addExpense.PNG[align="center", 333, 300]
 
 Step 3. The user executes *update i/1 v/3.5* to update the cost of the laksa to $3.50.
 The `LogicManager` calls the method `Model#keepTrackCommands(Undoable undoable)` to keep track of the `UpdateCommand` object
 that was used to update the cost of the laksa. This `UpdateCommand` object is pushed into `UndoStack`.
 
-image::UndoAndRedo/updateExpense.PNG[align="center"]
+image::UndoAndRedo/updateExpense.PNG[align="center", 346, 300]
 
 Step 4. The user executes *undo* to revert the cost of the laksa back to $4.00.
 The `UndoCommand` invokes the method `Model#getPreviousUndoableCommand()` to retrieve the `UpdateCommand` object.
 Before returning the `UpdateCommand` back to the callee, `UpdateCommand` was pop from `UndoStack` and push into `RedoStack`.
 
-image::UndoAndRedo/undo.PNG[align="center"]
+image::UndoAndRedo/undo.PNG[align="center", 315, 300]
 
 Step 5. The user executes *undo* to remove laksa from THRIFT's transaction list.
 The `UndoCommand` invokes the method `Model#getPreviousUndoableCommand()` to retrieve the `AddExpenseCommand` object.
 Before returning the `AddExpenseCommand` back to the callee, `AddExpenseCommand` was pop from `UndoStack` and push into `RedoStack`.
 
-image::UndoAndRedo/undo2.PNG[align="center"]
+image::UndoAndRedo/undo2.PNG[align="center", 315, 300]
+
+The sequence diagram shows how undo works for *add_expense* command:
+
+image::UndoAndRedo/UndoAddExpenseSequenceDiagram.png[align="center"]
 
 Step 6. The user executes *redo* to add laksa back to THRIFT's transaction list.
 The `RedoCommand` invokes the method `Model#getUndoneCommand()` to retrieve the `AddExpenseCommand` object.
 Before returning the `AddExpenseCommand` back to the callee, `AddExpenseCommand` was pop from `RedoStack` and push into `UndoStack`.
 
-image::UndoAndRedo/redo.PNG[align="center"]
+image::UndoAndRedo/redo.PNG[align="center", 310, 300]
 
 NOTE: All commands in `RedoStack` are purged when user executes another undoable command.
 

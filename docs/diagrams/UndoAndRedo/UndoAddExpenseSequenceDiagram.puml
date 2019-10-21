@@ -4,16 +4,16 @@
 box Logic LOGIC_COLOR_T1
 participant "LogicManager" as LogicManager LOGIC_COLOR
 participant "ThriftParser" as ThriftParser LOGIC_COLOR
-participant "UndoCommand" as UndoCommand LOGIC_COLOR
-participant "AddExpenseCommand" as AddExpenseCommand LOGIC_COLOR
+participant "u:UndoCommand" as UndoCommand LOGIC_COLOR
+participant "a:AddExpenseCommand" as AddExpenseCommand LOGIC_COLOR
 participant "CommandResult" as CommandResult LOGIC_COLOR
 end box
 
 box Model MODEL_COLOR_T1
-participant "Model" as Model LOGIC_COLOR
-participant "PastUndoableCommand" as PastUndoableCommand LOGIC_COLOR
-participant "Thrift" as Thrift LOGIC_COLOR
-participant "TransactionList" as TransactionList LOGIC_COLOR
+participant "Model" as Model MODEL_COLOR
+participant "PastUndoableCommand" as PastUndoableCommand MODEL_COLOR
+participant "Thrift" as Thrift MODEL_COLOR
+participant "TransactionList" as TransactionList MODEL_COLOR
 end box
 
 [-> LogicManager : execute("undo")
@@ -29,10 +29,10 @@ activate UndoCommand
 UndoCommand --> ThriftParser
 deactivate UndoCommand
 
-ThriftParser --> LogicManager
+ThriftParser --> LogicManager : u
 deactivate ThriftParser
 
-LogicManager -> UndoCommand : execute()
+LogicManager -> UndoCommand : execute(model)
 activate UndoCommand
 
 UndoCommand -> Model : getPreviousUndoableCommand()
@@ -41,25 +41,23 @@ activate Model
 Model -> PastUndoableCommand : getCommandToUndo()
 activate PastUndoableCommand
 
-PastUndoableCommand --> Model
+PastUndoableCommand --> Model : a
 deactivate PastUndoableCommand
 
-Model --> UndoCommand
+Model --> UndoCommand : a
 deactivate Model
 
-UndoCommand -> AddExpenseCommand : undo()
+UndoCommand -> AddExpenseCommand : undo(model)
 activate AddExpenseCommand
 
 AddExpenseCommand -> Model : deleteLastTransaction()
 activate Model
 
-Model --> Thrift : removeLastTransaction()
+Model -> Thrift : removeLastTransaction()
 activate Thrift
 
 Thrift -> TransactionList : removeLast()
 activate TransactionList
-
-TransactionList -> TransactionList : remove()
 
 TransactionList --> Thrift
 deactivate TransactionList
@@ -84,5 +82,6 @@ UndoCommand --> LogicManager
 deactivate UndoCommand
 
 [<-- LogicManager
+destroy UndoCommand
 deactivate LogicManager
 @enduml
