@@ -16,7 +16,7 @@ endif::[]
 
 image::logo/logo.png[align="center"]
 
-By: `Team THRIFT`      Since: `Sept 2019`      Licence: `MIT`
+By: `Team THRIFT`      Since: `Oct 2019`      Licence: `MIT`
 
 == Introduction
 <<thrift, THRIFT>> is an application for money-conscious NUS students who wish to track their spending, in order to make better informed decisions when it comes to saving money.
@@ -266,6 +266,20 @@ are applied when restoring `**THRIFT**` data from the data file.
 * **Alternative 2:** Allow only negative amount in `**Expense**` object and only positive amount in `**Income**` object
 ** Pros: Calculations become trivial: to get balance, sum up the entire `**List<Transaction>**`.
 ** Cons: Overhead to parse user input to allow only a single negative symbol and no other symbols.
+
+=== Undo and redo feature
+==== Implementation
+
+The underlying data structure of undo and redo feature are implemented in `**PastUndoableCommands**`. It consists of two stacks,
+`UndoStack` and `RedoStack`. It provides the following methods:
+
+* `PastUndoableCommands#addPastCommand(Undoable undoable)` -- Keeps track of the undoable commands.
+* `PastUndoableCommands#getCommandToUndo()` -- Retrieves undoable commands from `UndoStack` for user to perform undo.
+* `PastUndoableCommands#hasUndoable()` -- Checks if there are any commands to perform undo.
+* `PastUndoableCommands#getCommandToRedo()` -- Retrieves undone commands from `RedoStack` for user to perform redo.
+* `PastUndoableCommands#clearRedoStack()` -- Purge all the commands in `RedoStack`.
+* `PastUndoableCommands#hasRedoCommand()` -- Checks if there are any commands to perform redo.
+* `PastUndoableCommands#addUndoneCommand(Undoable command)` -- Keeps track of the undone commands.
 
 // tag::undoredo[]
 === [Proposed] Undo/Redo feature
@@ -1138,7 +1152,7 @@ Expected: Transaction regarding to the income received from bursary is added bac
 .. Test case:
 +
 --
-... `delete 1`
+... `delete i/1`
 ... `undo`
 ... `redo`
 --

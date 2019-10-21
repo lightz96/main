@@ -50,26 +50,16 @@ deactivate Model
 UndoCommand -> AddExpenseCommand : undo()
 activate AddExpenseCommand
 
-AddExpenseCommand -> Model : getThrift()
+AddExpenseCommand -> Model : deleteLastTransaction()
 activate Model
 
-Model --> AddExpenseCommand
-deactivate Model
-
-AddExpenseCommand -> Thrift : getTransactionList()
+Model --> Thrift : removeLastTransaction()
 activate Thrift
 
-Thrift --> AddExpenseCommand
-deactivate Thrift
-
-AddExpenseCommand -> Model : deleteTransaction(t)
-activate Model
-
-Model -> Thrift : removeTransaction(t)
-activate Thrift
-
-Thrift -> TransactionList : remove(t)
+Thrift -> TransactionList : removeLast()
 activate TransactionList
+
+TransactionList -> TransactionList : remove()
 
 TransactionList --> Thrift
 deactivate TransactionList
@@ -82,7 +72,6 @@ deactivate Model
 
 AddExpenseCommand --> UndoCommand
 deactivate AddExpenseCommand
-destroy AddExpenseCommand
 
 create CommandResult
 UndoCommand -> CommandResult
@@ -91,11 +80,8 @@ activate CommandResult
 CommandResult --> UndoCommand
 deactivate CommandResult
 
-UndoCommand --> LogicManager : result
+UndoCommand --> LogicManager
 deactivate UndoCommand
-UndoCommand -[hidden]-> LogicManager : result
-destroy UndoCommand
-
 
 [<-- LogicManager
 deactivate LogicManager
