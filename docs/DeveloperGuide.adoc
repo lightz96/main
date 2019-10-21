@@ -268,8 +268,10 @@ are applied when restoring `**THRIFT**` data from the data file.
 ** Cons: Overhead to parse user input to allow only a single negative symbol and no other symbols.
 
 === Undo and redo feature
-==== Implementation
+*Undo* command enables reverting back to the previous state when user has made a mistake. *Redo* command does the opposite of *undo* command
+when user realized that the command can be executed.
 
+==== Overview
 The underlying data structure of undo and redo feature are implemented in `**PastUndoableCommands**`. It consists of two stacks,
 `UndoStack` and `RedoStack`. It provides the following methods:
 
@@ -277,9 +279,54 @@ The underlying data structure of undo and redo feature are implemented in `**Pas
 * `PastUndoableCommands#getCommandToUndo()` -- Retrieves undoable commands from `UndoStack` for user to perform undo.
 * `PastUndoableCommands#hasUndoable()` -- Checks if there are any commands to perform undo.
 * `PastUndoableCommands#getCommandToRedo()` -- Retrieves undone commands from `RedoStack` for user to perform redo.
-* `PastUndoableCommands#clearRedoStack()` -- Purge all the commands in `RedoStack`.
 * `PastUndoableCommands#hasRedoCommand()` -- Checks if there are any commands to perform redo.
-* `PastUndoableCommands#addUndoneCommand(Undoable command)` -- Keeps track of the undone commands.
+
+The function wrappers to these methods are `Model#keepTrackCommands(Undoable command)`, `Model#getPreviousUndoableCommand()`, `hasUndoableCommand()`,
+`Model#getUndoneCommand()` and `hasUndoneCommand()` respectively.
+
+NOTE: Undoable commands are *add_expense*, *add_income*, *clone*, *delete*, *tag*, *untag*, *update*.
+
+Every undoable commands will be stored in the `UndoStack` once it is executed. It will only be stored in `RedoStack` when user executed
+*undo*.
+
+==== Implementation
+The below scenario illustrated how undo and redo feature works.
+
+Step 1. Application is launched with empty transaction list. Both `UndoStack` and `RedoStack` are empty upon initializing `**PastUndoableCommands**`.
+
+image::UndoAndRedo/initialUndoRedo.PNG[align="center", 333, 300]
+
+Step 2. The user executes *add_expense n/Laksa v/4* to add laksa to the transaction list in THRIFT.
+The `LogicManager` invokes the method `Model#keepTrackCommands(Undoable undoable)` to keep track of the `AddExpenseCommand` object
+that was used to add laksa. This `AddExpenseCommand` object is pushed into `UndoStack`.
+
+image::UndoAndRedo/addExpense.PNG[align="center"]
+
+Step 3. The user executes *update i/1 v/3.5* to update the cost of the laksa to $3.50.
+The `LogicManager` calls the method `Model#keepTrackCommands(Undoable undoable)` to keep track of the `UpdateCommand` object
+that was used to update the cost of the laksa. This `UpdateCommand` object is pushed into `UndoStack`.
+
+image::UndoAndRedo/updateExpense.PNG[align="center"]
+
+Step 4. The user executes *undo* to revert the cost of the laksa back to $4.00.
+The `UndoCommand` invokes the method `Model#getPreviousUndoableCommand()` to retrieve the `UpdateCommand` object.
+Before returning the `UpdateCommand` back to the callee, `UpdateCommand` was pop from `UndoStack` and push into `RedoStack`.
+
+image::UndoAndRedo/undo.PNG[align="center"]
+
+Step 5. The user executes *undo* to remove laksa from THRIFT's transaction list.
+The `UndoCommand` invokes the method `Model#getPreviousUndoableCommand()` to retrieve the `AddExpenseCommand` object.
+Before returning the `AddExpenseCommand` back to the callee, `AddExpenseCommand` was pop from `UndoStack` and push into `RedoStack`.
+
+image::UndoAndRedo/undo2.PNG[align="center"]
+
+Step 6. The user executes *redo* to add laksa back to THRIFT's transaction list.
+The `RedoCommand` invokes the method `Model#getUndoneCommand()` to retrieve the `AddExpenseCommand` object.
+Before returning the `AddExpenseCommand` back to the callee, `AddExpenseCommand` was pop from `RedoStack` and push into `UndoStack`.
+
+image::UndoAndRedo/redo.PNG[align="center"]
+
+NOTE: All commands in `RedoStack` are purged when user executes another undoable command.
 
 // tag::undoredo[]
 === [Proposed] Undo/Redo feature
