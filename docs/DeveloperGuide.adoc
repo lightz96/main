@@ -35,6 +35,15 @@ A developer should be able to understand the design, architecture and goals of T
 This developer guide specifies the technical and non-technical details of THRIFT.
 The technical aspects include the design and architecture while the non-technical aspects include the user stories, use cases and <<nfr, NFRs>>.
 
+=== About the document
+
+[horizontal]
+*add_expense n/Laksa v/4*:: Bold text indicates user input.
+
+`Description`:: Text with grey highlight (called a mark-up) indicates that it is a method/variable name.
+
+`**THRIFT**`:: Bold text with mark-up indicates a class/package name.
+
 == Setting up
 
 Refer to the guide <<SettingUp#, here>>.
@@ -273,10 +282,10 @@ are applied when restoring `**THRIFT**` data from the data file.
 === Updating transactions
 
 === Undo/Redoing undoable commands
-*Undo* command enables reverting back to the previous state when user has made a mistake. *Redo* command does the opposite of *undo* command
-when user realized that the command can be executed.
+*Undo* command allows the user to revert `**THRIFT**` to its previous state when they have made a mistake. *Redo* command does
+the opposite of *undo* command, useful for when the user wishes to execute the command instead.
 
-The underlying data structure of undo and redo feature are implemented in `**PastUndoableCommands**`. It consists of two stacks,
+The underlying data structure of the undo and redo feature is implemented in `**PastUndoableCommands**`. It consists of two stacks:
 `UndoStack` and `RedoStack`. It provides the following methods:
 
 * `PastUndoableCommands#addPastCommand(Undoable undoable)` -- Keeps track of the undoable commands.
@@ -290,59 +299,59 @@ The function wrappers to these methods are `Model#keepTrackCommands(Undoable com
 
 NOTE: Undoable commands are *add_expense*, *add_income*, *clone*, *delete*, *tag*, *untag*, *update*.
 
-Every undoable commands will be stored in the `UndoStack` once it is executed. It will only be stored in `RedoStack` when user executed
+Every undoable command will be stored in the `UndoStack` once it is executed. It will only be stored in `RedoStack` when the user executed
 *undo*.
 
 ==== Implementation
-The below scenario illustrated how undo and redo feature works.
+The below scenario illustrates how undo and redo feature works:
 
-Step 1. Application is launched with empty transaction list. Both `UndoStack` and `RedoStack` are empty upon initializing `**PastUndoableCommands**`.
+Step 1. The application is launched with an empty transaction list. Both `UndoStack` and `RedoStack` are empty upon initializing `**PastUndoableCommands**`.
 
 image::UndoAndRedo/initialUndoRedo.PNG[333, 300]
 
-Step 2. The user executes *add_expense n/Laksa v/4* to add laksa to the `**TransactionList**`.
-The `LogicManager` invokes the method `Model#keepTrackCommands(Undoable undoable)` to keep track of the `AddExpenseCommand` object
-that was used to add laksa. This `AddExpenseCommand` object is pushed into `UndoStack`.
+Step 2. The user executes *add_expense n/Laksa v/4* to add Laksa to the `**TransactionList**`.
+The `**LogicManager**` invokes the method `Model#keepTrackCommands(Undoable undoable)` to keep track of the `**AddExpenseCommand**` object
+that was used to add Laksa. This `**AddExpenseCommand**` object is pushed into `UndoStack`.
 
 image::UndoAndRedo/addExpense.PNG[333, 300]
 
-Step 3. The user executes *update i/1 v/3.5* to update the cost of the laksa to $3.50.
-The `LogicManager` calls the method `Model#keepTrackCommands(Undoable undoable)` to keep track of the `UpdateCommand` object
-that was used to update the cost of the laksa. This `UpdateCommand` object is pushed into `UndoStack`.
+Step 3. The user executes *update i/1 v/3.50* to update the cost of the Laksa to $3.50.
+The `**LogicManager**` calls the method `Model#keepTrackCommands(Undoable undoable)` to keep track of the `**UpdateCommand**` object
+that was used to update the cost of the Laksa. This `**UpdateCommand**` object is pushed into `UndoStack`.
 
 image::UndoAndRedo/updateExpense.PNG[346, 300]
 
-Step 4. The user executes *undo* to revert the cost of the laksa back to $4.00.
-The `UndoCommand` invokes the method `Model#getPreviousUndoableCommand()` to retrieve the `UpdateCommand` object.
-Before returning the `UpdateCommand` object back to the callee, `UpdateCommand` is popped from `UndoStack` and pushes into `RedoStack`.
+Step 4. The user executes *undo* to revert the cost of the Laksa to $4.00.
+The `**UndoCommand**` invokes the method `Model#getPreviousUndoableCommand()` to retrieve the `**UpdateCommand**` object.
+`**UpdateCommand**` is popped from `UndoStack` and pushed into `RedoStack` before being returned to the callee.
 
 image::UndoAndRedo/undo.PNG[315, 300]
 
-Step 5. The user executes *undo* to remove laksa from `**TransactionList**`.
-The `UndoCommand` invokes the method `Model#getPreviousUndoableCommand()` to retrieve the `AddExpenseCommand` object.
-Before returning the `AddExpenseCommand` back to the callee, `AddExpenseCommand` is popped from `UndoStack` and pushes into `RedoStack`.
+Step 5. The user executes *undo* to remove Laksa from `**TransactionList**`.
+The `**UndoCommand**` invokes the method `Model#getPreviousUndoableCommand()` to retrieve the `**AddExpenseCommand**` object.
+`**AddExpenseCommand**` is popped from `UndoStack` and pushed into `RedoStack` before being returned to the callee.
 
 image::UndoAndRedo/undo2.PNG[315, 300]
 
-The sequence diagram shows how *undo* works for *add_expense* command:
+The sequence diagram shows how *undo* work for *add_expense* command:
 
 .Sequence diagram of how *undo* command is applied at the back-end
 image::UndoAndRedo/UndoAddExpenseSequenceDiagram.png[]
 
-Step 6. The user executes *redo* to add laksa back to `TransactionList`.
-The `RedoCommand` invokes the method `Model#getUndoneCommand()` to retrieve the `AddExpenseCommand` object.
-Before returning the `AddExpenseCommand` back to the callee, `AddExpenseCommand` was pop from `RedoStack` and push into `UndoStack`.
+Step 6. The user executes *redo* to add Laksa back to `**TransactionList**`.
+The `**RedoCommand**` invokes the method `Model#getUndoneCommand()` to retrieve the `**AddExpenseCommand**` object.
+`**AddExpenseCommand**` is popped from `RedoStack` and pushed into `UndoStack` before being returned to the callee.
 
 image::UndoAndRedo/redo.PNG[310, 300]
 
-NOTE: All commands in `RedoStack` are purged when user executes another undoable command.
+NOTE: All commands stored in `RedoStack` are purged when the user executes another undoable command.
 
-The sequence diagram shows how *redo* works for *add_expense* command:
+The sequence diagram shows how *redo* work for *add_expense* command:
 
 .Sequence diagram of how *redo* command is applied at the back-end
 image::UndoAndRedo/RedoAddExpenseSequenceDiagram.png[]
 
-The following activity diagram shows what happen if user executes command:
+The following activity diagram shows what happens if the user executes a command:
 
 .Activity diagram of the command execution.
 image::UndoAndRedo/RunCommandActivityDiagrams.png[401, 600]
@@ -351,9 +360,9 @@ image::UndoAndRedo/RunCommandActivityDiagrams.png[401, 600]
 
 ===== Aspect: Data structure used to keep track of undoable command
 
-* **Alternative 1 (current choice):** Use two stacks. One stack stores the command to undo, the other stack stores the command to redo.
+* **Alternative 1 (current choice):** Use two stacks. One stack stores the command to undo while the other stack stores the command to redo.
 ** Pros: Easy to implement.
-** Cons: Need to carefully manage the two stacks. For example, you need to pop command from one stack and push into another stack.
+** Cons: Need to carefully manage the two stacks. For example, you need to pop the command from one stack and push it into another stack.
 * **Alternative 2:** Use an arraylist and a pointer to indicate the next command to undo.
 ** Pros: Easy to implement.
 ** Cons: Need to carefully manage the pointer. For example, you need to ensure that the pointer stays within the size of an arraylist.
@@ -947,7 +956,7 @@ _Use case ends_
 
 [appendix]
 == Glossary
-
+[horizontal]
 [[thrift]] THRIFT::
 Stands for "Terminal-input Human Readable Interactive Finance Tracker". It is the application this developer guide is for.
 
