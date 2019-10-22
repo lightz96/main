@@ -307,31 +307,31 @@ The below scenario illustrates how undo and redo feature works:
 
 Step 1. The application is launched with an empty transaction list. Both `UndoStack` and `RedoStack` are empty upon initializing `**PastUndoableCommands**`.
 
-image::UndoAndRedo/initialUndoRedo.PNG[333, 300]
+image::UndoAndRedo/initialUndoRedo.PNG[338, 300]
 
 Step 2. The user executes *add_expense n/Laksa v/4* to add Laksa to the `**TransactionList**`.
 The `**LogicManager**` invokes the method `Model#keepTrackCommands(Undoable undoable)` to keep track of the `**AddExpenseCommand**` object
 that was used to add Laksa. This `**AddExpenseCommand**` object is pushed into `UndoStack`.
 
-image::UndoAndRedo/addExpense.PNG[333, 300]
+image::UndoAndRedo/addExpense.PNG[357, 300]
 
 Step 3. The user executes *update i/1 v/3.50* to update the cost of the Laksa to $3.50.
 The `**LogicManager**` calls the method `Model#keepTrackCommands(Undoable undoable)` to keep track of the `**UpdateCommand**` object
 that was used to update the cost of the Laksa. This `**UpdateCommand**` object is pushed into `UndoStack`.
 
-image::UndoAndRedo/updateExpense.PNG[346, 300]
+image::UndoAndRedo/updateExpense.PNG[341, 300]
 
 Step 4. The user executes *undo* to revert the cost of the Laksa to $4.00.
 The `**UndoCommand**` invokes the method `Model#getPreviousUndoableCommand()` to retrieve the `**UpdateCommand**` object.
 `**UpdateCommand**` is popped from `UndoStack` and pushed into `RedoStack` before being returned to the callee.
 
-image::UndoAndRedo/undo.PNG[315, 300]
+image::UndoAndRedo/undo.PNG[320, 300]
 
 Step 5. The user executes *undo* to remove Laksa from `**TransactionList**`.
 The `**UndoCommand**` invokes the method `Model#getPreviousUndoableCommand()` to retrieve the `**AddExpenseCommand**` object.
 `**AddExpenseCommand**` is popped from `UndoStack` and pushed into `RedoStack` before being returned to the callee.
 
-image::UndoAndRedo/undo2.PNG[315, 300]
+image::UndoAndRedo/undo2.PNG[326, 300]
 
 The sequence diagram shows how *undo* work for *add_expense* command:
 
@@ -342,7 +342,7 @@ Step 6. The user executes *redo* to add Laksa back to `**TransactionList**`.
 The `**RedoCommand**` invokes the method `Model#getUndoneCommand()` to retrieve the `**AddExpenseCommand**` object.
 `**AddExpenseCommand**` is popped from `RedoStack` and pushed into `UndoStack` before being returned to the callee.
 
-image::UndoAndRedo/redo.PNG[310, 300]
+image::UndoAndRedo/redo.PNG[325, 300]
 
 NOTE: All commands stored in `RedoStack` are purged when the user executes another undoable command.
 
@@ -354,7 +354,7 @@ image::UndoAndRedo/RedoAddExpenseSequenceDiagram.png[]
 The following activity diagram shows what happens if the user executes a command:
 
 .Activity diagram of the command execution.
-image::UndoAndRedo/RunCommandActivityDiagrams.png[401, 600]
+image::UndoAndRedo/RunCommandActivityDiagrams.png[]
 
 ==== Design considerations
 
