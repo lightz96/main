@@ -134,7 +134,7 @@ NOTE: The lifeline for `DeleteCommandParser` should end at the destroy marker (X
 === Model component
 
 .Structure of the Model Component
-image::ModelClassDiagram.png[]
+image::ModelClassDiagram.png[628, 600]
 
 *API* : link:{repoURL}/src/main/java/thrift/model/Model.java[`Model.java`]
 
@@ -143,6 +143,7 @@ The `**Model**`,
 * stores a `**UserPref**` object that represents the user's preferences.
 * stores `**THRIFT**` data.
 * stores `**BudgetList**` which contains budget set for different months by the user.
+* stores `**PastUndoableCommands**` which keeps track of undoable commands for future undo and redo operation.
 * exposes an unmodifiable `**ObservableList<Transaction>**` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
@@ -275,7 +276,6 @@ are applied when restoring `**THRIFT**` data from the data file.
 *Undo* command enables reverting back to the previous state when user has made a mistake. *Redo* command does the opposite of *undo* command
 when user realized that the command can be executed.
 
-==== Overview
 The underlying data structure of undo and redo feature are implemented in `**PastUndoableCommands**`. It consists of two stacks,
 `UndoStack` and `RedoStack`. It provides the following methods:
 
@@ -298,51 +298,65 @@ The below scenario illustrated how undo and redo feature works.
 
 Step 1. Application is launched with empty transaction list. Both `UndoStack` and `RedoStack` are empty upon initializing `**PastUndoableCommands**`.
 
-image::UndoAndRedo/initialUndoRedo.PNG[align="center", 333, 300]
+image::UndoAndRedo/initialUndoRedo.PNG[333, 300]
 
-Step 2. The user executes *add_expense n/Laksa v/4* to add laksa to the transaction list in THRIFT.
+Step 2. The user executes *add_expense n/Laksa v/4* to add laksa to the `**TransactionList**`.
 The `LogicManager` invokes the method `Model#keepTrackCommands(Undoable undoable)` to keep track of the `AddExpenseCommand` object
 that was used to add laksa. This `AddExpenseCommand` object is pushed into `UndoStack`.
 
-image::UndoAndRedo/addExpense.PNG[align="center", 333, 300]
+image::UndoAndRedo/addExpense.PNG[333, 300]
 
 Step 3. The user executes *update i/1 v/3.5* to update the cost of the laksa to $3.50.
 The `LogicManager` calls the method `Model#keepTrackCommands(Undoable undoable)` to keep track of the `UpdateCommand` object
 that was used to update the cost of the laksa. This `UpdateCommand` object is pushed into `UndoStack`.
 
-image::UndoAndRedo/updateExpense.PNG[align="center", 346, 300]
+image::UndoAndRedo/updateExpense.PNG[346, 300]
 
 Step 4. The user executes *undo* to revert the cost of the laksa back to $4.00.
 The `UndoCommand` invokes the method `Model#getPreviousUndoableCommand()` to retrieve the `UpdateCommand` object.
-Before returning the `UpdateCommand` back to the callee, `UpdateCommand` was pop from `UndoStack` and push into `RedoStack`.
+Before returning the `UpdateCommand` object back to the callee, `UpdateCommand` is popped from `UndoStack` and pushes into `RedoStack`.
 
-image::UndoAndRedo/undo.PNG[align="center", 315, 300]
+image::UndoAndRedo/undo.PNG[315, 300]
 
-Step 5. The user executes *undo* to remove laksa from THRIFT's transaction list.
+Step 5. The user executes *undo* to remove laksa from `**TransactionList**`.
 The `UndoCommand` invokes the method `Model#getPreviousUndoableCommand()` to retrieve the `AddExpenseCommand` object.
-Before returning the `AddExpenseCommand` back to the callee, `AddExpenseCommand` was pop from `UndoStack` and push into `RedoStack`.
+Before returning the `AddExpenseCommand` back to the callee, `AddExpenseCommand` is popped from `UndoStack` and pushes into `RedoStack`.
 
-image::UndoAndRedo/undo2.PNG[align="center", 315, 300]
+image::UndoAndRedo/undo2.PNG[315, 300]
 
-The sequence diagram shows how undo works for *add_expense* command:
+The sequence diagram shows how *undo* works for *add_expense* command:
 
-.Sequence diagram of how *undo* command is applied on *add_expense* command
-image::UndoAndRedo/UndoAddExpenseSequenceDiagram.png[align="center"]
+.Sequence diagram of how *undo* command is applied at the back-end
+image::UndoAndRedo/UndoAddExpenseSequenceDiagram.png[]
 
-Step 6. The user executes *redo* to add laksa back to THRIFT's transaction list.
+Step 6. The user executes *redo* to add laksa back to `TransactionList`.
 The `RedoCommand` invokes the method `Model#getUndoneCommand()` to retrieve the `AddExpenseCommand` object.
 Before returning the `AddExpenseCommand` back to the callee, `AddExpenseCommand` was pop from `RedoStack` and push into `UndoStack`.
 
-image::UndoAndRedo/redo.PNG[align="center", 310, 300]
+image::UndoAndRedo/redo.PNG[310, 300]
 
 NOTE: All commands in `RedoStack` are purged when user executes another undoable command.
 
-The sequence diagram shows how redo works for *add_expense* command:
+The sequence diagram shows how *redo* works for *add_expense* command:
 
-.Sequence diagram of how *redo* command is applied on *add_expense* command
-image::UndoAndRedo/RedoAddExpenseSequenceDiagram.png[align="center"]
+.Sequence diagram of how *redo* command is applied at the back-end
+image::UndoAndRedo/RedoAddExpenseSequenceDiagram.png[]
+
+The following activity diagram shows what happen if user executes command:
+
+.Activity diagram of the command execution.
+image::UndoAndRedo/RunCommandActivityDiagrams.png[401, 600]
 
 ==== Design considerations
+
+===== Aspect: Data structure used to keep track of undoable command
+
+* **Alternative 1 (current choice):** Use two stacks. One stack stores the command to undo, the other stack stores the command to redo.
+** Pros: Easy to implement.
+** Cons: Need to carefully manage the two stacks. For example, you need to pop command from one stack and push into another stack.
+* **Alternative 2:** Use an arraylist and a pointer to indicate the next command to undo.
+** Pros: Easy to implement.
+** Cons: Need to carefully manage the pointer. For example, you need to ensure that the pointer stays within the size of an arraylist.
 
 // tag::undoredo[]
 === [Proposed] Undo/Redo feature
