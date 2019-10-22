@@ -16,7 +16,7 @@ endif::[]
 
 image::logo/logo.png[align="center"]
 
-By: `Team THRIFT`      Since: `Oct 2019`      Licence: `MIT`
+By: `Team THRIFT`      Since: `Sept 2019`      Licence: `MIT`
 
 == Introduction
 <<thrift, THRIFT>> is an application for money-conscious NUS students who wish to track their spending, in order to make better informed decisions when it comes to saving money.
