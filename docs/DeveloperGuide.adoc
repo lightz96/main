@@ -178,7 +178,7 @@ Classes used by multiple components are in the `**thrift.commons**` package.
 This section describes some noteworthy details on how certain features are implemented.
 
 // tag::budget[]
-=== Add Expense/Income feature
+=== Adding transactions
 ==== Implementation
 The **add_expense**/**add_income** feature is implemented through polymorphism. `**Expense**` and `**Income**` are both subclasses of the abstract class `Transaction`.
 Each `**Transaction**` contains the following mandatory fields: `Description`, `TransactionDate` and `Value`; as well as optional fields: `Remark`,
@@ -272,7 +272,7 @@ are applied when restoring `**THRIFT**` data from the data file.
 
 === Updating transactions
 
-=== Undo and redo feature
+=== Undo/Redoing undoable commands
 *Undo* command enables reverting back to the previous state when user has made a mistake. *Redo* command does the opposite of *undo* command
 when user realized that the command can be executed.
 
@@ -441,7 +441,7 @@ image::CommitActivityDiagram.png[]
 // end::undoredo[]
 
 // tag::dataencryption[]
-=== [Proposed] Data Encryption
+=== [Proposed] Data encryption
 
 _{Explain here how the data encryption feature will be implemented}_
 
@@ -476,12 +476,12 @@ Refer to the guide <<Documentation#, here>>.
 
 Refer to the guide <<Testing#, here>>.
 
-== Dev Ops
+== Dev ops
 
 Refer to the guide <<DevOps#, here>>.
 
 [appendix]
-== Product Scope
+== Product scope
 
 *Target user profile*:
 
@@ -498,7 +498,7 @@ Refer to the guide <<DevOps#, here>>.
 * congregates all info regarding fees and costs in a single location
 
 [appendix]
-== User Stories
+== User stories
 
 Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
 
@@ -708,7 +708,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 
 [appendix]
-== Use Cases
+== Use cases
 
 (For all use cases below, the *System* is the `THRIFT` and the *Actor* is the `user`, unless specified otherwise)
 
@@ -935,7 +935,7 @@ _Use case ends_
 _Use case ends_
 
 [appendix]
-== Non Functional Requirements
+== Non functional requirements
 
 . THRIFT should be able to run on any <<mainstream-os, mainstream OS>> as long as it has `Java 11` installed.
 . THRIFT should be able to hold up to 250 transactions without a noticeable drop in performance for typical usage.
@@ -968,7 +968,7 @@ with the goal of ensuring the systems are running efficiently and effectively.
 
 
 [appendix]
-== Instructions for Manual Testing
+== Instructions for manual testing
 
 Given below are instructions to test the app manually.
 
