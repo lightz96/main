@@ -457,7 +457,7 @@ image::UndoAndRedo/RunCommandActivityDiagrams.png[]
 ** Cons: Need to carefully manage the pointer. For example, you need to ensure that the pointer stays within the size of an arraylist.
 
 // tag::Filtering transactions[]
-=== Filtering Transactions
+=== Filtering transactions
 
 The *List* command allows the user to bring up a list of `**Transactions**`, and filter it by month or by its tags.
 This feature is implemented by using a `**Predicate<Transaction>**` to filter the `**Transactions**` by month or tags.
@@ -490,7 +490,7 @@ Step 5. The final list of filtered transactions will be brought up.
 The activity diagram below will give an overview of what is happening when the command is executed.
 
 .Activity diagram of the command execution.
-image::list/ListActivityDiagram.PNG[]
+image::list/ListActivityDiagram.png[]
 
 ==== Design Considerations
 
