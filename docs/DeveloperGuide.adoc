@@ -267,6 +267,10 @@ are applied when restoring `**THRIFT**` data from the data file.
 ** Pros: Calculations become trivial: to get balance, sum up the entire `**List<Transaction>**`.
 ** Cons: Overhead to parse user input to allow only a single negative symbol and no other symbols.
 
+=== Tagging/Untagging transactions
+
+=== Updating transactions
+
 === Undo and redo feature
 *Undo* command enables reverting back to the previous state when user has made a mistake. *Redo* command does the opposite of *undo* command
 when user realized that the command can be executed.
@@ -322,6 +326,7 @@ image::UndoAndRedo/undo2.PNG[align="center", 315, 300]
 
 The sequence diagram shows how undo works for *add_expense* command:
 
+.Sequence diagram of how *undo* command is applied on *add_expense* command
 image::UndoAndRedo/UndoAddExpenseSequenceDiagram.png[align="center"]
 
 Step 6. The user executes *redo* to add laksa back to THRIFT's transaction list.
@@ -331,6 +336,13 @@ Before returning the `AddExpenseCommand` back to the callee, `AddExpenseCommand`
 image::UndoAndRedo/redo.PNG[align="center", 310, 300]
 
 NOTE: All commands in `RedoStack` are purged when user executes another undoable command.
+
+The sequence diagram shows how redo works for *add_expense* command:
+
+.Sequence diagram of how *redo* command is applied on *add_expense* command
+image::UndoAndRedo/RedoAddExpenseSequenceDiagram.png[align="center"]
+
+==== Design considerations
 
 // tag::undoredo[]
 === [Proposed] Undo/Redo feature
