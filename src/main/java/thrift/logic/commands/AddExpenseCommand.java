@@ -28,9 +28,9 @@ public class AddExpenseCommand extends ScrollingCommand implements Undoable {
             + "To add an expense with remark: "
             + COMMAND_WORD + " " + CliSyntax.PREFIX_NAME + "Laksa " + CliSyntax.PREFIX_VALUE + "4 "
             + CliSyntax.PREFIX_REMARK + "One of my favourite\n"
-            + "To add an expense with tags: "
+            + "To add an expense with tag: "
             + COMMAND_WORD + " " + CliSyntax.PREFIX_NAME + "Laksa " + CliSyntax.PREFIX_VALUE + "4 "
-            + CliSyntax.PREFIX_TAG + "Bukit Panjang " + CliSyntax.PREFIX_TAG + "Food\n"
+            + CliSyntax.PREFIX_TAG + "Food\n"
             + "To add an expense with remark and tag: "
             + COMMAND_WORD + " " + CliSyntax.PREFIX_NAME + "Laksa " + CliSyntax.PREFIX_VALUE + "4 "
             + CliSyntax.PREFIX_REMARK + "One of my favourite " + CliSyntax.PREFIX_TAG + "Food";

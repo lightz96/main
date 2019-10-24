@@ -20,8 +20,8 @@ public class BudgetCommand extends NonScrollingCommand {
             + CliSyntax.PREFIX_DATE + "MM/YYYY\n"
             + "Possible usages of " + COMMAND_WORD + ": \n"
             + "To set budget for this month (assuming this month is October 2019): "
-            + COMMAND_WORD + " " + CliSyntax.PREFIX_DATE + "500 " + CliSyntax.PREFIX_DATE + "10/2019\n"
-            + "To forecast your budget for upcoming months: "
+            + COMMAND_WORD + " " + CliSyntax.PREFIX_VALUE + "500 " + CliSyntax.PREFIX_DATE + "10/2019\n"
+            + "To forecast your budget for a particular month: "
             + COMMAND_WORD + " " + CliSyntax.PREFIX_VALUE + "1000 " + CliSyntax.PREFIX_DATE + "11/2019";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sets your monthly budget to the specified amount.\n"

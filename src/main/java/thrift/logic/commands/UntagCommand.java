@@ -43,7 +43,7 @@ public class UntagCommand extends NonScrollingCommand implements Undoable {
             + "Format: " + COMMAND_WORD + " " + CliSyntax.PREFIX_INDEX + "INDEX (must be a positive integer) "
             + CliSyntax.PREFIX_TAG + "TAG...\n"
             + "Possible usages of " + COMMAND_WORD + ": \n"
-            + "To remove tag from existing tag(s) of the transaction at index 1 in the displayed transaction list: "
+            + "To remove a tag from existing tag(s) of the transaction at index 1 in the displayed transaction list: "
             + COMMAND_WORD + " " + CliSyntax.PREFIX_INDEX + "1 " + CliSyntax.PREFIX_TAG + "Food\n"
             + "To remove multiple tags from existing tag(s) of the transaction at index 1 in the displayed "
             + "transaction list: "

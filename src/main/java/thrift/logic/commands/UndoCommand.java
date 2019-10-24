@@ -16,7 +16,7 @@ public class UndoCommand extends NonScrollingCommand {
             + "Example: " + COMMAND_WORD;
 
     public static final String HELP_MESSAGE = COMMAND_WORD + ": Undo the previous undoable command.\n"
-            + "Undoable commands are add_expense, add_income, budget, clone, delete, tag, untag, update.\n"
+            + "Undoable commands are: add_expense, add_income, budget, clone, delete, tag, untag, update.\n"
             + "Format: " + COMMAND_WORD;
 
     public static final String MESSAGE_SUCCESS = "Undo successful";
