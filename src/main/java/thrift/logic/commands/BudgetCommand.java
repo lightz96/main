@@ -3,8 +3,6 @@ package thrift.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static thrift.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.Optional;
-
 import thrift.logic.parser.CliSyntax;
 import thrift.model.Model;
 import thrift.model.transaction.Budget;
