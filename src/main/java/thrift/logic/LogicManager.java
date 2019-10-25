@@ -17,6 +17,8 @@ import thrift.logic.commands.CloneCommand;
 import thrift.logic.commands.Command;
 import thrift.logic.commands.CommandResult;
 import thrift.logic.commands.DeleteCommand;
+import thrift.logic.commands.FindCommand;
+import thrift.logic.commands.ListCommand;
 import thrift.logic.commands.NonScrollingCommand;
 import thrift.logic.commands.RedoCommand;
 import thrift.logic.commands.ScrollingCommand;
@@ -31,6 +33,7 @@ import thrift.model.ReadOnlyThrift;
 import thrift.model.transaction.Transaction;
 import thrift.storage.Storage;
 import thrift.ui.BalanceBar;
+import thrift.ui.FilteredBar;
 import thrift.ui.TransactionListPanel;
 
 /**
@@ -51,11 +54,12 @@ public class LogicManager implements Logic {
     }
 
     @Override
-    public CommandResult execute(String commandText, TransactionListPanel transactionListPanel, BalanceBar balanceBar)
-            throws CommandException, ParseException {
+    public CommandResult execute(String commandText, TransactionListPanel transactionListPanel, BalanceBar balanceBar,
+            FilteredBar filteredBar) throws CommandException, ParseException {
         logger.info("----------------[USER COMMAND][" + commandText + "]");
         Command command = thriftParser.parseCommand(commandText);
-        CommandResult commandResult = processParsedCommand(command, commandText, transactionListPanel, balanceBar);
+        CommandResult commandResult = processParsedCommand(command, commandText, transactionListPanel, balanceBar,
+                filteredBar);
         try {
             storage.saveThrift(model.getThrift());
         } catch (IOException ioe) {
@@ -72,11 +76,12 @@ public class LogicManager implements Logic {
 
     @Override
     public CommandResult processParsedCommand(Command command, String commandText,
-                                               TransactionListPanel transactionListPanel,
-                                               BalanceBar balanceBar) throws CommandException {
+                                              TransactionListPanel transactionListPanel,
+                                              BalanceBar balanceBar, FilteredBar filteredBar) throws CommandException {
         requireAllNonNull(command, commandText);
         CommandResult commandResult = parseScrollable(command, transactionListPanel);
         parseRefreshable(command, balanceBar);
+        parseFilterable(commandText, command, filteredBar);
         parseUndoable(command, commandText);
         return commandResult;
     }
@@ -100,6 +105,15 @@ public class LogicManager implements Logic {
         if (isRefreshingFilteredList(command)) {
             model.updateBalanceForCurrentMonth();
             updateBalanceBar(balanceBar);
+        }
+    }
+
+    @Override
+    public void parseFilterable(String input, Command command, FilteredBar filteredBar) {
+        if (command instanceof ListCommand) {
+
+        } else if (command instanceof FindCommand) {
+
         }
     }
 

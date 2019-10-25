@@ -35,6 +35,7 @@ public class MainWindow extends UiPart<Stage> {
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
     private BalanceBar balanceBar;
+    private FilteredBar filteredBar;
 
     private String monthYear;
     private double budget;
@@ -54,6 +55,9 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private StackPane balancebarPlaceholder;
+
+    @FXML
+    private StackPane filteredbarPlaceholder;
 
     @FXML
     private StackPane statusbarPlaceholder;
@@ -130,6 +134,9 @@ public class MainWindow extends UiPart<Stage> {
         balanceBar = new BalanceBar(monthYear, budget, balance);
         balancebarPlaceholder.getChildren().add(balanceBar.getRoot());
 
+        filteredBar = new FilteredBar(monthYear);
+        filteredbarPlaceholder.getChildren().add(filteredBar.getRoot());
+
         StatusBarFooter statusBarFooter = new StatusBarFooter(logic.getThriftFilePath());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
@@ -186,7 +193,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     private CommandResult executeCommand(String commandText) throws CommandException, ParseException {
         try {
-            CommandResult commandResult = logic.execute(commandText, transactionListPanel, balanceBar);
+            CommandResult commandResult = logic.execute(commandText, transactionListPanel, balanceBar, filteredBar);
             logger.info("Result: " + commandResult.getFeedbackToUser());
             resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser());
 

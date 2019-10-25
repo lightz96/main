@@ -91,6 +91,7 @@
     -fx-background-insets: 0;
     -fx-padding: 0;
     -fx-background-color: #F5F5F5;
+    -fx-border-color: #BDBDBD;
 }
 
 .list-cell {
@@ -108,6 +109,7 @@
 }
 
 .list-cell:filled:selected {
+    -fx-background-color: #C5CAE9;
 }
 
 .list-cell:filled:selected #cardPane {
@@ -152,6 +154,8 @@
      -fx-border-color: #F5F5F5;
      -fx-border-top-width: 1px;
 }
+
+
 
 .status-bar {
     -fx-background-color: #F5F5F5;
@@ -216,6 +220,23 @@
 
 #expense-side-card-color {
     -fx-background-color: #e53935;
+}
+
+#balanceText,
+#expenseText,
+#incomeText {
+    -fx-padding: 8px;
+}
+
+#date-card {
+    -fx-background-color: #BDBDBD;
+    -fx-padding: 5px;
+    -fx-border-insets: 5px;
+    -fx-background-insets: 5px;
+}
+
+#date-card .label {
+    -fx-text-fill: white !important;
 }
 
 .status-bar .label {

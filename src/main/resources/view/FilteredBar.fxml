@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="view.FilteredBar"
-            prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+<HBox alignment="CENTER_RIGHT" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fitHeight="15.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <!--Icon made by Freepik from www.flaticon.com-->
+            <Image url="@img/filter.png" />
+         </image>
+         <HBox.margin>
+            <Insets right="5.0" />
+         </HBox.margin>
+      </ImageView>
+      <Label fx:id="filterLabel" alignment="CENTER_RIGHT" text="Label" />
+   </children>
+</HBox>
