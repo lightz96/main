@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.stage.Stage?>
 
-<fx:root minHeight="600" minWidth="650" onCloseRequest="#handleExit" title="THRIFT" type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root minHeight="800" minWidth="960" onCloseRequest="#handleExit" title="THRIFT" type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
   <icons>
     <Image url="@/images/thrift_32.png" />
   </icons>
@@ -44,17 +44,21 @@
           </padding>
         </StackPane>
 
+        <StackPane fx:id="balancebarPlaceholder" maxHeight="120" minHeight="100" prefHeight="120" styleClass="pane-with-border" VBox.vgrow="NEVER">
+          <padding>
+            <Insets bottom="5" left="10" right="10" top="5" />
+          </padding>
+        </StackPane>
+
         <VBox fx:id="transactionListPanel" minWidth="340" prefWidth="340" styleClass="pane-with-border" VBox.vgrow="ALWAYS">
           <padding>
             <Insets bottom="10" left="10" right="10" top="10" />
           </padding>
           <StackPane fx:id="transactionListPanelPlaceholder" VBox.vgrow="ALWAYS" />
-          <StackPane fx:id="balancebarPlaceholder" VBox.vgrow="NEVER" />
           <padding>
             <Insets bottom="10" left="10" right="10" top="10" />
           </padding>
         </VBox>
-
         <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
       </VBox>
     </Scene>

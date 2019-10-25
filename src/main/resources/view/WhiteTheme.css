@@ -91,7 +91,6 @@
     -fx-background-insets: 0;
     -fx-padding: 0;
     -fx-background-color: #F5F5F5;
-    -fx-border-color: #757575 #757575 #757575 #757575;
 }
 
 .list-cell {
@@ -109,11 +108,10 @@
 }
 
 .list-cell:filled:selected {
-    -fx-background-color: #FFE0B2;
 }
 
 .list-cell:filled:selected #cardPane {
-    -fx-border-color: #FFE0B2;
+    -fx-border-color: #1A237E;
     -fx-border-width: 1;
 }
 
@@ -128,7 +126,7 @@
 }
 
 .list-cell #incomeValue {
-    -fx-text-fill: #2E7D32;
+    -fx-text-fill: #8BC34A;
     -fx-font-size: 22px;
     -fx-label-padding: 25px 20px 0 0;
 }
@@ -183,13 +181,41 @@
 
 .balance-bar {
     -fx-background-color: #F5F5F5;
-    -fx-border-color: derive(#1d1d1d, 10%);
 }
 
 .balance-bar .label {
     -fx-font-family: "Segoe UI Bold";
     -fx-text-fill: #757575;
     -fx-font-size: 22px;
+}
+
+.side-card-color {
+    -fx-background-color: #757575;
+}
+
+/*https://stackoverflow.com/questions/16977100/confgure-margin-for-individual-element-via-java-fx-css*/
+.card-color {
+    -fx-background-color: #ffffff;
+    -fx-padding: 5px;
+    -fx-border-insets: 5px;
+    -fx-background-insets: 5px;
+}
+
+.balance-text {
+    -fx-text-fill: #ff6c4f;
+    -fx-font-size: 14px !important;
+}
+
+#balance-side-card-color {
+    -fx-background-color: #3949AB;
+}
+
+#income-side-card-color {
+    -fx-background-color: #00897B;
+}
+
+#expense-side-card-color {
+    -fx-background-color: #e53935;
 }
 
 .status-bar .label {
