@@ -1,7 +1,48 @@
-= Lee Bo Qiang - Project Portfolio
+= Lee Bo Qiang - Project Portfolio for THRIFT
 :site-section: AboutUs
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 :repoURL: https://github.com/AY1920S1-CS2103T-W12-2/main
 
-== Project: THRIFT
+== 1. Introduction
+The purpose of this portfolio is to demonstrate my capability based on  my contributions to the team project THRIFT.
+
+THRIFT is a financial tracker desktop application which provides a Command-Line Interface (CLI) for user to enter their commands.
+It is morphed from Address-book3.
+It is done by a team of 5 members, Jia hao, Jian Wen, Melvin, Kenson and me. This project spans over 4 weeks.
+
+== 2. About this project portfolio
+[horizontal]
+*add_expense n/Laksa v/4*:: Bold text indicates user input.
+
+`Description`:: Text with grey highlight (called a mark-up) indicates that it is a method/variable name.
+
+`**THRIFT**`:: Bold text with mark-up indicates a class/package name.
+
+== 3. Summary of contributions
+This section summarises my past 4 weeks of contributions to THRIFT.
+
+=== 3.1 Enhancements
+
+=== 3.2 Other contributions
+This section illustrates some other areas that I have contributed besides coding:
+
+* Project Management:
+** Setup Appveyor, netify, Coveralls and includes badges
+** Provides quality feedback to teammates regarding their code/documentation
+** Ensure that our team is using forking workflow.
+** Creates UI prototype
+
+* Enhancement to existing features:
+** Refactor the entire code base by renaming the Person to Transaction, AddressBook to THRIFT
+** Modifies the entire UI layout to make it look professional.
+** Changes the entire UI to use white theme
+
+== 4. Contribution to User Guide
+
+
+== 5. Contribution to Developer Guide
+
+
+
+
