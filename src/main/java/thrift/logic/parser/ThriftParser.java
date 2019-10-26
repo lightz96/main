@@ -6,6 +6,7 @@ import static thrift.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import thrift.commons.core.Messages;
 import thrift.logic.commands.AddExpenseCommand;
 import thrift.logic.commands.AddIncomeCommand;
 import thrift.logic.commands.BudgetCommand;
@@ -104,10 +105,20 @@ public class ThriftParser {
             return new ListCommandParser().parse(arguments);
 
         case RedoCommand.COMMAND_WORD:
-            return new RedoCommand();
+            if (arguments == null || arguments.trim().equals("")) {
+                return new RedoCommand();
+            } else {
+                throw new ParseException(String.format(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                        RedoCommand.MESSAGE_USAGE)));
+            }
 
         case UndoCommand.COMMAND_WORD:
-            return new UndoCommand();
+            if (arguments == null || arguments.trim().equals("")) {
+                return new UndoCommand();
+            } else {
+                throw new ParseException(String.format(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                        UndoCommand.MESSAGE_USAGE)));
+            }
 
         /*
          * Info related commands.
@@ -119,7 +130,12 @@ public class ThriftParser {
          * System related commands.
          */
         case ExitCommand.COMMAND_WORD:
-            return new ExitCommand();
+            if (arguments == null || arguments.trim().equals("")) {
+                return new ExitCommand();
+            } else {
+                throw new ParseException(String.format(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                        ExitCommand.MESSAGE_USAGE)));
+            }
 
         case HelpCommand.COMMAND_WORD:
             return new HelpCommandParser().parse(arguments);
