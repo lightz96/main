@@ -15,7 +15,6 @@ import java.util.HashSet;
 
 import org.junit.jupiter.api.Test;
 
-import javafx.scene.shape.VLineTo;
 import thrift.commons.core.GuiSettings;
 import thrift.logic.commands.AddExpenseCommand;
 import thrift.model.transaction.Description;
