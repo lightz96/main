@@ -44,7 +44,7 @@ public class BalanceBar extends UiPart<Region> {
     }
 
     public void setMonthBudget(double monthBudget) {
-        monthBudgetValueLabel.setText("$" + String.valueOf(DECIMAL_FORMATTER.format(monthBudget)));
+        monthBudgetValueLabel.setText("Budget: $" + String.valueOf(DECIMAL_FORMATTER.format(monthBudget)));
     }
 
     public void setMonthBalance(double monthBalance) {
