@@ -5,6 +5,7 @@ import static thrift.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
@@ -110,11 +111,46 @@ public class LogicManager implements Logic {
 
     @Override
     public void parseFilterable(String input, Command command, FilteredBar filteredBar) {
-        if (command instanceof ListCommand) {
-
-        } else if (command instanceof FindCommand) {
-
+        requireAllNonNull(input, command, filteredBar);
+        try {
+            String arguments = thriftParser.getArguments(input).trim();
+            if (command instanceof ListCommand) {
+                if (arguments.equals("")) {
+                    filteredBar.setFiltered("All");
+                } else {
+                    String monthYear = model.getCurrentMonthYear();
+                    filteredBar.setFiltered(monthYear);
+                }
+            } else if (command instanceof FindCommand) {
+                String filteredString = formatFindCommandArguments(arguments);
+                filteredBar.setFiltered(filteredString);
+            }
+        } catch (ParseException e) {
+            logger.severe("Unable to parse the user input at LogicManager#parseFilterable");
         }
+    }
+
+    /**
+     * Formats arguments for find command into human-readable format. <br>
+     * Note: arguments should not be empty.
+     *
+     * @param arguments is the arguments to find command.
+     * @return a human-readable string for find command.
+     */
+    private String formatFindCommandArguments(String arguments) {
+        assert !arguments.equals("");
+        String[] keywords = arguments.split("\\s+");
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < keywords.length; i++) {
+            if (i == keywords.length - 2) {
+                sb.append("\"").append(keywords[i]).append("\"").append(" or ");
+            } else if (i == keywords.length - 1) {
+                sb.append("\"").append(keywords[i]).append("\"");
+            } else {
+                sb.append("\"").append(keywords[i]).append("\"").append(", ");
+            }
+        }
+        return sb.toString();
     }
 
     @Override
