@@ -22,11 +22,15 @@ public class BalanceBar extends UiPart<Region> {
     @FXML
     private Label monthBalanceValueLabel;
 
-    public BalanceBar(String monthYear, double monthBudget, double monthBalance) {
+    @FXML
+    private Label monthExpenseValueLabel;
+
+    public BalanceBar(String monthYear, double monthBudget, double monthBalance, double monthExpense) {
         super(FXML);
         setMonthYear(monthYear);
         setMonthBudget(monthBudget);
         setMonthBalance(monthBalance);
+        setMonthExpense(monthExpense);
         monthBalanceValueLabel.setWrapText(true);
     }
 
@@ -48,5 +52,19 @@ public class BalanceBar extends UiPart<Region> {
             monthBalanceValueLabel.setStyle("-fx-text-fill: #4CAF50;");
         }
         monthBalanceValueLabel.setText(sb.toString());
+    }
+
+    /**
+     * Updates the monthly expense text in UI.
+     *
+     * @param monthExpense is the expense to be updated with.
+     */
+    public void setMonthExpense(double monthExpense) {
+        if (monthExpense == 0) {
+            monthExpenseValueLabel.setStyle("-fx-text-fill: #757575;");
+        } else {
+            monthExpenseValueLabel.setStyle("-fx-text-fill: #ff6c4f;");
+        }
+        monthExpenseValueLabel.setText("$" + DECIMAL_FORMATTER.format(monthExpense));
     }
 }

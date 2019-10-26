@@ -61,7 +61,7 @@
                <VBox id="expenseText" alignment="CENTER_RIGHT" prefHeight="120.0" prefWidth="252.0">
                   <children>
                      <Label alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="280.0" styleClass="balance-text" text="Expense" />
-                     <Label alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="248.0" text="\$1000.00" />
+                     <Label fx:id="monthExpenseValueLabel" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="248.0" text="\$1000.00" />
                   </children>
                </VBox>
             </children>

@@ -105,6 +105,7 @@ public class LogicManager implements Logic {
         requireNonNull(command);
         if (isRefreshingFilteredList(command)) {
             model.updateBalanceForCurrentMonth();
+            model.updateExpenseForCurrentMonth();
             updateBalanceBar(balanceBar);
         }
     }
@@ -167,6 +168,7 @@ public class LogicManager implements Logic {
         balanceBar.setMonthYear(getCurrentMonthYear());
         balanceBar.setMonthBudget(getCurrentMonthBudget());
         balanceBar.setMonthBalance(getCurrentMonthBalance());
+        balanceBar.setMonthExpense(getCurrentMonthExpense());
     }
 
     @Override
@@ -199,6 +201,16 @@ public class LogicManager implements Logic {
     @Override
     public double getCurrentMonthBalance() {
         return model.getBalance();
+    }
+
+    @Override
+    public double getCurrentMonthExpense() {
+        return model.getExpense();
+    }
+
+    @Override
+    public void computeInitialMonthExpense() {
+        model.updateExpenseForCurrentMonth();
     }
 
     @Override

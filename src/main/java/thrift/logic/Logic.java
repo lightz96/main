@@ -107,6 +107,12 @@ public interface Logic {
     /** Returns the current month's balance. */
     double getCurrentMonthBalance();
 
+    /** Returns the current month's expense. */
+    double getCurrentMonthExpense();
+
+    /** Computes the current month's initial expense. */
+    void computeInitialMonthExpense();
+
     /** Returns an unmodifiable view of the filtered list of transactions. */
     ObservableList<Transaction> getFilteredTransactionList();
 
