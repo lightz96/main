@@ -17,8 +17,8 @@ import org.junit.jupiter.api.Test;
 
 import thrift.commons.core.GuiSettings;
 import thrift.logic.commands.AddExpenseCommand;
-import thrift.model.transaction.Description;
 import thrift.logic.commands.exceptions.CommandException;
+import thrift.model.transaction.Description;
 import thrift.model.transaction.DescriptionOrRemarkContainsKeywordsPredicate;
 import thrift.model.transaction.Expense;
 import thrift.model.transaction.Income;

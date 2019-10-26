@@ -85,8 +85,10 @@ public interface Model {
 
     /**
      * Deletes the last transaction in the full transaction list.
+     *
+     * @return deleted transaction.
      */
-    void deleteLastTransaction();
+    Transaction deleteLastTransaction();
 
     /**
      * Adds the given expense.

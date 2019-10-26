@@ -35,6 +35,9 @@ public class BudgetCommand extends NonScrollingCommand implements Undoable {
 
     public static final String MESSAGE_SUCCESS = "New budget: %1$s";
 
+    public static final String UNDO_SUCCESS = "Budget is reset to: %1$s";
+    public static final String REDO_SUCCESS = "Budget is reset to: %1$s";
+
     private final Budget budget;
     private Budget oldBudget;
     /**
@@ -54,18 +57,21 @@ public class BudgetCommand extends NonScrollingCommand implements Undoable {
     }
 
     @Override
-    public void undo(Model model) {
+    public String undo(Model model) {
         requireAllNonNull(model, budget);
         if (oldBudget == null) {
             model.resetBudgetForThatMonth(budget);
+            return String.format(UNDO_SUCCESS, "-");
         } else {
             model.setBudget(oldBudget);
+            return String.format(UNDO_SUCCESS, oldBudget);
         }
     }
 
     @Override
-    public void redo(Model model) {
+    public String redo(Model model) {
         requireAllNonNull(model, budget);
         model.setBudget(budget);
+        return String.format(REDO_SUCCESS, budget);
     }
 }

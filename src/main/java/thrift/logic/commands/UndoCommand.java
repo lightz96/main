@@ -19,7 +19,7 @@ public class UndoCommand extends NonScrollingCommand {
             + "Undoable commands are: add_expense, add_income, budget, clone, delete, tag, untag, update.\n"
             + "Format: " + COMMAND_WORD;
 
-    public static final String MESSAGE_SUCCESS = "Undo successful";
+    public static final String MESSAGE_SUCCESS = "Undo successful.";
 
     public static final String NO_UNDOABLE_COMMAND = "No valid command to undo";
 
@@ -27,7 +27,7 @@ public class UndoCommand extends NonScrollingCommand {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
         Undoable command = model.getPreviousUndoableCommand();
-        command.undo(model);
-        return new CommandResult(MESSAGE_SUCCESS);
+        String outputMessage = command.undo(model);
+        return new CommandResult(MESSAGE_SUCCESS + "\n" + outputMessage);
     }
 }

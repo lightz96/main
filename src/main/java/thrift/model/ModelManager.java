@@ -135,8 +135,8 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void deleteLastTransaction() {
-        thrift.removeLastTransaction();
+    public Transaction deleteLastTransaction() {
+        return thrift.removeLastTransaction();
     }
 
     @Override
