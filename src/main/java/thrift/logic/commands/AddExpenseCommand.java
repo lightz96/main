@@ -50,11 +50,10 @@ public class AddExpenseCommand extends ScrollingCommand implements Undoable {
             + CliSyntax.PREFIX_TAG + "Meal ";
 
     public static final String MESSAGE_SUCCESS = "New expense added: %1$s";
-
-    private final Expense toAdd;
-
     public static final String UNDO_SUCCESS = "Deleted expense: %1$s";
     public static final String REDO_SUCCESS = "Added expense: %1$s";
+
+    private final Expense toAdd;
 
     /**
      * Creates an AddExpenseCommand to add the specified {@code Expense}

@@ -6,7 +6,6 @@ import static thrift.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import thrift.commons.core.Messages;
 import thrift.logic.commands.AddExpenseCommand;
 import thrift.logic.commands.AddIncomeCommand;
 import thrift.logic.commands.BudgetCommand;
