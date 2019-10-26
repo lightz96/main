@@ -26,11 +26,8 @@ public class UndoCommand extends NonScrollingCommand {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        if (model.hasUndoableCommand()) {
-            Undoable command = model.getPreviousUndoableCommand();
-            command.undo(model);
-            return new CommandResult(MESSAGE_SUCCESS);
-        }
-        throw new CommandException(NO_UNDOABLE_COMMAND);
+        Undoable command = model.getPreviousUndoableCommand();
+        command.undo(model);
+        return new CommandResult(MESSAGE_SUCCESS);
     }
 }

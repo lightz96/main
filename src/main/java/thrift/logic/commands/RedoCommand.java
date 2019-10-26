@@ -26,11 +26,8 @@ public class RedoCommand extends NonScrollingCommand {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        if (model.hasUndoneCommand()) {
-            Undoable undoable = model.getUndoneCommand();
-            undoable.redo(model);
-            return new CommandResult(MESSAGE_SUCCESS);
-        }
-        throw new CommandException(NO_REDOABLE_COMMAND);
+        Undoable undoable = model.getUndoneCommand();
+        undoable.redo(model);
+        return new CommandResult(MESSAGE_SUCCESS);
     }
 }
