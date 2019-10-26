@@ -129,7 +129,7 @@
 }
 
 .list-cell #incomeValue {
-    -fx-text-fill: #8BC34A;
+    -fx-text-fill: #4CAF50;
     -fx-font-size: 22px;
     -fx-label-padding: 25px 20px 0 0;
 }
