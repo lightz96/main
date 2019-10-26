@@ -40,7 +40,7 @@
                <VBox id="incomeText" alignment="CENTER_RIGHT" prefHeight="120.0" prefWidth="255.0">
                   <children>
                      <Label alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="280.0" styleClass="balance-text" text="Income" />
-                     <Label alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="280.0" text="\$1000.00" />
+                     <Label fx:id="monthIncomeValueLabel" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="280.0" text="\$1000.00" />
                   </children>
                </VBox>
             </children>

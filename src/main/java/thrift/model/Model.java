@@ -174,6 +174,16 @@ public interface Model {
     double getExpense();
 
     /**
+     * Updates the income tracked by the model by summing values from the {@code Transaction} in the filteredList.
+     */
+    void updateIncomeForCurrentMonth();
+
+    /**
+     * Returns the income held by the model to update the GUI with.
+     */
+    double getIncome();
+
+    /**
      * Returns if {@code transaction} is currently in {@code FilteredList<Transaction>}.
      */
     boolean isInView(Transaction transaction);

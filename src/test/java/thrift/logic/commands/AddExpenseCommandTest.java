@@ -260,6 +260,26 @@ public class AddExpenseCommandTest {
         }
 
         @Override
+        public void updateExpenseForCurrentMonth() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public double getExpense() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void updateIncomeForCurrentMonth() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public double getIncome() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public boolean isInView(Transaction transaction) {
             throw new AssertionError("This method should not be called.");
         }

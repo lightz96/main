@@ -5,7 +5,6 @@ import static thrift.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.List;
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
@@ -106,13 +105,14 @@ public class LogicManager implements Logic {
         if (isRefreshingFilteredList(command)) {
             model.updateBalanceForCurrentMonth();
             model.updateExpenseForCurrentMonth();
+            model.updateIncomeForCurrentMonth();
             updateBalanceBar(balanceBar);
         }
     }
 
     @Override
     public void parseFilterable(String input, Command command, FilteredBar filteredBar) {
-        requireAllNonNull(input, command, filteredBar);
+        requireAllNonNull(input, command);
         try {
             String arguments = thriftParser.getArguments(input).trim();
             if (command instanceof ListCommand) {
@@ -169,6 +169,7 @@ public class LogicManager implements Logic {
         balanceBar.setMonthBudget(getCurrentMonthBudget());
         balanceBar.setMonthBalance(getCurrentMonthBalance());
         balanceBar.setMonthExpense(getCurrentMonthExpense());
+        balanceBar.setMonthIncome(getCurrentMonthIncome());
     }
 
     @Override
@@ -211,6 +212,16 @@ public class LogicManager implements Logic {
     @Override
     public void computeInitialMonthExpense() {
         model.updateExpenseForCurrentMonth();
+    }
+
+    @Override
+    public double getCurrentMonthIncome() {
+        return model.getIncome();
+    }
+
+    @Override
+    public void computeInitialMonthIncome() {
+        model.updateIncomeForCurrentMonth();
     }
 
     @Override

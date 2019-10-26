@@ -41,6 +41,7 @@ public class MainWindow extends UiPart<Stage> {
     private double budget;
     private double balance;
     private double expense;
+    private double income;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -133,8 +134,10 @@ public class MainWindow extends UiPart<Stage> {
         budget = logic.getCurrentMonthBudget();
         balance = logic.getCurrentMonthBalance();
         logic.computeInitialMonthExpense();
+        logic.computeInitialMonthIncome();
         expense = logic.getCurrentMonthExpense();
-        balanceBar = new BalanceBar(monthYear, budget, balance, expense);
+        income = logic.getCurrentMonthIncome();
+        balanceBar = new BalanceBar(monthYear, budget, balance, expense, income);
         balancebarPlaceholder.getChildren().add(balanceBar.getRoot());
 
         filteredBar = new FilteredBar(monthYear);
