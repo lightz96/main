@@ -52,6 +52,9 @@ public class BalanceBar extends UiPart<Region> {
         if (monthBalance < 0) {
             sb.append("-$").append(DECIMAL_FORMATTER.format(monthBalance * (-1)));
             monthBalanceValueLabel.setStyle("-fx-text-fill: #ff6c4f;");
+        } else if (monthBalance == 0) {
+            sb.append("$").append(DECIMAL_FORMATTER.format(monthBalance));
+            monthBalanceValueLabel.setStyle("-fx-text-fill: #757575;");
         } else {
             sb.append("$").append(DECIMAL_FORMATTER.format(monthBalance));
             monthBalanceValueLabel.setStyle("-fx-text-fill: #4CAF50;");
