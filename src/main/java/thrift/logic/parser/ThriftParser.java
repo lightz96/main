@@ -104,20 +104,10 @@ public class ThriftParser {
             return new ListCommandParser().parse(arguments);
 
         case RedoCommand.COMMAND_WORD:
-            if (arguments == null || arguments.trim().equals("")) {
-                return new RedoCommand();
-            } else {
-                throw new ParseException(String.format(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                        RedoCommand.MESSAGE_USAGE)));
-            }
+            return new NoArgumentsCommandParser(commandWord, RedoCommand.MESSAGE_USAGE).parse(arguments);
 
         case UndoCommand.COMMAND_WORD:
-            if (arguments == null || arguments.trim().equals("")) {
-                return new UndoCommand();
-            } else {
-                throw new ParseException(String.format(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                        UndoCommand.MESSAGE_USAGE)));
-            }
+            return new NoArgumentsCommandParser(commandWord, UndoCommand.MESSAGE_USAGE).parse(arguments);
 
         /*
          * Info related commands.
@@ -129,12 +119,7 @@ public class ThriftParser {
          * System related commands.
          */
         case ExitCommand.COMMAND_WORD:
-            if (arguments == null || arguments.trim().equals("")) {
-                return new ExitCommand();
-            } else {
-                throw new ParseException(String.format(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                        ExitCommand.MESSAGE_USAGE)));
-            }
+            return new NoArgumentsCommandParser(commandWord, ExitCommand.MESSAGE_USAGE).parse(arguments);
 
         case HelpCommand.COMMAND_WORD:
             return new HelpCommandParser().parse(arguments);

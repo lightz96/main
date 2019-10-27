@@ -3,6 +3,8 @@ package thrift.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static thrift.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.text.SimpleDateFormat;
+
 import thrift.logic.parser.CliSyntax;
 import thrift.model.Model;
 import thrift.model.transaction.Budget;
@@ -35,8 +37,8 @@ public class BudgetCommand extends NonScrollingCommand implements Undoable {
 
     public static final String MESSAGE_SUCCESS = "New budget: %1$s";
 
-    public static final String UNDO_SUCCESS = "Budget is reset to: %1$s";
-    public static final String REDO_SUCCESS = "Budget is reset to: %1$s";
+    public static final String UNDO_SUCCESS = "Budget for the month %1$s is reset to: %2$s";
+    public static final String REDO_SUCCESS = "Budget for the month %1$s is reset to: %2$s";
 
     private final Budget budget;
     private Budget oldBudget;
@@ -59,19 +61,22 @@ public class BudgetCommand extends NonScrollingCommand implements Undoable {
     @Override
     public String undo(Model model) {
         requireAllNonNull(model, budget);
+        assert oldBudget == null || budget.getBudgetDate().equals(oldBudget.getBudgetDate());
+        String monthYear = new SimpleDateFormat("MMMMM yyyy").format(budget.getBudgetDate().getTime());
         if (oldBudget == null) {
             model.resetBudgetForThatMonth(budget);
-            return String.format(UNDO_SUCCESS, "-");
+            return String.format(UNDO_SUCCESS, monthYear, "-");
         } else {
             model.setBudget(oldBudget);
-            return String.format(UNDO_SUCCESS, oldBudget);
+            return String.format(UNDO_SUCCESS, monthYear, oldBudget);
         }
     }
 
     @Override
     public String redo(Model model) {
         requireAllNonNull(model, budget);
+        String monthYear = new SimpleDateFormat("MMMM yyyy").format(budget.getBudgetDate().getTime());
         model.setBudget(budget);
-        return String.format(REDO_SUCCESS, budget);
+        return String.format(REDO_SUCCESS, monthYear, budget);
     }
 }
