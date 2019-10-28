@@ -326,7 +326,7 @@ NOTE: Assume entry at index 1 is `[-] Laksa ($10.50) Date: 18/10/2019 Remarks: U
 [[UndoTag]]
 === Undoing the previous undoable command: `undo`
 Do not panic if you have accidentally made a mistake in THRIFT, like deleting the wrong transaction.
-THRIFT provides an `undo` command to save your trouble! You can revert to the previous state
+THRIFT provides an `undo` command to solve your trouble! You can revert to the previous state
 of THRIFT using `undo`.
 
 Format: `undo`
@@ -346,9 +346,9 @@ WARNING: You cannot undo undoable commands once the application exits.
 * `<<BudgetTag, budget>>`
 
 Examples: +
-Suppose you want to delete the second transaction (Bursary) in THRIFT, you remove the third transaction instead!
+Suppose you want to delete the second transaction (Bursary) in THRIFT, but you remove the third transaction instead!
 One possible solution is that you add the transaction manually back into THRIFT, but this is too troublesome! You can
-retrieve back the deleted transaction by performing `undo`.
+retrieve the deleted transaction by performing `undo`.
 
 To `undo` the `delete` command:
 
@@ -363,7 +363,7 @@ image::UndoAndRedo/undocommandresult.PNG[, 600]
 
 [[RedoTag]]
 === Redoing the undone command: `redo`
-Overuse of `undo` command? No worries, THRIFT provides `redo` command to help you in this situation.
+Misuse of `undo` command? No worries, THRIFT provides `redo` command to help you in this situation.
 You can restore back the previous state of the undone transaction.
 
 Format: `redo`
