@@ -473,7 +473,7 @@ Think about exiting THRIFT after you have added the transaction? You can enter *
 command box or click on the close button at the top-right corner of the application.
 
 ==== Command syntax:
-Format: `exit`
+`exit`
 
 === Generating an external report `[coming in v2.0]`
 
