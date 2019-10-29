@@ -42,11 +42,11 @@ image::UGUI.png[]
 
 Understanding this document:
 
-TIP: This symbol indicates useful information that may improve your experience with THRIFT.
+TIP: This symbol indicates a tip that you may find useful when using THRIFT.
 
-NOTE: This symbol indicates essential and good to know information.
+NOTE: This symbol indicates information that you may want to take note of when using THRIFT.
 
-WARNING: This symbol indicates warning information that you ought to be aware of while using THRIFT.
+WARNING: This symbol indicates information that you need to be cautious of when using THRIFT.
 [horizontal]
 `add_expense`:: Words with a grey highlight (called a mark-up) indicates that it is a command, or a part of it.
 kbd:[Enter]:: Words styled like this indicates a keyboard button.
