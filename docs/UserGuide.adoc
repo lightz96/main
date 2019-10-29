@@ -475,9 +475,6 @@ image::Help-exit/specifichelpcommand.PNG[]
 Think about exiting THRIFT after you have added the transaction? You can enter *exit* in the
 command box or click on the close button at the top-right corner of the application.
 
-==== Command syntax:
-`exit`
-
 === Generating an external report `[coming in v2.0]`
 
 With this feature, you will be able to save your monthly budget report into an external file for your record purposes. The report will clearly state your expenditure, income and remaining budget for the month.
