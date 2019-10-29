@@ -526,4 +526,7 @@ Example: `help delete`
 
 == Glossary
 [horizontal]
+[[thrift]]THRIFT:: Stands for "Terminal-input Human Readable Interactive Finance Tracker". It is the application this user guide is for.
+
 [[url]] URL:: Stands for "Uniform Resource Locator" which is used to access a particular website.
+
