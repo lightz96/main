@@ -7,6 +7,7 @@ import static thrift.model.transaction.TransactionDate.DATE_FORMATTER;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.IntStream;
 
 import thrift.commons.core.Messages;
 import thrift.commons.core.index.Index;
@@ -42,7 +43,7 @@ public class CloneCommand extends ScrollingCommand implements Undoable {
             + "\nPossible usage of " + COMMAND_WORD + ": \n"
             + "To clone the transaction at index 8 in the displayed transaction list: "
             + COMMAND_WORD + " " + CliSyntax.PREFIX_INDEX + "8\n"
-            + "To clone the transaction at index 8 5 times across next 5 months (including current month):"
+            + "To clone the transaction at index 8 5 times across next 5 months (including current month): "
             + COMMAND_WORD + " " + CliSyntax.PREFIX_INDEX + "8 " + CliSyntax.PREFIX_OCCURRENCE + "monthly:5";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
@@ -58,8 +59,8 @@ public class CloneCommand extends ScrollingCommand implements Undoable {
     public static final String MESSAGE_CLONE_TRANSACTION_SUCCESS = "Cloned transaction: %1$s";
     public static final String MESSAGE_NUM_CLONED_TRANSACTIONS = "(Cloned %s %d times)";
 
-    public static final String UNDO_SUCCESS = "Deleted cloned transaction: %1$s";
-    public static final String REDO_SUCCESS = "Added cloned transaction: %1$s";
+    public static final String UNDO_SUCCESS = "Deleted cloned transaction(s):\n%1$s";
+    public static final String REDO_SUCCESS = "Added cloned transaction(s):\n%1$s";
 
     private final Index targetIndex;
     private final Occurrence occurrence;
@@ -146,9 +147,14 @@ public class CloneCommand extends ScrollingCommand implements Undoable {
 
     @Override
     public String undo(Model model) {
-        requireNonNull(model);
-        Transaction deletedTransaction = model.deleteLastTransaction();
-        return String.format(UNDO_SUCCESS, deletedTransaction);
+        requireAllNonNull(model, occurrence);
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < occurrence.getNumOccurrences(); i++) {
+            Transaction deleteTransaction = model.deleteLastTransaction();
+            sb.append(deleteTransaction).append("\n");
+        }
+        sb.deleteCharAt(sb.length() - 1);
+        return String.format(UNDO_SUCCESS, sb.toString());
     }
 
     @Override
