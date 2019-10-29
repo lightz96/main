@@ -529,4 +529,4 @@ Example: `help delete`
 
 == Glossary
 [horizontal]
-[[url]] URL: Stands for Uniform Resource Locator which is used to access a particular website.
+[[url]] URL: Stands for "Uniform Resource Locator" which is used to access a particular website.
