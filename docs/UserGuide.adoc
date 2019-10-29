@@ -443,7 +443,7 @@ New to THRIFT? Or forget about some of the commands used in THRIFT? You can run 
 comprehensive user guide. It saves the trouble of saving the URL of this user guide.
 
 ==== Command syntax:
-Format: `help [COMMAND]`
+`help [COMMAND]`
 
 ==== Example usage:
 Suppose you want to add a transaction to THRIFT, but you had forgotten about the command to perform this function.
