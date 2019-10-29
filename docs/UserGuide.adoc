@@ -349,7 +349,7 @@ WARNING: You cannot undo undoable commands once the application exits.
 * `<<UntagTag, untag>>`
 * `<<BudgetTag, budget>>`
 
-==== Command Syntax:
+==== Command syntax:
 Format: `undo`
 
 ==== Example usage:
@@ -377,7 +377,7 @@ NOTE: `Redo` command is only applicable to <<Undoable, undoable command>>.
 
 WARNING: You cannot redo undone commands once the application exits or new undoable command is executed after `undo`.
 
-==== Command Syntax:
+==== Command syntax:
 Format: `redo`
 
 ==== Example usage:
@@ -442,7 +442,7 @@ Expected output:
 New to THRIFT? Or forget about some of the commands used in THRIFT? You can run *help* to obtain the link to this
 comprehensive user guide. It saves the trouble of saving the URL of this user guide.
 
-==== Command Syntax:
+==== Command syntax:
 Format: `help [COMMAND]`
 
 ==== Example usage:
@@ -472,7 +472,7 @@ image::Help-exit/specifichelpcommand.PNG[]
 Think about exiting THRIFT after you have added the transaction? You can enter *exit* in the
 command box or click on the close button at the top-right corner of the application.
 
-==== Command Syntax:
+==== Command syntax:
 Format: `exit`
 
 === Generating an external report `[coming in v2.0]`
