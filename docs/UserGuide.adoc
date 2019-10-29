@@ -339,7 +339,8 @@ NOTE: `Undo` can only apply to undoable commands. Undoable commands refers to co
 
 WARNING: You cannot undo undoable commands once the application exits.
 
-.List of undoable commands[[Undoable]]:
+List of undoable commands[[Undoable]]:
+
 * `<<ExpenseTag, add_expense>>`
 * `<<IncomeTag, add_income>>`
 * `<<DeleteTag, delete>>`
@@ -371,7 +372,7 @@ image::UndoAndRedo/undocommandresult.png[, 550]
 [[RedoTag]]
 === Redoing the undone command: `redo`
 Misuse of `undo` command? No worries, THRIFT provides `redo` command to help you in this situation.
-You can restore back the previous state of the undone transaction.
+You can restore the previous state of the undone transaction.
 
 NOTE: `Redo` command is only applicable to <<Undoable, undoable command>>.
 
@@ -391,7 +392,7 @@ To `redo` undone `add_expense` command:
 +
 image::UndoAndRedo/redocommand.png[, 550]
 
-. You will see a success message displays in the result box and the transaction adds back to the list:
+. You will see a success message displays in the result box and the transaction (Chicken Rice) adds back to the list:
 +
 image::UndoAndRedo/redocommandresult.png[, 550]
 
@@ -465,7 +466,7 @@ TIP: Alternative methods: press kbd:[F1] or click on *Help* in the menu bar, and
 However, if you just want to view the usage syntax of the `add_expense` command because you had forgotten the exact format,
 you can enter *help add_expense* instead of *help*.
 
-Below is a simplified version of the `add_expense` command:
+You will see a simplified help version of the `add_expense` command displays in the result box:
 
 image::Help-exit/specifichelpcommand.PNG[]
 
@@ -525,3 +526,7 @@ Examples: +
 * <<HelpTag, *Help*>>: `help [COMMAND]` +
 Example: `help delete`
 * <<ExitTag, *Exit*>>: `exit`
+
+== Glossary
+[horizontal]
+[[url]] URL: Stands for Uniform Resource Locator which is used to access a particular website.
