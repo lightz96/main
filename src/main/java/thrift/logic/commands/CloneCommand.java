@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static thrift.commons.util.CollectionUtil.requireAllNonNull;
 import static thrift.model.transaction.TransactionDate.DATE_FORMATTER;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
@@ -64,7 +65,7 @@ public class CloneCommand extends ScrollingCommand implements Undoable {
     private final Index targetIndex;
     private final Occurrence occurrence;
     private int frequencyCalendarField;
-    private Transaction transactionToClone;
+    private ArrayList<Transaction> clonedTransactionList;
 
     /**
      * Creates a CloneCommand instance to clone an {@code Expense} or {@code Income}
@@ -77,7 +78,7 @@ public class CloneCommand extends ScrollingCommand implements Undoable {
         requireNonNull(occurrence);
         this.targetIndex = targetIndex;
         this.occurrence = occurrence;
-        this.transactionToClone = null;
+        this.clonedTransactionList = new ArrayList<>();
         this.frequencyCalendarField = 0;
     }
 
@@ -90,7 +91,7 @@ public class CloneCommand extends ScrollingCommand implements Undoable {
             throw new CommandException(Messages.MESSAGE_INVALID_TRANSACTION_DISPLAYED_INDEX);
         }
 
-        transactionToClone = lastShownList.get(targetIndex.getZeroBased());
+        Transaction transactionToClone = lastShownList.get(targetIndex.getZeroBased());
         frequencyCalendarField = occurrence.getFrequencyCalendarField();
 
         for (int i = 0; i < occurrence.getNumOccurrences(); i++) {
@@ -99,12 +100,12 @@ public class CloneCommand extends ScrollingCommand implements Undoable {
             String date = DATE_FORMATTER.format(calendar.getTime());
 
             Transaction clonedTransaction = createClonedTransaction(transactionToClone, date);
+            clonedTransactionList.add(clonedTransaction);
             if (clonedTransaction instanceof Expense) {
                 model.addExpense((Expense) clonedTransaction);
             } else if (clonedTransaction instanceof Income) {
                 model.addIncome((Income) clonedTransaction);
             }
-
             // Use null comparison instead of requireNonNull(transactionListPanel) as current JUnit tests are unable to
             // handle JavaFX initialization
             if (transactionListPanel != null && model.isInView(clonedTransaction)) {
@@ -160,16 +161,13 @@ public class CloneCommand extends ScrollingCommand implements Undoable {
 
     @Override
     public String redo(Model model) {
-        requireAllNonNull(model, transactionToClone, occurrence);
+        requireAllNonNull(model, occurrence);
         assert frequencyCalendarField == Calendar.DATE || frequencyCalendarField == Calendar.WEEK_OF_YEAR
                 || frequencyCalendarField == Calendar.MONTH || frequencyCalendarField == Calendar.YEAR;
+        assert clonedTransactionList.size() > 0;
 
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < occurrence.getNumOccurrences(); i++) {
-            Calendar calendar = Calendar.getInstance();
-            calendar.add(frequencyCalendarField, i);
-            String date = DATE_FORMATTER.format(calendar.getTime());
-            Transaction clonedTransaction = createClonedTransaction(transactionToClone, date);
+        for (Transaction clonedTransaction : clonedTransactionList) {
             if (clonedTransaction instanceof Expense) {
                 model.addExpense((Expense) clonedTransaction);
             } else if (clonedTransaction instanceof Income) {
