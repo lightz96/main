@@ -36,6 +36,11 @@ This developer guide specifies the technical and non-technical details of THRIFT
 The technical aspects include the design and architecture while the non-technical aspects include the user stories, use cases and <<nfr, NFRs>>.
 
 === About the document
+TIP: This symbol indicates a tip that you may find useful when enhancing THRIFT.
+
+NOTE: This symbol indicates information that you may want to take note of when enhancing THRIFT.
+
+WARNING: This symbol indicates information that you need to be cautious of when enhancing THRIFT.
 
 [horizontal]
 *add_expense n/Laksa v/4*:: Bold text indicates user input.
@@ -807,7 +812,42 @@ Refer to the guide <<Documentation#, here>>.
 
 == Testing
 
-Refer to the guide <<Testing#, here>>.
+=== Running Tests
+
+There are two ways to run tests.
+
+*Method 1: Using IntelliJ JUnit test runner*
+
+* To run all tests, right-click on the `src/test/java` folder and choose `Run 'All Tests'`
+* To run a subset of tests, you can right-click on a test package, test class, or a test and choose `Run 'ABC'`
+
+*Method 2: Using Gradle*
+
+* Open a console and run the command `gradlew clean test` (Mac/Linux: `./gradlew clean test`)
+
+[NOTE]
+See <<UsingGradle#, UsingGradle.adoc>> for more info on how to run tests using Gradle.
+
+=== Types of tests
+
+We have three types of tests:
+
+.  _Unit tests_ targeting the lowest level methods/classes. +
+e.g. `thrift.commons.util.StringUtilTest`
+.  _Integration tests_ that are checking the integration of multiple code units (those code units are assumed to be working). +
+e.g. `thrift.storage.StorageManagerTest`
+.  Hybrids of unit and integration tests. These test are checking multiple code units as well as how the are connected together. +
+e.g. `thrift.logic.LogicManagerTest`
+
+
+=== Troubleshooting Testing
+**Problem: Keyboard and mouse movements are not simulated on macOS Mojave, resulting in GUI Tests failure.**
+
+* Reason: From macOS Mojave onwards, applications without `Accessibility` permission cannot simulate certain keyboard and mouse movements.
+* Solution: Open `System Preferences`, click `Security and Privacy` -> `Privacy` -> `Accessibility`, and check the box beside `Intellij IDEA`.
+
+.`Accessibility` permission is granted to `IntelliJ IDEA`
+image::testfx-idea-accessibility-permissions.png[width="600"]
 
 == Dev ops
 This section describes the practices and tools used during development.
