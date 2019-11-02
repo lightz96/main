@@ -5,13 +5,26 @@
 :repoURL: https://github.com/AY1920S1-CS2103T-W12-2/main
 
 == 1. Introduction
-The purpose of this portfolio is to demonstrate my capability based on  my contributions to the team project THRIFT.
+This portfolio aims to showcase the work that I have done in this team project THRIFT.
+
+=== 1.1 About the team
+This project is done by a team of 5 members: Poh Jia Hao, Lye Jian Wen, Ang Chin Guan, Melvin, Oen Qi Han, Kenson and myself.
+
+=== 1.2 About the project
+It is a project by CS2103T Software Engineering in National University of Singapore (NUS). This project spans over 4 weeks.
+
+I did this project as an year 2 undergraduate as Bachelor in Computer Science in NUS.
+This project used Command-Line Interface (CLI) as it is one of our constraints in our module.
+This is meant for user who prefers typing compared to others.
 
 THRIFT is a financial tracker desktop application which provides a Command-Line Interface (CLI) for user to enter their commands.
 It is morphed from Address-book3.
-It is done by a team of 5 members, Jia hao, Jian Wen, Melvin, Kenson and me. This project spans over 4 weeks.
 
-== 2. About this project portfolio
+=== 1.3 List of main features
+THRIFT provides a list of features: add, delete, update transactions, set budgets, undo and redo.
+
+=== 1.4 About this portfolio
+The following symbols used in this portfolio:
 [horizontal]
 *add_expense n/Laksa v/4*:: Bold text indicates user input.
 
@@ -23,6 +36,9 @@ It is done by a team of 5 members, Jia hao, Jian Wen, Melvin, Kenson and me. Thi
 This section summarises my past 4 weeks of contributions to THRIFT.
 
 === 3.1 Enhancements
+
+=== 3.2 Code contributed
+Please click this link to view a sample of my code: [Code] []
 
 === 3.2 Other contributions
 This section illustrates some other areas that I have contributed besides coding:
@@ -38,10 +54,166 @@ This section illustrates some other areas that I have contributed besides coding
 ** Modifies the entire UI layout to make it look professional.
 ** Changes the entire UI to use white theme
 
-== 4. Contribution to User Guide
+* Community:
+** Reviewed PR
+** Reported Bugs
 
+== 4. Contribution to User Guide
+(Start of extract)
+[[UndoTag]]
+=== Undoing the previous undoable command: `undo`
+Do not panic if you have accidentally made a mistake in THRIFT, like deleting the wrong transaction.
+THRIFT provides an `undo` command to solve your trouble! You can revert to the previous state
+of THRIFT using `undo`.
+
+NOTE: `Undo` can only apply to undoable commands. Undoable commands refers to commands that modify the data of the THRIFT application.
+
+WARNING: You cannot undo undoable commands once the application exits.
+
+List of undoable commands[[Undoable]]:
+
+* `<<ExpenseTag, add_expense>>`
+* `<<IncomeTag, add_income>>`
+* `<<DeleteTag, delete>>`
+* `<<UpdateTag, update>>`
+* `<<CloneTag, clone>>`
+* `<<TagTag, tag>>`
+* `<<UntagTag, untag>>`
+* `<<BudgetTag, budget>>`
+
+==== Command syntax:
+`undo`
+
+==== Example usage:
+Suppose you want to delete the second transaction (Bursary) in THRIFT, but you remove the third transaction (Chicken Rice) instead!
+One possible solution is that you add the transaction manually back into THRIFT, but this is too troublesome! You can
+retrieve the deleted transaction by performing `undo`.
+
+To `undo` the `delete` command:
+
+. Type *undo* into the command box and press kbd:[Enter]:
++
+image::UndoAndRedo/undocommand.png[, 550]
+
+. You will see a success message displays in the result box, and the transaction (Chicken Rice)
+adds back to its original position in the list:
++
+image::UndoAndRedo/undocommandresult.png[, 550]
+
+[[RedoTag]]
+=== Redoing the undone command: `redo`
+Misuse of `undo` command? No worries, THRIFT provides `redo` command to help you in this situation.
+You can restore the previous state of the undone transaction.
+
+NOTE: `Redo` command is only applicable to <<Undoable, undoable command>>.
+
+WARNING: You cannot redo undone commands once the application exits or new undoable command is executed after `undo`.
+
+==== Command syntax:
+`redo`
+
+==== Example usage:
+Suppose you had undone the addition of the transaction (Chicken Rice) (See: <<UndoTag, Undoing the previous undoable command>>),
+but you decide to track the transaction using THRIFT. Instead of adding the transaction manually, you can add back
+the transaction by executing `redo`.
+
+To `redo` undone `add_expense` command:
+
+. Type *redo* into the command box and press kbd:[Enter]:
++
+image::UndoAndRedo/redocommand.png[, 550]
+
+. You will see a success message displays in the result box and the transaction (Chicken Rice) adds back to the list:
++
+image::UndoAndRedo/redocommandresult.png[, 550]
+(End of extract)
 
 == 5. Contribution to Developer Guide
+=== Undo/Redoing undoable commands
+*Undo* command allows the user to revert `**THRIFT**` to its previous state when they have made a mistake. *Redo* command does
+the opposite of *undo* command, useful for when the user wishes to execute the command instead.
+
+The underlying data structure of the undo and redo feature is implemented in `**PastUndoableCommands**`. It consists of two stacks:
+`UndoStack` and `RedoStack`. It provides the following methods:
+
+* `PastUndoableCommands#addPastCommand(Undoable undoable)` -- Keeps track of the undoable commands.
+* `PastUndoableCommands#getCommandToUndo()` -- Retrieves undoable commands from `UndoStack` for user to perform undo.
+* `PastUndoableCommands#hasUndoable()` -- Checks if there are any commands to perform undo.
+* `PastUndoableCommands#getCommandToRedo()` -- Retrieves undone commands from `RedoStack` for user to perform redo.
+* `PastUndoableCommands#hasRedoCommand()` -- Checks if there are any commands to perform redo.
+
+The function wrappers to these methods are `Model#keepTrackCommands(Undoable command)`, `Model#getPreviousUndoableCommand()`, `Model#hasUndoableCommand()`,
+`Model#getUndoneCommand()` and `Model#hasUndoneCommand()` respectively.
+
+NOTE: Undoable commands are *add_expense*, *add_income*, *clone*, *delete*, *tag*, *untag*, *update*.
+
+Every undoable command will be stored in the `UndoStack` once it is executed. It will only be stored in `RedoStack` when the user executed
+*undo*.
+
+==== Implementation
+The below scenario illustrates how undo and redo feature works:
+
+Step 1. The application is launched with an empty transaction list. Both `UndoStack` and `RedoStack` are empty upon initializing `**PastUndoableCommands**`.
+
+image::UndoAndRedo/initialUndoRedo.PNG[338, 300]
+
+Step 2. The user executes *add_expense n/Laksa v/4* to add Laksa to the `**TransactionList**`.
+The `**LogicManager**` invokes the method `Model#keepTrackCommands(Undoable undoable)` to keep track of the `**AddExpenseCommand**` object
+that was used to add Laksa. This `**AddExpenseCommand**` object is pushed into `UndoStack`.
+
+image::UndoAndRedo/addExpense.PNG[357, 300]
+
+Step 3. The user executes *update i/1 v/3.50* to update the cost of the Laksa to $3.50.
+The `**LogicManager**` calls the method `Model#keepTrackCommands(Undoable undoable)` to keep track of the `**UpdateCommand**` object
+that was used to update the cost of the Laksa. This `**UpdateCommand**` object is pushed into `UndoStack`.
+
+image::UndoAndRedo/updateExpense.PNG[341, 300]
+
+Step 4. The user executes *undo* to revert the cost of the Laksa to $4.00.
+The `**UndoCommand**` invokes the method `Model#getPreviousUndoableCommand()` to retrieve the `**UpdateCommand**` object.
+`**UpdateCommand**` is popped from `UndoStack` and pushed into `RedoStack` before being returned to the callee.
+
+image::UndoAndRedo/undo.PNG[320, 300]
+
+Step 5. The user executes *undo* to remove Laksa from `**TransactionList**`.
+The `**UndoCommand**` invokes the method `Model#getPreviousUndoableCommand()` to retrieve the `**AddExpenseCommand**` object.
+`**AddExpenseCommand**` is popped from `UndoStack` and pushed into `RedoStack` before being returned to the callee.
+
+image::UndoAndRedo/undo2.PNG[326, 300]
+
+The sequence diagram shows how *undo* work for *add_expense* command:
+
+.Sequence diagram of how *undo* command is applied at the back-end
+image::UndoAndRedo/UndoAddExpenseSequenceDiagram.png[]
+
+Step 6. The user executes *redo* to add Laksa back to `**TransactionList**`.
+The `**RedoCommand**` invokes the method `Model#getUndoneCommand()` to retrieve the `**AddExpenseCommand**` object.
+`**AddExpenseCommand**` is popped from `RedoStack` and pushed into `UndoStack` before being returned to the callee.
+
+image::UndoAndRedo/redo.PNG[325, 300]
+
+NOTE: All commands stored in `RedoStack` are purged when the user executes another undoable command.
+
+The sequence diagram shows how *redo* work for *add_expense* command:
+
+.Sequence diagram of how *redo* command is applied at the back-end
+image::UndoAndRedo/RedoAddExpenseSequenceDiagram.png[]
+
+The following activity diagram shows what happens if the user executes a command:
+
+.Activity diagram of the command execution.
+image::UndoAndRedo/RunCommandActivityDiagrams.png[]
+
+==== Design considerations
+
+===== Aspect: Data structure used to keep track of undoable command
+
+* **Alternative 1 (current choice):** Use two stacks. One stack stores the command to undo while the other stack stores the command to redo.
+** Pros: Easy to implement.
+** Cons: Need to carefully manage the two stacks. For example, you need to pop the command from one stack and push it into another stack.
+* **Alternative 2:** Use an arraylist and a pointer to indicate the next command to undo.
+** Pros: Easy to implement.
+** Cons: Need to carefully manage the pointer. For example, you need to ensure that the pointer stays within the size of an arraylist.
 
 
 
