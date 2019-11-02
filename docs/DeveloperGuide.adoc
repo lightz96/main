@@ -47,7 +47,7 @@ WARNING: This symbol indicates information that you need to be cautious of when 
 
 _/src/java/thrift/logic/Logic.java_:: Italic text indicates that it is a file/github path.
 
-`currentMonth`:: Text with grey highlight (called a mark-up) indicates that it is a method/variable/setting parameter name.
+`currentMonth`:: Text with grey highlight (called a mark-up) indicates that it is a method/variable/parameter name.
 
 `**THRIFT**`:: Bold text with mark-up indicates a class/package name.
 
@@ -102,7 +102,7 @@ Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> docume
 
 After forking the repo, the documentation will still have the SE-EDU branding and refer to the _se-edu/addressbook-level3_ repo.
 
-If you plan to develop this fork as a separate product (i.e. instead of contributing to _se-edu/addressbook-level3_), you should do the following:
+If you plan to develop this fork as a separate product (i.e. instead of contributing to _AY1920S1-CS2103T-W12-2/main_), you should do the following:
 
 . Configure the <<Docs-SiteWideDocSettings, site-wide documentation settings>> in link:{repoURL}/build.gradle[`_build.gradle_`], such as the `site-name`, to suit your own project.
 
@@ -933,12 +933,6 @@ If set, the name will be displayed near the top of the page.
 |URL to the site's repository on https://github.com[GitHub].
 Setting this will add a "View on GitHub" link in the navigation bar.
 |_not set_
-
-|`site-seedu`
-|Define this attribute if the project is an official SE-EDU project.
-This will render the SE-EDU navigation bar at the top of the page, and add some SE-EDU-specific navigation items.
-|_not set_
-
 |===
 
 [[Docs-PerFileDocSettings]]
