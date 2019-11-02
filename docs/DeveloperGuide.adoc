@@ -100,7 +100,7 @@ Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> docume
 
 ==== Updating documentation to match your fork
 
-After forking the repo, the documentation will still have the SE-EDU branding and refer to the _se-edu/addressbook-level3_ repo.
+After forking the repo, the documentation will still have the THRIFT branding and refer to the _AY1920S1-CS2103T-W12-2/main_ repo.
 
 If you plan to develop this fork as a separate product (i.e. instead of contributing to _AY1920S1-CS2103T-W12-2/main_), you should do the following:
 
@@ -975,7 +975,7 @@ These template files are written in a mixture of https://www.ruby-lang.org[Ruby]
 ====
 Modifying the template files in link:{repoURL}/docs/templates[_docs/templates_] requires some knowledge and experience with Ruby and Asciidoctor's API.
 You should only modify them if you need greater control over the site's layout than what stylesheets can provide.
-The SE-EDU team does not provide support for modified template files.
+The THRIFT team does not provide support for modified template files.
 ====
 
 [[Testing]]
