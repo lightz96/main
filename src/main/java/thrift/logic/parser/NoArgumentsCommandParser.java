@@ -18,6 +18,7 @@ public class NoArgumentsCommandParser implements Parser<Command> {
     private String errorMessage;
 
     public NoArgumentsCommandParser(String command, String errorMessage) {
+        assert !command.equals("") && !errorMessage.equals("");
         this.command = command;
         this.errorMessage = errorMessage;
     }
