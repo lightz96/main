@@ -14,7 +14,6 @@ import thrift.logic.commands.UpdateCommand.UpdateTransactionDescriptor;
 import thrift.logic.commands.exceptions.CommandException;
 import thrift.model.Model;
 import thrift.model.ModelManager;
-import thrift.model.PastUndoableCommands;
 import thrift.model.Thrift;
 import thrift.model.UserPrefs;
 import thrift.model.transaction.Expense;
@@ -31,8 +30,7 @@ import thrift.testutil.UpdateTransactionDescriptorBuilder;
  */
 public class UpdateCommandTest {
 
-    private Model model = new ModelManager(TypicalTransactions.getTypicalThrift(), new UserPrefs(),
-            new PastUndoableCommands());
+    private Model model = new ModelManager(TypicalTransactions.getTypicalThrift(), new UserPrefs());
 
     @Test
     public void execute_allFieldsSpecifiedUnfilteredList_success() {
@@ -47,8 +45,7 @@ public class UpdateCommandTest {
 
         String expectedMessageUpdated = String.format(UpdateCommand.MESSAGE_UPDATE_TRANSACTION_SUCCESS, updatedExpense);
 
-        Model expectedModel = new ModelManager(new Thrift(model.getThrift()), new UserPrefs(),
-                new PastUndoableCommands());
+        Model expectedModel = new ModelManager(new Thrift(model.getThrift()), new UserPrefs());
         expectedModel.setTransaction(model.getFilteredTransactionList().get(1), updatedExpense);
 
         assertCommandSuccess(updateCommand, model, expectedMessageUpdated + expectedMessageOriginal,
@@ -69,8 +66,7 @@ public class UpdateCommandTest {
         String expectedMessageUpdated = String.format(UpdateCommand.MESSAGE_UPDATE_TRANSACTION_SUCCESS,
                 updatedTransaction);
 
-        Model expectedModel = new ModelManager(new Thrift(model.getThrift()), new UserPrefs(),
-                new PastUndoableCommands());
+        Model expectedModel = new ModelManager(new Thrift(model.getThrift()), new UserPrefs());
         expectedModel.setTransaction(lastTransaction, updatedTransaction);
 
         assertCommandSuccess(updateCommand, model, expectedMessageUpdated
@@ -91,8 +87,7 @@ public class UpdateCommandTest {
 
         String expectedMessageUpdated = String.format(UpdateCommand.MESSAGE_UPDATE_TRANSACTION_SUCCESS, updatedPerson);
 
-        Model expectedModel = new ModelManager(new Thrift(model.getThrift()), new UserPrefs(),
-                new PastUndoableCommands());
+        Model expectedModel = new ModelManager(new Thrift(model.getThrift()), new UserPrefs());
         expectedModel.setTransaction(model.getFilteredTransactionList().get(0), updatedPerson);
 
         assertCommandSuccess(updateCommand, model, expectedMessageUpdated
@@ -146,8 +141,7 @@ public class UpdateCommandTest {
         UpdateCommand updateCommand = new UpdateCommand(indexLastTransaction, updateTransactionDescriptor);
 
         //test update command
-        Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs(),
-                new PastUndoableCommands());
+        Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
         expectedModel.setTransactionWithIndex(indexLastTransaction, updatedTransaction);
         assertCommandSuccess(updateCommand, model, expectedMessageUpdated + expectedMessageOriginal,
                 expectedModel);
@@ -173,8 +167,7 @@ public class UpdateCommandTest {
                 updatedTransaction);
         UpdateCommand updateCommand = new UpdateCommand(indexLastTransaction, updateTransactionDescriptor);
 
-        Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs(),
-                new PastUndoableCommands());
+        Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
         //test update command
         expectedModel.setTransactionWithIndex(indexLastTransaction, updatedTransaction);
         assertCommandSuccess(updateCommand, model, expectedMessageUpdated + expectedMessageOriginal, expectedModel);

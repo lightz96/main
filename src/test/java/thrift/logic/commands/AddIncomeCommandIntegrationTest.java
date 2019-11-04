@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import thrift.logic.commands.exceptions.CommandException;
 import thrift.model.Model;
 import thrift.model.ModelManager;
-import thrift.model.PastUndoableCommands;
 import thrift.model.UserPrefs;
 import thrift.model.transaction.Income;
 import thrift.testutil.IncomeBuilder;
@@ -24,14 +23,14 @@ public class AddIncomeCommandIntegrationTest {
 
     @BeforeEach
     public void setUp() {
-        model = new ModelManager(TypicalTransactions.getTypicalThrift(), new UserPrefs(), new PastUndoableCommands());
+        model = new ModelManager(TypicalTransactions.getTypicalThrift(), new UserPrefs());
     }
 
     @Test
     public void execute_newIncome_success() {
         Income validIncome = new IncomeBuilder().build();
 
-        Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs(), new PastUndoableCommands());
+        Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
         expectedModel.addIncome(validIncome);
 
         assertCommandSuccess(new AddIncomeCommand(validIncome), model,
@@ -40,7 +39,7 @@ public class AddIncomeCommandIntegrationTest {
 
     @Test
     public void undo_success() throws CommandException {
-        Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs(), new PastUndoableCommands());
+        Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
 
         Income validIncome = new IncomeBuilder().build();
 
@@ -58,7 +57,7 @@ public class AddIncomeCommandIntegrationTest {
 
     @Test
     public void redo_redoAddIncome_success() throws CommandException {
-        Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs(), new PastUndoableCommands());
+        Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
 
         //add income to THIRFT
         Income validIncome = new IncomeBuilder().build();

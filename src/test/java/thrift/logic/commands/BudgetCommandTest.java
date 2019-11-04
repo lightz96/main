@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Test;
 
 import thrift.model.Model;
 import thrift.model.ModelManager;
-import thrift.model.PastUndoableCommands;
 import thrift.model.UserPrefs;
 import thrift.model.transaction.Budget;
 import thrift.model.transaction.BudgetValue;
@@ -20,8 +19,7 @@ import thrift.testutil.TypicalTransactions;
 
 public class BudgetCommandTest {
 
-    private Model model = new ModelManager(TypicalTransactions.getTypicalThrift(), new UserPrefs(),
-            new PastUndoableCommands());
+    private Model model = new ModelManager(TypicalTransactions.getTypicalThrift(), new UserPrefs());
 
     @Test
     public void constructor_nullBudget_throwsNullPointerException() {
@@ -31,7 +29,7 @@ public class BudgetCommandTest {
 
     @Test
     public void undo_budgetIsNotSetBeforeExecution_success() throws ParseException {
-        Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs(), new PastUndoableCommands());
+        Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(Budget.BUDGET_DATE_FORMAT.parse("11/2019"));
@@ -49,7 +47,7 @@ public class BudgetCommandTest {
 
     @Test
     public void undo_budgetIsSetBeforeExecution_success() throws ParseException {
-        Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs(), new PastUndoableCommands());
+        Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(Budget.BUDGET_DATE_FORMAT.parse("10/2019"));
@@ -67,7 +65,7 @@ public class BudgetCommandTest {
 
     @Test
     public void redo_budgetIsNotSetBeforeExecution_success() throws ParseException {
-        Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs(), new PastUndoableCommands());
+        Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(Budget.BUDGET_DATE_FORMAT.parse("10/2019"));
@@ -88,7 +86,7 @@ public class BudgetCommandTest {
 
     @Test
     public void redo_budgetIsSetBeforeExecution_success() throws ParseException {
-        Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs(), new PastUndoableCommands());
+        Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(Budget.BUDGET_DATE_FORMAT.parse("10/2019"));

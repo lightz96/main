@@ -19,7 +19,6 @@ import thrift.commons.core.Messages;
 import thrift.commons.core.index.Index;
 import thrift.model.Model;
 import thrift.model.ModelManager;
-import thrift.model.PastUndoableCommands;
 import thrift.model.UserPrefs;
 import thrift.model.clone.Occurrence;
 import thrift.model.transaction.Expense;
@@ -32,8 +31,7 @@ import thrift.testutil.TypicalTransactions;
 
 public class CloneCommandTest {
 
-    private Model model = new ModelManager(TypicalTransactions.getTypicalThrift(), new UserPrefs(),
-            new PastUndoableCommands());
+    private Model model = new ModelManager(TypicalTransactions.getTypicalThrift(), new UserPrefs());
     private final int zeroOccurrence = 0;
     private final int oneOccurrence = 1;
     private final int twelveOccurrences = 12;
@@ -63,8 +61,7 @@ public class CloneCommandTest {
         String expectedMessage = String.format(CloneCommand.MESSAGE_CLONE_TRANSACTION_SUCCESS, transactionToClone)
                 + "\n" + String.format(CloneCommand.MESSAGE_NUM_CLONED_TRANSACTIONS, "for today", oneOccurrence);
 
-        ModelManager expectedModel = new ModelManager(model.getThrift(), new UserPrefs(),
-                new PastUndoableCommands());
+        ModelManager expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
         expectedModel.addIncome(expectedTransaction);
 
         assertCommandSuccess(cloneCommand, model, expectedMessage, expectedModel);
@@ -95,8 +92,7 @@ public class CloneCommandTest {
         String expectedMessage = String.format(CloneCommand.MESSAGE_CLONE_TRANSACTION_SUCCESS, transactionToClone)
                 + "\n" + String.format(CloneCommand.MESSAGE_NUM_CLONED_TRANSACTIONS, "for today", oneOccurrence);
 
-        ModelManager expectedModel = new ModelManager(model.getThrift(), new UserPrefs(),
-                new PastUndoableCommands());
+        ModelManager expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
         expectedModel.addExpense(expectedTransaction);
 
         assertCommandSuccess(cloneCommand, model, expectedMessage, expectedModel);
@@ -126,8 +122,7 @@ public class CloneCommandTest {
         String expectedMessage = String.format(CloneCommand.MESSAGE_CLONE_TRANSACTION_SUCCESS, transactionToClone)
                 + "\n" + String.format(CloneCommand.MESSAGE_NUM_CLONED_TRANSACTIONS, "monthly", twelveOccurrences);
 
-        ModelManager expectedModel = new ModelManager(model.getThrift(), new UserPrefs(),
-                new PastUndoableCommands());
+        ModelManager expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
         for (int i = 1; i <= twelveOccurrences; i++) {
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(originalDate);
@@ -166,8 +161,7 @@ public class CloneCommandTest {
         String expectedMessage = String.format(CloneCommand.MESSAGE_CLONE_TRANSACTION_SUCCESS, transactionToClone)
                 + "\n" + String.format(CloneCommand.MESSAGE_NUM_CLONED_TRANSACTIONS, "yearly", fiveOccurrences);
 
-        ModelManager expectedModel = new ModelManager(model.getThrift(), new UserPrefs(),
-                new PastUndoableCommands());
+        ModelManager expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
 
         for (int i = 1; i <= fiveOccurrences; i++) {
             Calendar calendar = Calendar.getInstance();
@@ -203,7 +197,7 @@ public class CloneCommandTest {
 
     @Test
     public void undo_undoCloneCommandExpenseWithNoOccurrence_success() {
-        Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs(), new PastUndoableCommands());
+        Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
 
         Transaction transactionToClone = model.getFilteredTransactionList()
                 .get(TypicalIndexes.INDEX_FIRST_TRANSACTION.getZeroBased());
@@ -231,7 +225,7 @@ public class CloneCommandTest {
 
     @Test
     public void redo_redoCloneCommandExpenseWithNoOccurrence_success() {
-        Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs(), new PastUndoableCommands());
+        Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
 
         Transaction transactionToClone = model.getFilteredTransactionList()
                 .get(TypicalIndexes.INDEX_FIRST_TRANSACTION.getZeroBased());
@@ -263,7 +257,7 @@ public class CloneCommandTest {
 
     @Test
     public void undo_undoCloneCommandIncomeWithNoOccurrence_success() {
-        Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs(), new PastUndoableCommands());
+        Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
 
         Transaction transactionToClone = model.getFilteredTransactionList()
                 .get(TypicalIndexes.INDEX_SECOND_TRANSACTION.getZeroBased());
@@ -291,7 +285,7 @@ public class CloneCommandTest {
 
     @Test
     public void redo_redoCloneCommandIncomeWithNoOccurrence_success() {
-        Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs(), new PastUndoableCommands());
+        Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
 
         Transaction transactionToClone = model.getFilteredTransactionList()
                 .get(TypicalIndexes.INDEX_SECOND_TRANSACTION.getZeroBased());

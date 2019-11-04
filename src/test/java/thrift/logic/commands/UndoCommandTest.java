@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 
 import thrift.model.Model;
 import thrift.model.ModelManager;
-import thrift.model.PastUndoableCommands;
 import thrift.model.UserPrefs;
 import thrift.model.transaction.Expense;
 import thrift.testutil.ExpenseBuilder;
@@ -15,8 +14,7 @@ import thrift.testutil.TypicalTransactions;
 
 public class UndoCommandTest {
 
-    private Model model = new ModelManager(TypicalTransactions.getTypicalThrift(), new UserPrefs(),
-            new PastUndoableCommands());
+    private Model model = new ModelManager(TypicalTransactions.getTypicalThrift(), new UserPrefs());
 
     @Test
     public void execute_noUndoableCommand_throwsCommandException() {
@@ -26,8 +24,7 @@ public class UndoCommandTest {
 
     @Test
     public void execute_undoAddExpensesCommand_success() {
-        Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs(),
-                new PastUndoableCommands());
+        Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
 
         UndoCommand undoCommand = new UndoCommand();
         Expense expense = new ExpenseBuilder().build();

@@ -15,7 +15,6 @@ import thrift.commons.core.index.Index;
 import thrift.logic.commands.exceptions.CommandException;
 import thrift.model.Model;
 import thrift.model.ModelManager;
-import thrift.model.PastUndoableCommands;
 import thrift.model.UserPrefs;
 import thrift.model.transaction.Expense;
 import thrift.model.transaction.Income;
@@ -29,8 +28,7 @@ import thrift.testutil.TypicalTransactions;
  */
 public class DeleteCommandTest {
 
-    private Model model = new ModelManager(TypicalTransactions.getTypicalThrift(), new UserPrefs(),
-            new PastUndoableCommands());
+    private Model model = new ModelManager(TypicalTransactions.getTypicalThrift(), new UserPrefs());
 
     @Test
     public void execute_validIndexUnfilteredList_success() {
@@ -40,8 +38,7 @@ public class DeleteCommandTest {
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_TRANSACTION_SUCCESS, transactionToDelete);
 
-        ModelManager expectedModel = new ModelManager(model.getThrift(), new UserPrefs(),
-                new PastUndoableCommands());
+        ModelManager expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
         expectedModel.deleteTransaction(transactionToDelete);
 
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
@@ -63,8 +60,7 @@ public class DeleteCommandTest {
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_TRANSACTION_SUCCESS, transactionToDelete);
 
-        Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs(),
-                new PastUndoableCommands());
+        Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
         expectedModel.deleteTransaction(TypicalIndexes.INDEX_FIRST_TRANSACTION);
 
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
@@ -107,8 +103,7 @@ public class DeleteCommandTest {
 
     @Test
     public void undo_undoDeleteExpense_success() throws CommandException {
-        Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs(),
-                new PastUndoableCommands());
+        Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
 
         Transaction transactionToDelete = model.getFilteredTransactionList()
                 .get(TypicalIndexes.INDEX_FIRST_TRANSACTION.getZeroBased());
@@ -128,8 +123,7 @@ public class DeleteCommandTest {
 
     @Test
     public void undo_undoDeleteIncome_success() throws CommandException {
-        Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs(),
-                new PastUndoableCommands());
+        Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
         Transaction transactionToDelete = model.getFilteredTransactionList()
                 .get(TypicalIndexes.INDEX_SECOND_TRANSACTION.getZeroBased());
 
@@ -147,8 +141,7 @@ public class DeleteCommandTest {
 
     @Test
     public void redo_redoDeleteExpense_success() throws CommandException {
-        Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs(),
-                new PastUndoableCommands());
+        Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
 
         Transaction transactionToDelete = model.getFilteredTransactionList()
                 .get(TypicalIndexes.INDEX_FIRST_TRANSACTION.getZeroBased());
@@ -171,8 +164,7 @@ public class DeleteCommandTest {
 
     @Test
     public void redo_redoDeleteIncomeOnFullList_success() throws CommandException {
-        Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs(),
-                new PastUndoableCommands());
+        Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
 
         Transaction transactionToDelete = model.getFilteredTransactionList()
                 .get(TypicalIndexes.INDEX_SECOND_TRANSACTION.getZeroBased());

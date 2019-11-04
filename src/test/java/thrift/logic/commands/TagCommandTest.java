@@ -17,7 +17,6 @@ import thrift.commons.core.index.Index;
 import thrift.logic.commands.exceptions.CommandException;
 import thrift.model.Model;
 import thrift.model.ModelManager;
-import thrift.model.PastUndoableCommands;
 import thrift.model.UserPrefs;
 import thrift.model.tag.Tag;
 import thrift.model.transaction.Expense;
@@ -32,8 +31,7 @@ class TagCommandTest {
 
     @Test
     void execute_newTags_success() throws CommandException {
-        Model model = new ModelManager(TypicalTransactions.getTypicalThrift(), new UserPrefs(),
-                new PastUndoableCommands());
+        Model model = new ModelManager(TypicalTransactions.getTypicalThrift(), new UserPrefs());
         Expense originalExpense = new ExpenseBuilder(model.getFilteredTransactionList().get(0))
                 .build();
 
@@ -57,10 +55,8 @@ class TagCommandTest {
 
     @Test
     void undo_undoTag_success() {
-        Model model = new ModelManager(TypicalTransactions.getTypicalThrift(), new UserPrefs(),
-                new PastUndoableCommands());
-        Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs(),
-                new PastUndoableCommands());
+        Model model = new ModelManager(TypicalTransactions.getTypicalThrift(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
 
         Index indexLastTransaction = Index.fromOneBased(model.getFilteredTransactionList().size());
         Transaction lastTransaction = model.getFilteredTransactionList().get(indexLastTransaction.getZeroBased());
@@ -89,10 +85,8 @@ class TagCommandTest {
 
     @Test
     void redo_redoTag_success() {
-        Model model = new ModelManager(TypicalTransactions.getTypicalThrift(), new UserPrefs(),
-                new PastUndoableCommands());
-        Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs(),
-                new PastUndoableCommands());
+        Model model = new ModelManager(TypicalTransactions.getTypicalThrift(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
 
         Index indexLastTransaction = Index.fromOneBased(model.getFilteredTransactionList().size());
         Transaction lastTransaction = model.getFilteredTransactionList().get(indexLastTransaction.getZeroBased());

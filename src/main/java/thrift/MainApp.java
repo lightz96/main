@@ -20,7 +20,6 @@ import thrift.logic.Logic;
 import thrift.logic.LogicManager;
 import thrift.model.Model;
 import thrift.model.ModelManager;
-import thrift.model.PastUndoableCommands;
 import thrift.model.ReadOnlyThrift;
 import thrift.model.ReadOnlyUserPrefs;
 import thrift.model.Thrift;

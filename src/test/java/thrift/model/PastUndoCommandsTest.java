@@ -2,18 +2,15 @@ package thrift.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import thrift.commons.core.index.Index;
 import thrift.logic.commands.AddExpenseCommand;
 import thrift.logic.commands.AddIncomeCommand;
 import thrift.logic.commands.BudgetCommand;
 import thrift.logic.commands.CloneCommand;
 import thrift.logic.commands.DeleteCommand;
-import thrift.logic.commands.ListCommand;
 import thrift.logic.commands.RedoCommand;
 import thrift.logic.commands.TagCommand;
 import thrift.logic.commands.UndoCommand;
