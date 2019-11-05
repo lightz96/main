@@ -1,7 +1,6 @@
 package thrift.logic.parser;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static thrift.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static thrift.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;

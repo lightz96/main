@@ -2,6 +2,8 @@ package thrift.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static thrift.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static thrift.logic.commands.CommandTestUtil.assertRedoCommandSuccess;
+import static thrift.logic.commands.CommandTestUtil.assertUndoCommandSuccess;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -38,28 +40,10 @@ public class AddIncomeCommandIntegrationTest {
     }
 
     @Test
-    public void undo_success() throws CommandException {
+    public void undoAndRedo_undoAndRedoAddIncome_success() throws CommandException {
         Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
 
-        Income validIncome = new IncomeBuilder().build();
-
-        model.addIncome(validIncome);
-        AddIncomeCommand addIncomeCommand = new AddIncomeCommand(validIncome);
-        model.keepTrackCommands(addIncomeCommand);
-        expectedModel.addIncome(validIncome);
-        assertEquals(expectedModel, model);
-
-        Undoable undoable = model.getPreviousUndoableCommand();
-        undoable.undo(model);
-        expectedModel.deleteLastTransaction();
-        assertEquals(expectedModel, model);
-    }
-
-    @Test
-    public void redo_redoAddIncome_success() throws CommandException {
-        Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
-
-        //add income to THIRFT
+        //add income
         Income validIncome = new IncomeBuilder().build();
         model.addIncome(validIncome);
         AddIncomeCommand addIncomeCommand = new AddIncomeCommand(validIncome);
@@ -67,16 +51,14 @@ public class AddIncomeCommandIntegrationTest {
         expectedModel.addIncome(validIncome);
         assertEquals(expectedModel, model);
 
-        //undo add_income command
+        //test undo
         Undoable undoable = model.getPreviousUndoableCommand();
-        undoable.undo(model);
         expectedModel.deleteLastTransaction();
-        assertEquals(expectedModel, model);
+        assertUndoCommandSuccess(undoable, model, expectedModel);
 
-        //redo add_income command
+        //test redo
         undoable = model.getUndoneCommand();
-        undoable.redo(model);
         expectedModel.addIncome(validIncome);
-        assertEquals(expectedModel, model);
+        assertRedoCommandSuccess(undoable, model, expectedModel);
     }
 }

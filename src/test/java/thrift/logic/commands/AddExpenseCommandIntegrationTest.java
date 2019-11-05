@@ -2,6 +2,8 @@ package thrift.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static thrift.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static thrift.logic.commands.CommandTestUtil.assertRedoCommandSuccess;
+import static thrift.logic.commands.CommandTestUtil.assertUndoCommandSuccess;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -38,9 +40,10 @@ public class AddExpenseCommandIntegrationTest {
     }
 
     @Test
-    public void undo_undoAddExpense_success() throws CommandException {
+    public void undoAndRedo_undoAndRedoAddExpense_success() throws CommandException {
         Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
 
+        //add expense
         Expense validExpense = new ExpenseBuilder().build();
         model.addExpense(validExpense);
         AddExpenseCommand addExpenseCommand = new AddExpenseCommand(validExpense);
@@ -48,35 +51,15 @@ public class AddExpenseCommandIntegrationTest {
         expectedModel.addExpense(validExpense);
         assertEquals(expectedModel, model);
 
+        //test undo
         Undoable undoable = model.getPreviousUndoableCommand();
-        undoable.undo(model);
         expectedModel.deleteLastTransaction();
-        assertEquals(expectedModel, model);
-    }
+        assertUndoCommandSuccess(undoable, model, expectedModel);
 
-    @Test
-    public void redo_redoAddExpense_success() throws CommandException {
-        Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
-
-        //add expense to THIRFT
-        Expense validExpense = new ExpenseBuilder().build();
-        model.addExpense(validExpense);
-        AddExpenseCommand addExpenseCommand = new AddExpenseCommand(validExpense);
-        model.keepTrackCommands(addExpenseCommand);
-        expectedModel.addExpense(validExpense);
-        assertEquals(expectedModel, model);
-
-        //undo add_expense command
-        Undoable undoable = model.getPreviousUndoableCommand();
-        undoable.undo(model);
-        expectedModel.deleteLastTransaction();
-        assertEquals(expectedModel, model);
-
-        //redo add_expense command
+        //test redo
         undoable = model.getUndoneCommand();
-        undoable.redo(model);
         expectedModel.addExpense(validExpense);
-        assertEquals(expectedModel, model);
+        assertRedoCommandSuccess(undoable, model, expectedModel);
     }
 
 }
