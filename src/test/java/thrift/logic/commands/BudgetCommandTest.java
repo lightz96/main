@@ -32,7 +32,7 @@ public class BudgetCommandTest {
     public void undoAndRedo_budgetIsNotSetBeforeExecution_success() throws ParseException {
         Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
 
-        //set budget
+        //sets budget
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(Budget.BUDGET_DATE_FORMAT.parse("01/2019"));
         BudgetValue budgetValue = new BudgetValue("100");
@@ -44,11 +44,11 @@ public class BudgetCommandTest {
         assertTrue(oldBudget == null);
         assertCommandSuccess(budgetCommand, model, expectedMessage, expectedModel);
 
-        //test undo
+        //undo
         expectedModel.resetBudgetForThatMonth(budget);
         assertUndoCommandSuccess(budgetCommand, model, expectedModel);
 
-        //test redo
+        //redo
         expectedModel.setBudget(budget);
         assertRedoCommandSuccess(budgetCommand, model, expectedModel);
     }
@@ -57,7 +57,7 @@ public class BudgetCommandTest {
     public void undoAndRedo_budgetIsSetBeforeExecution_success() throws ParseException {
         Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
 
-        //set budget
+        //sets budget
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(Budget.BUDGET_DATE_FORMAT.parse("10/2019"));
         BudgetValue budgetValue = new BudgetValue("100");
@@ -69,11 +69,11 @@ public class BudgetCommandTest {
         assertTrue(oldBudget != null);
         assertCommandSuccess(budgetCommand, model, expectedMessage, expectedModel);
 
-        //test undo
+        //undo
         expectedModel.setBudget(oldBudget);
         assertUndoCommandSuccess(budgetCommand, model, expectedModel);
 
-        //test redo
+        //redo
         expectedModel.setBudget(budget);
         assertRedoCommandSuccess(budgetCommand, model, expectedModel);
     }

@@ -1,7 +1,7 @@
 package thrift.logic.commands;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static thrift.logic.commands.CommandTestUtil.assertCommandFailure;
+import static thrift.logic.commands.CommandTestUtil.assertCommandSuccess;
 
 import org.junit.jupiter.api.Test;
 
@@ -26,13 +26,16 @@ public class UndoCommandTest {
     public void execute_undoAddExpensesCommand_success() {
         Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
 
-        UndoCommand undoCommand = new UndoCommand();
+        //adds expense
         Expense expense = new ExpenseBuilder().build();
         AddExpenseCommand addExpenseCommand = new AddExpenseCommand(expense);
-
         model.addExpense(expense);
         model.keepTrackCommands(addExpenseCommand);
 
-        assertDoesNotThrow(() -> undoCommand.execute(model));
+        //undo
+        UndoCommand undoCommand = new UndoCommand();
+        String outputMessage = String.format(AddExpenseCommand.UNDO_SUCCESS, expense);
+        assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS + "\n" + outputMessage,
+                expectedModel);
     }
 }

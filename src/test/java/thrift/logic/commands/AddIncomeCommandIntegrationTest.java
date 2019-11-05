@@ -43,7 +43,7 @@ public class AddIncomeCommandIntegrationTest {
     public void undoAndRedo_undoAndRedoAddIncome_success() throws CommandException {
         Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
 
-        //add income
+        //adds income
         Income validIncome = new IncomeBuilder().build();
         model.addIncome(validIncome);
         AddIncomeCommand addIncomeCommand = new AddIncomeCommand(validIncome);
@@ -51,12 +51,12 @@ public class AddIncomeCommandIntegrationTest {
         expectedModel.addIncome(validIncome);
         assertEquals(expectedModel, model);
 
-        //test undo
+        //undo
         Undoable undoable = model.getPreviousUndoableCommand();
         expectedModel.deleteLastTransaction();
         assertUndoCommandSuccess(undoable, model, expectedModel);
 
-        //test redo
+        //redo
         undoable = model.getUndoneCommand();
         expectedModel.addIncome(validIncome);
         assertRedoCommandSuccess(undoable, model, expectedModel);

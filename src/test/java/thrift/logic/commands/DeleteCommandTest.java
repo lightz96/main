@@ -102,84 +102,47 @@ public class DeleteCommandTest {
     }
 
     @Test
-    public void undo_undoDeleteExpense_success() throws CommandException {
+    public void undoAndRedo_undoAndRedoDeleteExpense_success() throws CommandException {
         Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
 
         Transaction transactionToDelete = model.getFilteredTransactionList()
                 .get(TypicalIndexes.INDEX_FIRST_TRANSACTION.getZeroBased());
-
-        //ensure that the first transaction is an expense.
+        //ensures that the first transaction is an expense.
         assertTrue(transactionToDelete instanceof Expense);
-
+        //deletes transaction.
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_TRANSACTION_SUCCESS, transactionToDelete);
         expectedModel.deleteTransaction(transactionToDelete);
-
         DeleteCommand deleteCommand = new DeleteCommand(TypicalIndexes.INDEX_FIRST_TRANSACTION);
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
 
-        expectedModel.addExpense((Expense) transactionToDelete, TypicalIndexes.INDEX_FIRST_TRANSACTION);
-        assertUndoCommandSuccess(deleteCommand, model, expectedModel);
-    }
-
-    @Test
-    public void undo_undoDeleteIncome_success() throws CommandException {
-        Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
-        Transaction transactionToDelete = model.getFilteredTransactionList()
-                .get(TypicalIndexes.INDEX_SECOND_TRANSACTION.getZeroBased());
-
-        //ensure that the third transaction is an income.
-        assertTrue(transactionToDelete instanceof Income);
-
-        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_TRANSACTION_SUCCESS, transactionToDelete);
-        expectedModel.deleteTransaction(transactionToDelete);
-        DeleteCommand deleteCommand = new DeleteCommand(TypicalIndexes.INDEX_SECOND_TRANSACTION);
-        assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
-
-        expectedModel.addIncome((Income) transactionToDelete, TypicalIndexes.INDEX_SECOND_TRANSACTION);
-        assertUndoCommandSuccess(deleteCommand, model, expectedModel);
-    }
-
-    @Test
-    public void redo_redoDeleteExpense_success() throws CommandException {
-        Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
-
-        Transaction transactionToDelete = model.getFilteredTransactionList()
-                .get(TypicalIndexes.INDEX_FIRST_TRANSACTION.getZeroBased());
-
-        //ensure that the first transaction is an expense.
-        assertTrue(transactionToDelete instanceof Expense);
-
-        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_TRANSACTION_SUCCESS, transactionToDelete);
-        expectedModel.deleteTransaction(transactionToDelete);
-
-        DeleteCommand deleteCommand = new DeleteCommand(TypicalIndexes.INDEX_FIRST_TRANSACTION);
-        assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
-
+        //undo
         expectedModel.addExpense((Expense) transactionToDelete, TypicalIndexes.INDEX_FIRST_TRANSACTION);
         assertUndoCommandSuccess(deleteCommand, model, expectedModel);
 
+        //redo
         expectedModel.deleteTransaction(TypicalIndexes.INDEX_FIRST_TRANSACTION);
         assertRedoCommandSuccess(deleteCommand, model, expectedModel);
     }
 
     @Test
-    public void redo_redoDeleteIncomeOnFullList_success() throws CommandException {
+    public void undoAndRedo_undoAndRedoDeleteIncome_success() throws CommandException {
         Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
 
         Transaction transactionToDelete = model.getFilteredTransactionList()
                 .get(TypicalIndexes.INDEX_SECOND_TRANSACTION.getZeroBased());
-
-        //ensure that the third transaction is an income.
+        //ensure that the second transaction is an income.
         assertTrue(transactionToDelete instanceof Income);
-
+        //deletes income
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_TRANSACTION_SUCCESS, transactionToDelete);
         expectedModel.deleteTransaction(transactionToDelete);
         DeleteCommand deleteCommand = new DeleteCommand(TypicalIndexes.INDEX_SECOND_TRANSACTION);
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
 
+        //undo
         expectedModel.addIncome((Income) transactionToDelete, TypicalIndexes.INDEX_SECOND_TRANSACTION);
         assertUndoCommandSuccess(deleteCommand, model, expectedModel);
 
+        //redo
         expectedModel.deleteTransaction(TypicalIndexes.INDEX_SECOND_TRANSACTION);
         assertRedoCommandSuccess(deleteCommand, model, expectedModel);
     }

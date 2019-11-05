@@ -54,7 +54,7 @@ public class AddIncomeCommandTest {
     public void undoAndRedo_success() {
         ModelStubUndoRedoAddIncome modelStub = new ModelStubUndoRedoAddIncome();
 
-        //add income
+        //adds income
         Income validIncome = new IncomeBuilder().build();
         modelStub.addIncome(validIncome);
         AddIncomeCommand addIncomeCommand = new AddIncomeCommand(validIncome);
@@ -62,14 +62,14 @@ public class AddIncomeCommandTest {
         assertEquals(1, modelStub.getThrift().getTransactionList().size());
         assertFalse(modelStub.undoableCommandStack.isEmpty());
 
-        //test undo
+        //undo
         Undoable undoable = modelStub.getPreviousUndoableCommand();
         assertSame(undoable, addIncomeCommand);
         undoable.undo(modelStub);
         assertEquals(0, modelStub.getThrift().getTransactionList().size());
         assertTrue(modelStub.undoableCommandStack.isEmpty());
 
-        //test redo
+        //redo
         undoable = modelStub.getUndoneCommand();
         assertSame(undoable, addIncomeCommand);
         undoable.redo(modelStub);

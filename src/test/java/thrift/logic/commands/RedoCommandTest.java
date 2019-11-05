@@ -28,12 +28,14 @@ public class RedoCommandTest {
     public void execute_redoAddExpensesCommand_success() throws CommandException {
         Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
 
-        UndoCommand undoCommand = new UndoCommand();
+        //adds expense
         Expense expense = new ExpenseBuilder().build();
         AddExpenseCommand addExpenseCommand = new AddExpenseCommand(expense);
-
         model.addExpense(expense);
         model.keepTrackCommands(addExpenseCommand);
+
+        //undo
+        UndoCommand undoCommand = new UndoCommand();
         assertDoesNotThrow(() -> undoCommand.execute(model));
 
         RedoCommand redoCommand = new RedoCommand();
@@ -42,6 +44,5 @@ public class RedoCommandTest {
         String outputMessage = String.format(AddExpenseCommand.REDO_SUCCESS, expense);
         assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS + "\n" + outputMessage,
                 expectedModel);
-
     }
 }

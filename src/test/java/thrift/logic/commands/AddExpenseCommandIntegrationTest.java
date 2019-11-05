@@ -43,7 +43,7 @@ public class AddExpenseCommandIntegrationTest {
     public void undoAndRedo_undoAndRedoAddExpense_success() throws CommandException {
         Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
 
-        //add expense
+        //adds expense
         Expense validExpense = new ExpenseBuilder().build();
         model.addExpense(validExpense);
         AddExpenseCommand addExpenseCommand = new AddExpenseCommand(validExpense);
@@ -51,12 +51,12 @@ public class AddExpenseCommandIntegrationTest {
         expectedModel.addExpense(validExpense);
         assertEquals(expectedModel, model);
 
-        //test undo
+        //undo
         Undoable undoable = model.getPreviousUndoableCommand();
         expectedModel.deleteLastTransaction();
         assertUndoCommandSuccess(undoable, model, expectedModel);
 
-        //test redo
+        //redo
         undoable = model.getUndoneCommand();
         expectedModel.addExpense(validExpense);
         assertRedoCommandSuccess(undoable, model, expectedModel);

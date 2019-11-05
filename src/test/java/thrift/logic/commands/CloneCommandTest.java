@@ -10,9 +10,12 @@ import static thrift.logic.commands.CommandTestUtil.showTransactionAtIndex;
 import static thrift.model.transaction.TransactionDate.DATE_FORMATTER;
 import static thrift.testutil.Assert.assertThrows;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import thrift.commons.core.Messages;
@@ -27,6 +30,7 @@ import thrift.model.transaction.Transaction;
 import thrift.testutil.ExpenseBuilder;
 import thrift.testutil.IncomeBuilder;
 import thrift.testutil.TypicalIndexes;
+import thrift.testutil.TypicalOccurrences;
 import thrift.testutil.TypicalTransactions;
 
 public class CloneCommandTest {
@@ -36,6 +40,12 @@ public class CloneCommandTest {
     private final int oneOccurrence = 1;
     private final int twelveOccurrences = 12;
     private final int fiveOccurrences = 5;
+    private List<Transaction> clonedTransactionList;
+
+    @BeforeEach
+    public void setUp() {
+        clonedTransactionList = new ArrayList<>();
+    }
 
     @Test
     public void constructor_nullReceivedFields_throwsNullPointerException() {
@@ -196,12 +206,11 @@ public class CloneCommandTest {
     }
 
     @Test
-    public void undo_undoCloneCommandExpenseWithNoOccurrence_success() {
+    public void undoAndRedo_undoAndRedoCloneCommandOnExpenseWithNoOccurrence_success() {
         Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
 
         Transaction transactionToClone = model.getFilteredTransactionList()
                 .get(TypicalIndexes.INDEX_FIRST_TRANSACTION.getZeroBased());
-
         Expense expectedTransaction = new ExpenseBuilder()
                 .withDescription(transactionToClone.getDescription().value)
                 .withDate(DATE_FORMATTER.format(new Date()))
@@ -209,41 +218,12 @@ public class CloneCommandTest {
                 .withRemark(transactionToClone.getRemark().value)
                 .withTags(transactionToClone.getTags().stream().map(tag -> tag.tagName).toArray(String[]::new))
                 .build();
-
-        //simulates user performing clone command
+        //Executes clone command
         expectedModel.addExpense(expectedTransaction);
+        CloneCommand cloneCommand = new CloneCommand(TypicalIndexes.INDEX_FIRST_TRANSACTION,
+                TypicalOccurrences.NO_OCCURRENCE);
         String expectedMessage = String.format(CloneCommand.MESSAGE_CLONE_TRANSACTION_SUCCESS, transactionToClone)
                 + "\n" + String.format(CloneCommand.MESSAGE_NUM_CLONED_TRANSACTIONS, "for today", oneOccurrence);
-        CloneCommand cloneCommand = new CloneCommand(TypicalIndexes.INDEX_FIRST_TRANSACTION,
-                new Occurrence("daily", zeroOccurrence));
-        assertCommandSuccess(cloneCommand, model, expectedMessage, expectedModel);
-
-        //undo
-        expectedModel.deleteLastTransaction();
-        assertUndoCommandSuccess(cloneCommand, model, expectedModel);
-    }
-
-    @Test
-    public void redo_redoCloneCommandExpenseWithNoOccurrence_success() {
-        Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
-
-        Transaction transactionToClone = model.getFilteredTransactionList()
-                .get(TypicalIndexes.INDEX_FIRST_TRANSACTION.getZeroBased());
-
-        Expense expectedTransaction = new ExpenseBuilder()
-                .withDescription(transactionToClone.getDescription().value)
-                .withDate(DATE_FORMATTER.format(new Date()))
-                .withValue(transactionToClone.getValue().getUnformattedString())
-                .withRemark(transactionToClone.getRemark().value)
-                .withTags(transactionToClone.getTags().stream().map(tag -> tag.tagName).toArray(String[]::new))
-                .build();
-
-        //simulates user performing clone command
-        expectedModel.addExpense(expectedTransaction);
-        String expectedMessage = String.format(CloneCommand.MESSAGE_CLONE_TRANSACTION_SUCCESS, transactionToClone)
-                + "\n" + String.format(CloneCommand.MESSAGE_NUM_CLONED_TRANSACTIONS, "for today", oneOccurrence);
-        CloneCommand cloneCommand = new CloneCommand(TypicalIndexes.INDEX_FIRST_TRANSACTION,
-                new Occurrence("daily", zeroOccurrence));
         assertCommandSuccess(cloneCommand, model, expectedMessage, expectedModel);
 
         //undo
@@ -256,12 +236,11 @@ public class CloneCommandTest {
     }
 
     @Test
-    public void undo_undoCloneCommandIncomeWithNoOccurrence_success() {
+    public void undoAndRedo_undoAndRedoCloneCommandOnIncomeWithNoOccurrence_success() {
         Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
 
         Transaction transactionToClone = model.getFilteredTransactionList()
                 .get(TypicalIndexes.INDEX_SECOND_TRANSACTION.getZeroBased());
-
         Income expectedTransaction = new IncomeBuilder()
                 .withDescription(transactionToClone.getDescription().value)
                 .withDate(DATE_FORMATTER.format(new Date()))
@@ -269,41 +248,12 @@ public class CloneCommandTest {
                 .withRemark(transactionToClone.getRemark().value)
                 .withTags(transactionToClone.getTags().stream().map(tag -> tag.tagName).toArray(String[]::new))
                 .build();
-
-        //simulates user performing clone command
+        //Executes clone command
         expectedModel.addIncome(expectedTransaction);
+        CloneCommand cloneCommand = new CloneCommand(TypicalIndexes.INDEX_SECOND_TRANSACTION,
+                TypicalOccurrences.NO_OCCURRENCE);
         String expectedMessage = String.format(CloneCommand.MESSAGE_CLONE_TRANSACTION_SUCCESS, transactionToClone)
                 + "\n" + String.format(CloneCommand.MESSAGE_NUM_CLONED_TRANSACTIONS, "for today", oneOccurrence);
-        CloneCommand cloneCommand = new CloneCommand(TypicalIndexes.INDEX_SECOND_TRANSACTION,
-                new Occurrence("daily", zeroOccurrence));
-        assertCommandSuccess(cloneCommand, model, expectedMessage, expectedModel);
-
-        //undo
-        expectedModel.deleteLastTransaction();
-        assertUndoCommandSuccess(cloneCommand, model, expectedModel);
-    }
-
-    @Test
-    public void redo_redoCloneCommandIncomeWithNoOccurrence_success() {
-        Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
-
-        Transaction transactionToClone = model.getFilteredTransactionList()
-                .get(TypicalIndexes.INDEX_SECOND_TRANSACTION.getZeroBased());
-
-        Income expectedTransaction = new IncomeBuilder()
-                .withDescription(transactionToClone.getDescription().value)
-                .withDate(DATE_FORMATTER.format(new Date()))
-                .withValue(transactionToClone.getValue().getUnformattedString())
-                .withRemark(transactionToClone.getRemark().value)
-                .withTags(transactionToClone.getTags().stream().map(tag -> tag.tagName).toArray(String[]::new))
-                .build();
-
-        //simulates user performing clone command
-        expectedModel.addIncome(expectedTransaction);
-        String expectedMessage = String.format(CloneCommand.MESSAGE_CLONE_TRANSACTION_SUCCESS, transactionToClone)
-                + "\n" + String.format(CloneCommand.MESSAGE_NUM_CLONED_TRANSACTIONS, "for today", oneOccurrence);
-        CloneCommand cloneCommand = new CloneCommand(TypicalIndexes.INDEX_SECOND_TRANSACTION,
-                new Occurrence("daily", zeroOccurrence));
         assertCommandSuccess(cloneCommand, model, expectedMessage, expectedModel);
 
         //undo
@@ -312,6 +262,338 @@ public class CloneCommandTest {
 
         //redo
         expectedModel.addIncome(expectedTransaction);
+        assertRedoCommandSuccess(cloneCommand, model, expectedModel);
+    }
+
+    @Test
+    public void undoAndRedo_undoAndRedoCloneCommandOnExpenseWithDailyOccurrence_success() {
+        Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
+        Transaction transactionToClone = model.getFilteredTransactionList()
+                .get(TypicalIndexes.INDEX_FIRST_TRANSACTION.getZeroBased());
+        //Executes clone command
+        for (int i = 1; i <= TypicalOccurrences.DAILY_OCCURRENCE.getNumOccurrences(); i++) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(transactionToClone.getDate().getDate());
+            calendar.add(Calendar.DATE, i);
+            String date = DATE_FORMATTER.format(calendar.getTime());
+
+            Expense expectedTransaction = new ExpenseBuilder()
+                    .withDescription(transactionToClone.getDescription().value)
+                    .withDate(date)
+                    .withValue(transactionToClone.getValue().getUnformattedString())
+                    .withRemark(transactionToClone.getRemark().value)
+                    .withTags(transactionToClone.getTags().stream().map(tag -> tag.tagName).toArray(String[]::new))
+                    .build();
+
+            clonedTransactionList.add(expectedTransaction);
+            expectedModel.addExpense(expectedTransaction);
+        }
+        CloneCommand cloneCommand = new CloneCommand(TypicalIndexes.INDEX_FIRST_TRANSACTION,
+                TypicalOccurrences.DAILY_OCCURRENCE);
+        String expectedMessage = String.format(CloneCommand.MESSAGE_CLONE_TRANSACTION_SUCCESS, transactionToClone)
+                + "\n" + String.format(CloneCommand.MESSAGE_NUM_CLONED_TRANSACTIONS, "daily",
+                TypicalOccurrences.DAILY_OCCURRENCE.getNumOccurrences());
+        assertCommandSuccess(cloneCommand, model, expectedMessage, expectedModel);
+
+        //undo
+        for (int i = 1; i <= TypicalOccurrences.DAILY_OCCURRENCE.getNumOccurrences(); i++) {
+            expectedModel.deleteLastTransaction();
+        }
+        assertUndoCommandSuccess(cloneCommand, model, expectedModel);
+
+        //redo
+        for (Transaction transaction : clonedTransactionList) {
+            expectedModel.addExpense((Expense) transaction);
+        }
+        assertRedoCommandSuccess(cloneCommand, model, expectedModel);
+    }
+
+    @Test
+    public void undoAndRedo_undoAndRedoCloneCommandOnIncomeWithDailyOccurrence_success() {
+        Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
+        Transaction transactionToClone = model.getFilteredTransactionList()
+                .get(TypicalIndexes.INDEX_SECOND_TRANSACTION.getZeroBased());
+        //Executes clone command
+        for (int i = 1; i <= TypicalOccurrences.DAILY_OCCURRENCE.getNumOccurrences(); i++) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(transactionToClone.getDate().getDate());
+            calendar.add(Calendar.DATE, i);
+            String date = DATE_FORMATTER.format(calendar.getTime());
+
+            Income expectedTransaction = new IncomeBuilder()
+                    .withDescription(transactionToClone.getDescription().value)
+                    .withDate(date)
+                    .withValue(transactionToClone.getValue().getUnformattedString())
+                    .withRemark(transactionToClone.getRemark().value)
+                    .withTags(transactionToClone.getTags().stream().map(tag -> tag.tagName).toArray(String[]::new))
+                    .build();
+
+            clonedTransactionList.add(expectedTransaction);
+            expectedModel.addIncome(expectedTransaction);
+        }
+        CloneCommand cloneCommand = new CloneCommand(TypicalIndexes.INDEX_SECOND_TRANSACTION,
+                TypicalOccurrences.DAILY_OCCURRENCE);
+        String expectedMessage = String.format(CloneCommand.MESSAGE_CLONE_TRANSACTION_SUCCESS, transactionToClone)
+                + "\n" + String.format(CloneCommand.MESSAGE_NUM_CLONED_TRANSACTIONS, "daily",
+                TypicalOccurrences.DAILY_OCCURRENCE.getNumOccurrences());
+        assertCommandSuccess(cloneCommand, model, expectedMessage, expectedModel);
+
+        //undo
+        for (int i = 1; i <= TypicalOccurrences.DAILY_OCCURRENCE.getNumOccurrences(); i++) {
+            expectedModel.deleteLastTransaction();
+        }
+        assertUndoCommandSuccess(cloneCommand, model, expectedModel);
+
+        //redo
+        for (Transaction transaction : clonedTransactionList) {
+            expectedModel.addIncome((Income) transaction);
+        }
+        assertRedoCommandSuccess(cloneCommand, model, expectedModel);
+    }
+
+    @Test
+    public void undoAndRedo_undoAndRedoCloneCommandOnExpenseWithWeeklyOccurrence_success() {
+        Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
+        Transaction transactionToClone = model.getFilteredTransactionList()
+                .get(TypicalIndexes.INDEX_FIRST_TRANSACTION.getZeroBased());
+        //Executes clone command
+        for (int i = 1; i <= TypicalOccurrences.WEEKLY_OCCURRENCE.getNumOccurrences(); i++) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(transactionToClone.getDate().getDate());
+            calendar.add(Calendar.WEEK_OF_YEAR, i);
+            String date = DATE_FORMATTER.format(calendar.getTime());
+            Expense expectedTransaction = new ExpenseBuilder()
+                    .withDescription(transactionToClone.getDescription().value)
+                    .withDate(date)
+                    .withValue(transactionToClone.getValue().getUnformattedString())
+                    .withRemark(transactionToClone.getRemark().value)
+                    .withTags(transactionToClone.getTags().stream().map(tag -> tag.tagName).toArray(String[]::new))
+                    .build();
+            clonedTransactionList.add(expectedTransaction);
+            expectedModel.addExpense(expectedTransaction);
+        }
+        CloneCommand cloneCommand = new CloneCommand(TypicalIndexes.INDEX_FIRST_TRANSACTION,
+                TypicalOccurrences.WEEKLY_OCCURRENCE);
+        String expectedMessage = String.format(CloneCommand.MESSAGE_CLONE_TRANSACTION_SUCCESS, transactionToClone)
+                + "\n" + String.format(CloneCommand.MESSAGE_NUM_CLONED_TRANSACTIONS, "weekly",
+                TypicalOccurrences.WEEKLY_OCCURRENCE.getNumOccurrences());
+        assertCommandSuccess(cloneCommand, model, expectedMessage, expectedModel);
+
+        //undo
+        for (int i = 1; i <= TypicalOccurrences.WEEKLY_OCCURRENCE.getNumOccurrences(); i++) {
+            expectedModel.deleteLastTransaction();
+        }
+        assertUndoCommandSuccess(cloneCommand, model, expectedModel);
+
+        //redo
+        for (Transaction transaction : clonedTransactionList) {
+            expectedModel.addExpense((Expense) transaction);
+        }
+        assertRedoCommandSuccess(cloneCommand, model, expectedModel);
+    }
+
+    @Test
+    public void undoAndRedo_undoAndRedoCloneCommandOnIncomeWithWeeklyOccurrence_success() {
+        Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
+        Transaction transactionToClone = model.getFilteredTransactionList()
+                .get(TypicalIndexes.INDEX_SECOND_TRANSACTION.getZeroBased());
+        //Executes clone command
+        for (int i = 1; i <= TypicalOccurrences.WEEKLY_OCCURRENCE.getNumOccurrences(); i++) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(transactionToClone.getDate().getDate());
+            calendar.add(Calendar.WEEK_OF_YEAR, i);
+            String date = DATE_FORMATTER.format(calendar.getTime());
+            Income expectedTransaction = new IncomeBuilder()
+                    .withDescription(transactionToClone.getDescription().value)
+                    .withDate(date)
+                    .withValue(transactionToClone.getValue().getUnformattedString())
+                    .withRemark(transactionToClone.getRemark().value)
+                    .withTags(transactionToClone.getTags().stream().map(tag -> tag.tagName).toArray(String[]::new))
+                    .build();
+            clonedTransactionList.add(expectedTransaction);
+            expectedModel.addIncome(expectedTransaction);
+        }
+        CloneCommand cloneCommand = new CloneCommand(TypicalIndexes.INDEX_SECOND_TRANSACTION,
+                TypicalOccurrences.WEEKLY_OCCURRENCE);
+        String expectedMessage = String.format(CloneCommand.MESSAGE_CLONE_TRANSACTION_SUCCESS, transactionToClone)
+                + "\n" + String.format(CloneCommand.MESSAGE_NUM_CLONED_TRANSACTIONS, "weekly",
+                TypicalOccurrences.WEEKLY_OCCURRENCE.getNumOccurrences());
+        assertCommandSuccess(cloneCommand, model, expectedMessage, expectedModel);
+
+        //undo
+        for (int i = 1; i <= TypicalOccurrences.WEEKLY_OCCURRENCE.getNumOccurrences(); i++) {
+            expectedModel.deleteLastTransaction();
+        }
+        assertUndoCommandSuccess(cloneCommand, model, expectedModel);
+
+        //redo
+        for (Transaction transaction : clonedTransactionList) {
+            expectedModel.addIncome((Income) transaction);
+        }
+        assertRedoCommandSuccess(cloneCommand, model, expectedModel);
+    }
+
+    @Test
+    public void undoAndRedo_undoAndRedoCloneCommandOnExpenseWithMonthlyOccurrence_success() {
+        Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
+        Transaction transactionToClone = model.getFilteredTransactionList()
+                .get(TypicalIndexes.INDEX_FIRST_TRANSACTION.getZeroBased());
+        //Executes clone command
+        for (int i = 1; i <= TypicalOccurrences.MONTHLY_OCCURRENCE.getNumOccurrences(); i++) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(transactionToClone.getDate().getDate());
+            calendar.add(Calendar.MONTH, i);
+            String date = DATE_FORMATTER.format(calendar.getTime());
+            Expense expectedTransaction = new ExpenseBuilder()
+                    .withDescription(transactionToClone.getDescription().value)
+                    .withDate(date)
+                    .withValue(transactionToClone.getValue().getUnformattedString())
+                    .withRemark(transactionToClone.getRemark().value)
+                    .withTags(transactionToClone.getTags().stream().map(tag -> tag.tagName).toArray(String[]::new))
+                    .build();
+            clonedTransactionList.add(expectedTransaction);
+            expectedModel.addExpense(expectedTransaction);
+        }
+        CloneCommand cloneCommand = new CloneCommand(TypicalIndexes.INDEX_FIRST_TRANSACTION,
+                TypicalOccurrences.MONTHLY_OCCURRENCE);
+        String expectedMessage = String.format(CloneCommand.MESSAGE_CLONE_TRANSACTION_SUCCESS, transactionToClone)
+                + "\n" + String.format(CloneCommand.MESSAGE_NUM_CLONED_TRANSACTIONS, "monthly",
+                TypicalOccurrences.MONTHLY_OCCURRENCE.getNumOccurrences());
+        assertCommandSuccess(cloneCommand, model, expectedMessage, expectedModel);
+
+        //undo
+        for (int i = 1; i <= TypicalOccurrences.MONTHLY_OCCURRENCE.getNumOccurrences(); i++) {
+            expectedModel.deleteLastTransaction();
+        }
+        assertUndoCommandSuccess(cloneCommand, model, expectedModel);
+
+        //redo
+        for (Transaction transaction : clonedTransactionList) {
+            expectedModel.addExpense((Expense) transaction);
+        }
+        assertRedoCommandSuccess(cloneCommand, model, expectedModel);
+    }
+
+    @Test
+    public void undoAndRedo_undoAndRedoCloneCommandOnIncomeWithMonthlyOccurrence_success() {
+        Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
+        Transaction transactionToClone = model.getFilteredTransactionList()
+                .get(TypicalIndexes.INDEX_SECOND_TRANSACTION.getZeroBased());
+        //Executes clone command
+        for (int i = 1; i <= TypicalOccurrences.MONTHLY_OCCURRENCE.getNumOccurrences(); i++) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(transactionToClone.getDate().getDate());
+            calendar.add(Calendar.MONTH, i);
+            String date = DATE_FORMATTER.format(calendar.getTime());
+            Income expectedTransaction = new IncomeBuilder()
+                    .withDescription(transactionToClone.getDescription().value)
+                    .withDate(date)
+                    .withValue(transactionToClone.getValue().getUnformattedString())
+                    .withRemark(transactionToClone.getRemark().value)
+                    .withTags(transactionToClone.getTags().stream().map(tag -> tag.tagName).toArray(String[]::new))
+                    .build();
+            clonedTransactionList.add(expectedTransaction);
+            expectedModel.addIncome(expectedTransaction);
+        }
+        CloneCommand cloneCommand = new CloneCommand(TypicalIndexes.INDEX_SECOND_TRANSACTION,
+                TypicalOccurrences.MONTHLY_OCCURRENCE);
+        String expectedMessage = String.format(CloneCommand.MESSAGE_CLONE_TRANSACTION_SUCCESS, transactionToClone)
+                + "\n" + String.format(CloneCommand.MESSAGE_NUM_CLONED_TRANSACTIONS, "monthly",
+                TypicalOccurrences.MONTHLY_OCCURRENCE.getNumOccurrences());
+        assertCommandSuccess(cloneCommand, model, expectedMessage, expectedModel);
+
+        //undo
+        for (int i = 1; i <= TypicalOccurrences.MONTHLY_OCCURRENCE.getNumOccurrences(); i++) {
+            expectedModel.deleteLastTransaction();
+        }
+        assertUndoCommandSuccess(cloneCommand, model, expectedModel);
+
+        //redo
+        for (Transaction transaction : clonedTransactionList) {
+            expectedModel.addIncome((Income) transaction);
+        }
+        assertRedoCommandSuccess(cloneCommand, model, expectedModel);
+    }
+
+    @Test
+    public void undoAndRedo_undoAndRedoCloneCommandOnExpenseWithYearlyOccurrence_success() {
+        Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
+        Transaction transactionToClone = model.getFilteredTransactionList()
+                .get(TypicalIndexes.INDEX_FIRST_TRANSACTION.getZeroBased());
+        //Executes clone command
+        for (int i = 1; i <= TypicalOccurrences.YEARLY_OCCURRENCE.getNumOccurrences(); i++) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(transactionToClone.getDate().getDate());
+            calendar.add(Calendar.YEAR, i);
+            String date = DATE_FORMATTER.format(calendar.getTime());
+            Expense expectedTransaction = new ExpenseBuilder()
+                    .withDescription(transactionToClone.getDescription().value)
+                    .withDate(date)
+                    .withValue(transactionToClone.getValue().getUnformattedString())
+                    .withRemark(transactionToClone.getRemark().value)
+                    .withTags(transactionToClone.getTags().stream().map(tag -> tag.tagName).toArray(String[]::new))
+                    .build();
+            clonedTransactionList.add(expectedTransaction);
+            expectedModel.addExpense(expectedTransaction);
+        }
+        CloneCommand cloneCommand = new CloneCommand(TypicalIndexes.INDEX_FIRST_TRANSACTION,
+                TypicalOccurrences.YEARLY_OCCURRENCE);
+        String expectedMessage = String.format(CloneCommand.MESSAGE_CLONE_TRANSACTION_SUCCESS, transactionToClone)
+                + "\n" + String.format(CloneCommand.MESSAGE_NUM_CLONED_TRANSACTIONS, "yearly",
+                TypicalOccurrences.YEARLY_OCCURRENCE.getNumOccurrences());
+        assertCommandSuccess(cloneCommand, model, expectedMessage, expectedModel);
+
+        //undo
+        for (int i = 1; i <= TypicalOccurrences.YEARLY_OCCURRENCE.getNumOccurrences(); i++) {
+            expectedModel.deleteLastTransaction();
+        }
+        assertUndoCommandSuccess(cloneCommand, model, expectedModel);
+
+        //redo
+        for (Transaction transaction : clonedTransactionList) {
+            expectedModel.addExpense((Expense) transaction);
+        }
+        assertRedoCommandSuccess(cloneCommand, model, expectedModel);
+    }
+
+    @Test
+    public void undoAndRedo_undoAndRedoCloneCommandOnIncomeWithYearlyOccurrence_success() {
+        Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
+        Transaction transactionToClone = model.getFilteredTransactionList()
+                .get(TypicalIndexes.INDEX_SECOND_TRANSACTION.getZeroBased());
+        //Executes clone command
+        for (int i = 1; i <= TypicalOccurrences.YEARLY_OCCURRENCE.getNumOccurrences(); i++) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(transactionToClone.getDate().getDate());
+            calendar.add(Calendar.YEAR, i);
+            String date = DATE_FORMATTER.format(calendar.getTime());
+            Income expectedTransaction = new IncomeBuilder()
+                    .withDescription(transactionToClone.getDescription().value)
+                    .withDate(date)
+                    .withValue(transactionToClone.getValue().getUnformattedString())
+                    .withRemark(transactionToClone.getRemark().value)
+                    .withTags(transactionToClone.getTags().stream().map(tag -> tag.tagName).toArray(String[]::new))
+                    .build();
+            clonedTransactionList.add(expectedTransaction);
+            expectedModel.addIncome(expectedTransaction);
+        }
+        CloneCommand cloneCommand = new CloneCommand(TypicalIndexes.INDEX_SECOND_TRANSACTION,
+                TypicalOccurrences.YEARLY_OCCURRENCE);
+        String expectedMessage = String.format(CloneCommand.MESSAGE_CLONE_TRANSACTION_SUCCESS, transactionToClone)
+                + "\n" + String.format(CloneCommand.MESSAGE_NUM_CLONED_TRANSACTIONS, "yearly",
+                TypicalOccurrences.YEARLY_OCCURRENCE.getNumOccurrences());
+        assertCommandSuccess(cloneCommand, model, expectedMessage, expectedModel);
+
+        //undo
+        for (int i = 1; i <= TypicalOccurrences.YEARLY_OCCURRENCE.getNumOccurrences(); i++) {
+            expectedModel.deleteLastTransaction();
+        }
+        assertUndoCommandSuccess(cloneCommand, model, expectedModel);
+
+        //redo
+        for (Transaction transaction : clonedTransactionList) {
+            expectedModel.addIncome((Income) transaction);
+        }
         assertRedoCommandSuccess(cloneCommand, model, expectedModel);
     }
 
