@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Test;
 
 import thrift.commons.core.Messages;
 import thrift.commons.core.index.Index;
+import thrift.logic.commands.exceptions.CommandException;
 import thrift.model.Model;
 import thrift.model.ModelManager;
 import thrift.model.UserPrefs;
@@ -267,61 +268,69 @@ public class CloneCommandTest {
     }
 
     @Test
-    public void undoAndRedo_undoAndRedoCloneCommandOnExpenseWithDailyOccurrence_success() {
+    public void undoAndRedo_undoAndRedoCloneCommandOnExpenseWithDailyOccurrence_success() throws CommandException {
         Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
-        assertUndoRedoOnExpenseWithOccurrences(TypicalOccurrences.DAILY_OCCURRENCE, Calendar.DATE, expectedModel);
+        assertUndoRedoOnExpenseWithOccurrences(TypicalOccurrences.DAILY_OCCURRENCE, expectedModel);
     }
 
     @Test
-    public void undoAndRedo_undoAndRedoCloneCommandOnIncomeWithDailyOccurrence_success() {
+    public void undoAndRedo_undoAndRedoCloneCommandOnIncomeWithDailyOccurrence_success() throws CommandException {
         Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
-        assertUndoRedoOnIncomeWithOccurrences(TypicalOccurrences.DAILY_OCCURRENCE, Calendar.DATE, expectedModel);
+        assertUndoRedoOnIncomeWithOccurrences(TypicalOccurrences.DAILY_OCCURRENCE, expectedModel);
     }
 
     @Test
-    public void undoAndRedo_undoAndRedoCloneCommandOnExpenseWithWeeklyOccurrence_success() {
+    public void undoAndRedo_undoAndRedoCloneCommandOnExpenseWithWeeklyOccurrence_success() throws CommandException {
         Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
-        assertUndoRedoOnExpenseWithOccurrences(TypicalOccurrences.WEEKLY_OCCURRENCE, Calendar.WEEK_OF_YEAR, expectedModel);
+        assertUndoRedoOnExpenseWithOccurrences(TypicalOccurrences.WEEKLY_OCCURRENCE, expectedModel);
     }
 
     @Test
-    public void undoAndRedo_undoAndRedoCloneCommandOnIncomeWithWeeklyOccurrence_success() {
+    public void undoAndRedo_undoAndRedoCloneCommandOnIncomeWithWeeklyOccurrence_success() throws CommandException {
         Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
-        assertUndoRedoOnIncomeWithOccurrences(TypicalOccurrences.WEEKLY_OCCURRENCE, Calendar.WEEK_OF_YEAR, expectedModel);
+        assertUndoRedoOnIncomeWithOccurrences(TypicalOccurrences.WEEKLY_OCCURRENCE, expectedModel);
     }
 
     @Test
-    public void undoAndRedo_undoAndRedoCloneCommandOnExpenseWithMonthlyOccurrence_success() {
+    public void undoAndRedo_undoAndRedoCloneCommandOnExpenseWithMonthlyOccurrence_success() throws CommandException {
         Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
-        assertUndoRedoOnExpenseWithOccurrences(TypicalOccurrences.MONTHLY_OCCURRENCE, Calendar.MONTH, expectedModel);
+        assertUndoRedoOnExpenseWithOccurrences(TypicalOccurrences.MONTHLY_OCCURRENCE, expectedModel);
     }
 
     @Test
-    public void undoAndRedo_undoAndRedoCloneCommandOnIncomeWithMonthlyOccurrence_success() {
+    public void undoAndRedo_undoAndRedoCloneCommandOnIncomeWithMonthlyOccurrence_success() throws CommandException {
         Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
-        assertUndoRedoOnIncomeWithOccurrences(TypicalOccurrences.MONTHLY_OCCURRENCE, Calendar.MONTH, expectedModel);
+        assertUndoRedoOnIncomeWithOccurrences(TypicalOccurrences.MONTHLY_OCCURRENCE, expectedModel);
     }
 
     @Test
-    public void undoAndRedo_undoAndRedoCloneCommandOnExpenseWithYearlyOccurrence_success() {
+    public void undoAndRedo_undoAndRedoCloneCommandOnExpenseWithYearlyOccurrence_success() throws CommandException {
         Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
-        assertUndoRedoOnExpenseWithOccurrences(TypicalOccurrences.YEARLY_OCCURRENCE, Calendar.YEAR, expectedModel);
+        assertUndoRedoOnExpenseWithOccurrences(TypicalOccurrences.YEARLY_OCCURRENCE, expectedModel);
     }
 
     @Test
-    public void undoAndRedo_undoAndRedoCloneCommandOnIncomeWithYearlyOccurrence_success() {
+    public void undoAndRedo_undoAndRedoCloneCommandOnIncomeWithYearlyOccurrence_success() throws CommandException {
         Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
-        assertUndoRedoOnIncomeWithOccurrences(TypicalOccurrences.YEARLY_OCCURRENCE, Calendar.YEAR, expectedModel);
+        assertUndoRedoOnIncomeWithOccurrences(TypicalOccurrences.YEARLY_OCCURRENCE, expectedModel);
     }
 
-    public void assertUndoRedoOnIncomeWithOccurrences(Occurrence occurrence, int frequency, Model expectedModel) {
+    /**
+     * Verifies if the clone command with occurrence works correctly when trying to undo and redo cloned income.
+     *
+     * @param occurrence is the occurrence of the clone command.
+     * @param expectedModel is the model which should contain the expected data.
+     * @throws CommandException if invalid frequency used in occurrence.
+     */
+    public void assertUndoRedoOnIncomeWithOccurrences(Occurrence occurrence, Model expectedModel)
+            throws CommandException {
         Transaction transactionToClone = model.getFilteredTransactionList()
                 .get(TypicalIndexes.INDEX_SECOND_TRANSACTION.getZeroBased());
         //Executes clone command
         for (int i = 1; i <= occurrence.getNumOccurrences(); i++) {
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(transactionToClone.getDate().getDate());
-            calendar.add(frequency, i);
+            calendar.add(occurrence.getFrequencyCalendarField(), i);
             String date = DATE_FORMATTER.format(calendar.getTime());
             Income expectedTransaction = new IncomeBuilder()
                     .withDescription(transactionToClone.getDescription().value)
@@ -353,14 +362,22 @@ public class CloneCommandTest {
         assertRedoCommandSuccess(cloneCommand, model, expectedModel);
     }
 
-    public void assertUndoRedoOnExpenseWithOccurrences(Occurrence occurrence, int frequency, Model expectedModel) {
+    /**
+     * Verifies if the clone command with occurrence works correctly when trying to undo and redo cloned income.
+     *
+     * @param occurrence is the occurrence of the clone command.
+     * @param expectedModel is the model which should contain the expected data.
+     * @throws CommandException if invalid frequency used in occurrence.
+     */
+    public void assertUndoRedoOnExpenseWithOccurrences(Occurrence occurrence, Model expectedModel)
+            throws CommandException {
         Transaction transactionToClone = model.getFilteredTransactionList()
                 .get(TypicalIndexes.INDEX_FIRST_TRANSACTION.getZeroBased());
         //Executes clone command
         for (int i = 1; i <= occurrence.getNumOccurrences(); i++) {
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(transactionToClone.getDate().getDate());
-            calendar.add(frequency, i);
+            calendar.add(occurrence.getFrequencyCalendarField(), i);
             String date = DATE_FORMATTER.format(calendar.getTime());
             Expense expectedTransaction = new ExpenseBuilder()
                     .withDescription(transactionToClone.getDescription().value)
