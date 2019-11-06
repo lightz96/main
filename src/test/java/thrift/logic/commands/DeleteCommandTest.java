@@ -102,7 +102,7 @@ public class DeleteCommandTest {
     }
 
     @Test
-    public void undoAndRedo_undoAndRedoDeleteExpense_success() throws CommandException {
+    public void undoAndRedo_deleteExpense_success() throws CommandException {
         Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
 
         Transaction transactionToDelete = model.getFilteredTransactionList()
@@ -125,7 +125,7 @@ public class DeleteCommandTest {
     }
 
     @Test
-    public void undoAndRedo_undoAndRedoDeleteIncome_success() throws CommandException {
+    public void undoAndRedo_deleteIncome_success() throws CommandException {
         Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
 
         Transaction transactionToDelete = model.getFilteredTransactionList()

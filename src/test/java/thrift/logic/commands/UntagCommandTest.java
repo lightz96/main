@@ -59,7 +59,7 @@ class UntagCommandTest {
     }
 
     @Test
-    void undoAndRedo_undoAndRedoUntagForExpense_success() {
+    void undoAndRedo_untagForExpense_success() {
         Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
         Transaction lastTransaction = model.getFilteredTransactionList()
                 .get(TypicalIndexes.INDEX_THIRD_TRANSACTION.getZeroBased());
@@ -91,7 +91,7 @@ class UntagCommandTest {
     }
 
     @Test
-    void undoAndRedo_undoAndRedoUntagForIncome_success() {
+    void undoAndRedo_untagForIncome_success() {
         Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
         Transaction lastTransaction = model.getFilteredTransactionList()
                 .get(TypicalIndexes.INDEX_SECOND_TRANSACTION.getZeroBased());

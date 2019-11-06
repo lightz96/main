@@ -126,34 +126,7 @@ public class UpdateCommandTest {
     }
 
     @Test
-    public void undo_undoUpdateExpense_success() throws CommandException {
-        Index indexLastTransaction = Index.fromOneBased(model.getFilteredTransactionList().size());
-        Transaction lastTransaction = model.getFilteredTransactionList().get(indexLastTransaction.getZeroBased());
-        String expectedMessageOriginal = String.format(UpdateCommand.MESSAGE_ORIGINAL_TRANSACTION, lastTransaction);
-
-        UpdateTransactionDescriptor updateTransactionDescriptor = new UpdateTransactionDescriptorBuilder()
-                .withDescription("Chicken")
-                .build();
-        Transaction updatedTransaction = new Expense(updateTransactionDescriptor.getDescription().get(),
-                lastTransaction.getValue(), lastTransaction.getRemark(), lastTransaction.getDate(),
-                lastTransaction.getTags());
-        String expectedMessageUpdated = String.format(UpdateCommand.MESSAGE_UPDATE_TRANSACTION_SUCCESS,
-                updatedTransaction);
-        UpdateCommand updateCommand = new UpdateCommand(indexLastTransaction, updateTransactionDescriptor);
-
-        //test update command
-        Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
-        expectedModel.setTransactionWithIndex(indexLastTransaction, updatedTransaction);
-        assertCommandSuccess(updateCommand, model, expectedMessageUpdated + expectedMessageOriginal,
-                expectedModel);
-
-        //test undo
-        expectedModel.setTransactionWithIndex(indexLastTransaction, lastTransaction);
-        assertUndoCommandSuccess(updateCommand, model, expectedModel);
-    }
-
-    @Test
-    public void undoAndRedo_undoAndRedoUpdateExpense_success() throws CommandException {
+    public void undoAndRedo_updateExpense_success() throws CommandException {
         Transaction lastTransaction = model.getFilteredTransactionList()
                 .get(TypicalIndexes.INDEX_THIRD_TRANSACTION.getZeroBased());
         String expectedMessageOriginal = String.format(UpdateCommand.MESSAGE_ORIGINAL_TRANSACTION, lastTransaction);
@@ -185,7 +158,7 @@ public class UpdateCommandTest {
     }
 
     @Test
-    public void undoAndRedo_undoAndRedoUpdateIncome_success() throws CommandException {
+    public void undoAndRedo_updateIncome_success() throws CommandException {
         Transaction lastTransaction = model.getFilteredTransactionList()
                 .get(TypicalIndexes.INDEX_SECOND_TRANSACTION.getZeroBased());
         String expectedMessageOriginal = String.format(UpdateCommand.MESSAGE_ORIGINAL_TRANSACTION, lastTransaction);

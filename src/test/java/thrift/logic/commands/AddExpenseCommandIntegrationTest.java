@@ -40,7 +40,7 @@ public class AddExpenseCommandIntegrationTest {
     }
 
     @Test
-    public void undoAndRedo_undoAndRedoAddExpense_success() throws CommandException {
+    public void undoAndRedo_addExpense_success() throws CommandException {
         Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
 
         //adds expense

@@ -207,7 +207,7 @@ public class CloneCommandTest {
     }
 
     @Test
-    public void undoAndRedo_undoAndRedoCloneCommandOnExpenseWithNoOccurrence_success() {
+    public void undoAndRedo_cloneCommandOnExpenseWithNoOccurrence_success() {
         Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
 
         Transaction transactionToClone = model.getFilteredTransactionList()
@@ -238,7 +238,7 @@ public class CloneCommandTest {
     }
 
     @Test
-    public void undoAndRedo_undoAndRedoCloneCommandOnIncomeWithNoOccurrence_success() {
+    public void undoAndRedo_cloneCommandOnIncomeWithNoOccurrence_success() {
         Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
 
         Transaction transactionToClone = model.getFilteredTransactionList()
@@ -268,49 +268,49 @@ public class CloneCommandTest {
     }
 
     @Test
-    public void undoAndRedo_undoAndRedoCloneCommandOnExpenseWithDailyOccurrence_success() throws CommandException {
+    public void undoAndRedo_cloneCommandOnExpenseWithDailyOccurrence_success() throws CommandException {
         Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
         assertUndoRedoOnExpenseWithOccurrences(TypicalOccurrences.DAILY_OCCURRENCE, expectedModel);
     }
 
     @Test
-    public void undoAndRedo_undoAndRedoCloneCommandOnIncomeWithDailyOccurrence_success() throws CommandException {
+    public void undoAndRedo_cloneCommandOnIncomeWithDailyOccurrence_success() throws CommandException {
         Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
         assertUndoRedoOnIncomeWithOccurrences(TypicalOccurrences.DAILY_OCCURRENCE, expectedModel);
     }
 
     @Test
-    public void undoAndRedo_undoAndRedoCloneCommandOnExpenseWithWeeklyOccurrence_success() throws CommandException {
+    public void undoAndRedo_cloneCommandOnExpenseWithWeeklyOccurrence_success() throws CommandException {
         Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
         assertUndoRedoOnExpenseWithOccurrences(TypicalOccurrences.WEEKLY_OCCURRENCE, expectedModel);
     }
 
     @Test
-    public void undoAndRedo_undoAndRedoCloneCommandOnIncomeWithWeeklyOccurrence_success() throws CommandException {
+    public void undoAndRedo_cloneCommandOnIncomeWithWeeklyOccurrence_success() throws CommandException {
         Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
         assertUndoRedoOnIncomeWithOccurrences(TypicalOccurrences.WEEKLY_OCCURRENCE, expectedModel);
     }
 
     @Test
-    public void undoAndRedo_undoAndRedoCloneCommandOnExpenseWithMonthlyOccurrence_success() throws CommandException {
+    public void undoAndRedo_cloneCommandOnExpenseWithMonthlyOccurrence_success() throws CommandException {
         Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
         assertUndoRedoOnExpenseWithOccurrences(TypicalOccurrences.MONTHLY_OCCURRENCE, expectedModel);
     }
 
     @Test
-    public void undoAndRedo_undoAndRedoCloneCommandOnIncomeWithMonthlyOccurrence_success() throws CommandException {
+    public void undoAndRedo_cloneCommandOnIncomeWithMonthlyOccurrence_success() throws CommandException {
         Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
         assertUndoRedoOnIncomeWithOccurrences(TypicalOccurrences.MONTHLY_OCCURRENCE, expectedModel);
     }
 
     @Test
-    public void undoAndRedo_undoAndRedoCloneCommandOnExpenseWithYearlyOccurrence_success() throws CommandException {
+    public void undoAndRedo_cloneCommandOnExpenseWithYearlyOccurrence_success() throws CommandException {
         Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
         assertUndoRedoOnExpenseWithOccurrences(TypicalOccurrences.YEARLY_OCCURRENCE, expectedModel);
     }
 
     @Test
-    public void undoAndRedo_undoAndRedoCloneCommandOnIncomeWithYearlyOccurrence_success() throws CommandException {
+    public void undoAndRedo_cloneCommandOnIncomeWithYearlyOccurrence_success() throws CommandException {
         Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
         assertUndoRedoOnIncomeWithOccurrences(TypicalOccurrences.YEARLY_OCCURRENCE, expectedModel);
     }

@@ -40,7 +40,7 @@ public class AddIncomeCommandIntegrationTest {
     }
 
     @Test
-    public void undoAndRedo_undoAndRedoAddIncome_success() throws CommandException {
+    public void undoAndRedo_addIncome_success() throws CommandException {
         Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
 
         //adds income

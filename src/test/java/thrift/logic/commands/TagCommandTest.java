@@ -60,7 +60,7 @@ class TagCommandTest {
     }
 
     @Test
-    void undoAndRedo_undoAndRedoTagForExpense_success() {
+    void undoAndRedo_tagForExpense_success() {
         Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
         Transaction lastTransaction = model.getFilteredTransactionList()
                 .get(TypicalIndexes.INDEX_THIRD_TRANSACTION.getZeroBased());
@@ -94,7 +94,7 @@ class TagCommandTest {
     }
 
     @Test
-    void undoAndRedo_undoAndRedoTagForIncome_success() {
+    void undoAndRedo_tagForIncome_success() {
         Model expectedModel = new ModelManager(model.getThrift(), new UserPrefs());
         Transaction lastTransaction = model.getFilteredTransactionList()
                 .get(TypicalIndexes.INDEX_SECOND_TRANSACTION.getZeroBased());
