@@ -773,10 +773,9 @@ array, preventing invalid values from being added later.
 * **Alternative 2**: Store valid values as `**Enum**`
 - Pros: Validity of values in `**Enum**` form all but assured, there will never be invalid values.
 - Cons: More code and memory required for entire `**Enum**` classes.
-
 // end::clone[]
 
-// tag::undoredo[]
+// tag::undo[]
 === Undo/Redoing undoable commands
 `**UndoCommand**` allows the user to revert `**THRIFT**` to its previous state when they have made a mistake. `**RedoCommand**`  does
 the opposite of `**UndoCommand**`, useful for when users change their mind.
@@ -784,18 +783,18 @@ the opposite of `**UndoCommand**`, useful for when users change their mind.
 The underlying data structure of the undo and redo feature is implemented in `**PastUndoableCommands**`. It consists of two stacks:
 `UndoStack` and `RedoStack`. It provides the following methods:
 
-* `PastUndoableCommands#addPastCommand(Undoable undoable)` -- Keeps track of the undoable commands.
-* `PastUndoableCommands#getCommandToUndo()` -- Retrieves undoable commands from `UndoStack` for user to perform undo.
-* `PastUndoableCommands#hasUndoable()` -- Checks if there are any commands to perform undo.
-* `PastUndoableCommands#getCommandToRedo()` -- Retrieves undone commands from `RedoStack` for user to perform redo.
-* `PastUndoableCommands#hasRedoCommand()` -- Checks if there are any commands to perform redo.
+* `PastUndoableCommands#addPastCommand(Undoable undoable)` -- Keeps track of the undoable command objects.
+* `PastUndoableCommands#getCommandToUndo()` -- Retrieves undoable command object from `UndoStack` to perform undo.
+* `PastUndoableCommands#hasUndoable()` -- Checks if there is any undoable command object to perform undo.
+* `PastUndoableCommands#getCommandToRedo()` -- Retrieves undone command object from `RedoStack` to perform redo.
+* `PastUndoableCommands#hasRedoCommand()` -- Checks if there is any undone command object to perform redo.
 
 The function wrappers to these methods are `Model#keepTrackCommands(Undoable command)`, `Model#getPreviousUndoableCommand()`, `Model#hasUndoableCommand()`,
 `Model#getUndoneCommand()` and `Model#hasUndoneCommand()` respectively.
 
 NOTE: Undoable commands are `**AddExpenseCommand**`, `**AddIncomeCommand**`, `**CloneCommand**`, `**DeleteCommand**`, `**TagCommand**`, `**UntagCommand**`, `**UpdateCommand**`, `**BudgetCommand**`.
 
-Every undoable command will be stored in the `UndoStack` once it is executed. It will only be stored in `RedoStack` when the user executed
+Every undoable command object will be stored in the `UndoStack` once it is executed. It will only be stored in `RedoStack` when the user executed
 *undo*.
 
 ==== Implementation
@@ -803,38 +802,54 @@ The below scenario illustrates how undo and redo feature works:
 
 Step 1. The application is launched with an empty transaction list. Both `UndoStack` and `RedoStack` are empty upon initializing `**PastUndoableCommands**`.
 
-image::UndoAndRedo/initialUndoRedo.PNG[338, 300]
+image::UndoAndRedo/initialUndoRedo.PNG[, 250]
 
 Step 2. The user executes *add_expense n/Laksa v/4* to add Laksa to the `**TransactionList**`.
 The `**LogicManager**` invokes the method `Model#keepTrackCommands(Undoable undoable)` to keep track of the `**AddExpenseCommand**` object
 that was used to add Laksa. This `**AddExpenseCommand**` object is pushed into `UndoStack`.
 
-image::UndoAndRedo/addExpense.PNG[357, 300]
+image::UndoAndRedo/addExpense.PNG[, 250]
 
 Step 3. The user executes *undo* to remove Laksa from `**TransactionList**`.
 The `**UndoCommand**` invokes the method `Model#getPreviousUndoableCommand()` to retrieve the `**AddExpenseCommand**` object.
 `**AddExpenseCommand**` is popped from `UndoStack` and pushed into `RedoStack` before being returned to the callee.
 
-image::UndoAndRedo/undo.PNG[326, 300]
+image::UndoAndRedo/undo.PNG[, 250]
 
-The sequence diagram shows how *undo* work for `**AddExpenseCommand**`:
+The sequence diagram shows how *undo* works for `**AddExpenseCommand**`:
 
 .Sequence diagram of how `**UndoCommand**` is applied at the back-end
 image::UndoAndRedo/UndoAddExpenseSequenceDiagram.png[]
+// end::undo[]
 
+[[GeneralUndoSequence]]
+A general sequence diagram to illustrate how *undo* works for undoable commands:
+
+.General sequence diagram of how `**UndoCommand**` is applied at the back-end for undoable commands
+image::UndoAndRedo/UndoGeneralSequenceDiagram.png[]
+
+// tag::redo[]
 Step 4. The user executes *redo* to add Laksa back to `**TransactionList**`.
 The `**RedoCommand**` invokes the method `Model#getUndoneCommand()` to retrieve the `**AddExpenseCommand**` object.
 `**AddExpenseCommand**` is popped from `RedoStack` and pushed into `UndoStack` before being returned to the callee.
 
-image::UndoAndRedo/redo.PNG[325, 300]
+image::UndoAndRedo/redo.PNG[, 250]
 
-NOTE: All commands stored in `RedoStack` are purged when the user executes another undoable command.
+NOTE: All undoable commands objects stored in `RedoStack` are purged when the user executes another undoable command.
 
 The sequence diagram shows how *redo* work for `**AddExpenseCommand**`:
 
 .Sequence diagram of how `**RedoCommand**` is applied at the back-end
 image::UndoAndRedo/RedoAddExpenseSequenceDiagram.png[]
+// end::redo[]
 
+[[GeneralRedoSequence]]
+A general sequence diagram to illustrate how *redo* work for undoable commands:
+
+.General sequence diagram of how `**RedoCommand**` is applied at the back-end for undoable commands
+image::UndoAndRedo/RedoGeneralSequenceDiagram.png[]
+
+// tag::designconsideration[]
 The following activity diagram shows what happens if the user executes a command:
 
 .Activity diagram of the command execution.
@@ -867,7 +882,7 @@ an `**AddExpenseCommand**`, alternative 1 requires a time complexity of O(1), wh
 
 Alternative 1 was chosen because it provides a higher level of abstraction.
 Alternative 2 is using a list to implement a stack.
-// end::undoredo[]
+// end::designconsideration[]
 
 // tag::Filtering transactions[]
 === Filtering transactions

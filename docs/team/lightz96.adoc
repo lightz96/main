@@ -15,15 +15,17 @@ and myself (User Experience Developer).
 
 === About the project
 THRIFT is a financial tracker desktop application that is morphed from https://github.com/nus-cs2103-AY1920S1/addressbook-level3[Address-book3].
-With THRIFT, users can keep track of their incoming and outgoing transactions by executing a single command (one of the requirements in this module)
-and will not be worried about overspending. It is designed for NUS students who want to save money and prefer typing to other
-inputs, like a mouse click. Below shows how THRIFT looks like:
+With THRIFT, users can keep track of their incomes and expenses by executing a single command and will not be worried about overspending.
+It is designed for NUS students who want to save money and prefer typing to other inputs, like a mouse click.
+
+THRIFT provides basic features to add, update, delete, and tag transactions. It also offers additional utility features to
+set budget, convert currencies, clone transactions, filter transactions, and last but not least, undo and redo commands.
+All these features will be executed via commands as it is one of the requirements in this module. Below shows how THRIFT looks like:
 
 .The Graphical User Interface (GUI) for THRIFT.
 image::UGUI.png[,600]
 
-THRIFT provides basic features to add, update, delete, and tag transactions. It also offers additional utility features to
-convert your currency, clone transactions, filter transactions, and last but not least, undo and redo commands.
+
 
 === About this portfolio
 The following symbols and text formatting used in this portfolio:
@@ -94,7 +96,23 @@ The following section demonstrates my documentation skills in providing technica
 
 (Start of extract)
 
-include::../DeveloperGuide.adoc[tag=undoredo]
+include::../DeveloperGuide.adoc[tag=undo]
+
+(End of extract)
+
+Please click on this link to see a sequence diagram of how *undo* works in general: https://ay1920s1-cs2103t-w12-2.github.io/main/DeveloperGuide.html#GeneralUndoSequence[General sequence diagram for UndoCommand].
+
+(Start of extract)
+
+include::../DeveloperGuide.adoc[tag=redo]
+
+(End of extract)
+
+Please click on this link to see a sequence diagram of how *redo* works in general: https://ay1920s1-cs2103t-w12-2.github.io/main/DeveloperGuide.html#GeneralRedoSequence[General sequence diagram for RedoCommand].
+
+(Start of extract)
+
+include::../DeveloperGuide.adoc[tag=designconsideration]
 
 (End of extract)
 
