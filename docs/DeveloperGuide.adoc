@@ -793,7 +793,7 @@ The underlying data structure of the undo and redo feature is implemented in `**
 The function wrappers to these methods are `Model#keepTrackCommands(Undoable command)`, `Model#getPreviousUndoableCommand()`, `Model#hasUndoableCommand()`,
 `Model#getUndoneCommand()` and `Model#hasUndoneCommand()` respectively.
 
-NOTE: Undoable commands are `**AddExpenseCommand**`, `**AddIncome**`, `**CloneCommand**`, `**DeleteCommand**`, `**TagCommand**`, `**UntagCommand**`, `**UpdateCommand**`, `**BudgetCommand**`.
+NOTE: Undoable commands are `**AddExpenseCommand**`, `**AddIncomeCommand**`, `**CloneCommand**`, `**DeleteCommand**`, `**TagCommand**`, `**UntagCommand**`, `**UpdateCommand**`, `**BudgetCommand**`.
 
 Every undoable command will be stored in the `UndoStack` once it is executed. It will only be stored in `RedoStack` when the user executed
 *undo*.
