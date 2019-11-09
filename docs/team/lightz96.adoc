@@ -55,7 +55,7 @@ and ensure that each implementation works correctly.
 
 * *Minor feature 2*: I added filter text in the GUI.
 ** What it does: It indicates the type of filter used currently for the transaction list.
-** Justification: If users have forgotten about the filter they set for the list of transactions, they can refer to this filter text.
+** Justification: If users have forgotten about the filter they set for the transaction list, they can refer to this filter text.
 
 * *Code contributed*: Please click this link to view a sample of my code: link:https://nus-cs2103-ay1920s1.github.io/tp-dashboard/#search=lightz96&sort=groupTitle&sortWithin=title&since=2019-09-06&timeframe=commit&mergegroup=false&groupSelect=groupByRepos&breakdown=false[[RepoSense Code Contribution Dashboard]].
 
@@ -63,6 +63,7 @@ and ensure that each implementation works correctly.
 ** Project management
 *** Created the GUI prototype for THRIFT. (Pull request https://github.com/AY1920S1-CS2103T-W12-2/main/pull/59[#59])
 *** Refactored the entire code base by renaming the Person to Transaction, AddressBook to THRIFT. (Pull request https://github.com/AY1920S1-CS2103T-W12-2/main/pull/76[#76])
+*** Managed issues assigned to me from version 1.0 to version 1.4 (https://github.com/AY1920S1-CS2103T-W12-2/main/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aclosed+assignee%3Alightz96+[Issues assigned])
 ** Enhancement to existing features
 *** Revamped the entire user interface. (Pull request https://github.com/AY1920S1-CS2103T-W12-2/main/pull/193[#193])
 *** Added the ability to view the usage of a specific command. (Pull request https://github.com/AY1920S1-CS2103T-W12-2/main/pull/187[#187])
