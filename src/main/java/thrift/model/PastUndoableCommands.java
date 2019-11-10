@@ -1,5 +1,7 @@
 package thrift.model;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.Stack;
 
 import thrift.logic.commands.RedoCommand;
@@ -27,6 +29,7 @@ public class PastUndoableCommands {
      * @param command is the undoable command to be tracked
      */
     public void addPastCommand(Undoable command) {
+        requireNonNull(command);
         if (hasRedoCommand()) {
             clearRedoStack();
         }

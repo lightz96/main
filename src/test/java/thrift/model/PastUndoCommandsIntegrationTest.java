@@ -2,7 +2,6 @@ package thrift.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
@@ -29,33 +28,19 @@ import thrift.testutil.TypicalOccurrences;
 import thrift.testutil.TypicalTransactions;
 import thrift.testutil.UpdateTransactionDescriptorBuilder;
 
-public class PastUndoCommandsTest {
+public class PastUndoCommandsIntegrationTest {
 
     private PastUndoableCommands pastUndoableCommands = new PastUndoableCommands();
 
     @Test
-    public void addPastCommand() throws CommandException {
-        PastUndoableCommands pastUndoableCommands = new PastUndoableCommands();
-        CommandStub commandStub = new CommandStub();
-        //throws exceptions
-        assertThrows(NullPointerException.class, () -> pastUndoableCommands.addPastCommand(null));
-
+    public void addPastCommand_addAddExpenseCommand_success() throws CommandException {
+        Expense validExpense = new ExpenseBuilder().build();
+        Undoable addExpenseCommand = new AddExpenseCommand(validExpense);
+        pastUndoableCommands.addPastCommand(addExpenseCommand);
+        assertEquals(addExpenseCommand, pastUndoableCommands.getCommandToUndo());
     }
 
-    private class CommandStub implements Undoable {
-        @Override
-        public String undo(Model model) {
-            return null;
-        }
-
-        @Override
-        public String redo(Model model) {
-            return null;
-        }
-    }
-
-
-        @Test
+    @Test
     public void addPastCommand_addAddIncomeCommand_success() throws CommandException {
         Income validIncome = new IncomeBuilder().build();
         Undoable addIncomeCommand = new AddIncomeCommand(validIncome);
