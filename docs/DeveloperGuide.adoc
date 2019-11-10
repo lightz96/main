@@ -2014,6 +2014,13 @@ Expected: The budget shown in the UI for "11/2019" is reset to "$0.00".
 --
 +
 Expected: No changes. A message is shown in the Result Box, indicating that there are no available commands for the user to undo.
+.. Test case:
++
+--
+... *undo 123*
+--
++
+Expected: No changes. A message is shown in the Result Box, indicating that it is an invalid command.
 
 === Redoing the undone command
 
@@ -2120,6 +2127,13 @@ There is a message shown in the Result Box indicating that there are no availabl
 --
 +
 Expected: No changes. A message is shown in the Result Box, indicating that there are no available commands for the user to redo.
+.. Test case:
++
+--
+... *redo 123*
+--
++
+Expected: No changes. A message is shown in the Result Box, indicating that it is an invalid command.
 
 === Showing help window
 
