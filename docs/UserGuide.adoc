@@ -495,8 +495,8 @@ To `undo` the `delete` command:
 +
 image::UndoAndRedo/undocommand.png[, 500]
 
-. You will see a success message displays in the Result Box, and the transaction "Chicken Rice"
-adds back to its original position in the list:
+. You will see that a success message displays in the Result Box, and the transaction "Chicken Rice"
+returns to its original position in the list:
 +
 image::UndoAndRedo/undocommandresult.png[, 500]
 // end::undo[]
@@ -528,7 +528,7 @@ To `redo` undone `add_expense` command:
 +
 image::UndoAndRedo/redocommand.png[, 500]
 
-. You will see a success message displays in the Result Box and the transaction "Chicken Rice" adds back to the list:
+. You will see that a success message displays in the Result Box and the transaction "Chicken Rice" adds back to the list:
 +
 image::UndoAndRedo/redocommandresult.png[, 500]
 // end::redo[]

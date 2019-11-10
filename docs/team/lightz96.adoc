@@ -8,19 +8,19 @@
 == Introduction
 This portfolio aims to showcase the work that I have contributed to a team project called THRIFT. This project is an assignment under one of the core
 modules called CS2103T Software Engineering, offered by the School of Computing (SoC) at the National University of Singapore (NUS).
-I take this module during Year 2 as an undergraduate while pursuing my Bachelor of Computer in Computer Science at NUS.
+I took this module during Year 2 as an undergraduate while pursuing my Bachelor of Computer in Computer Science at NUS.
 
 This project is developed by a team of five highly motivated members: Poh Jia Hao (Team Lead), Lye Jian Wen (Quality Assurance Manager), Ang Chin Guan, Melvin (Software Architect), Oen Qi Han, Kenson (Process Analyst)
 and myself (User Experience Developer).
 
 === About the project
 THRIFT is a financial tracker desktop application that is morphed from https://github.com/nus-cs2103-AY1920S1/addressbook-level3[Address-book3].
-With THRIFT, users can keep track of their incomes and expenses by executing a single command and will not be worried about overspending.
+With THRIFT, users can keep track of their incomes and expenses and will not be worried about overspending.
 It is designed for NUS students who want to save money and prefer typing to other inputs, like a mouse click.
 
 THRIFT provides basic features to add, update, delete, and tag transactions. It also offers additional utility features to
 set budget, convert currencies, clone transactions, filter transactions, and last but not least, undo and redo commands.
-All these features will be executed via commands as it is one of the requirements in this module. Below shows how THRIFT looks like:
+All these features will be executed using Command-Line Interface (CLI) as it is one of the requirements in this module. Below shows how THRIFT looks like:
 
 .The Graphical User Interface (GUI) for THRIFT.
 image::UGUI.png[,600]
@@ -48,8 +48,8 @@ This section summarises my contributions to THRIFT.
 ** What it does: The undo command will undo the previous command while the redo command will redo the undone command.
 ** Justification: It offers users the ability to perform undo and redo multiple times in the event
 that they are unable to make a decision. For example, users cannot decide how much budget to set for this month.
-** Highlights: The implementation is challenging because I need to provide different sets of implementation for each undoable command
-and ensure that each implementation works correctly.
+** Highlights: The implementation is challenging because I need to provide different implementations for each of the undoable commands
+and ensure that it works correctly.
 
 * *Minor feature 1*: I added the monthly expense and income in the GUI.
 ** What it does: It calculates the total expense and income for the filtered month.
@@ -92,7 +92,7 @@ Please click on these links to view other sections that I have also contributed 
 [[DeveloperTag]]
 == Contribution to Developer Guide
 
-The following section demonstrates my documentation skills in providing technical details regarding the implementation of the undo and redo features.
+The following section demonstrates my documentation skills in providing technical details such as the implementation of the undo and redo features.
 
 (Start of extract)
 
