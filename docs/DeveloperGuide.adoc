@@ -778,7 +778,7 @@ array, preventing invalid values from being added later.
 // tag::undo[]
 === Undo/Redoing undoable commands
 `**UndoCommand**` allows the user to revert `**THRIFT**` to its previous state when they have made a mistake. `**RedoCommand**`  does
-the opposite of `**UndoCommand**`, useful for when users change their mind.
+the opposite of `**UndoCommand**`, useful for when users change their minds.
 
 The underlying data structure of the undo and redo feature is implemented in `**PastUndoableCommands**`. It consists of two stacks:
 `UndoStack` and `RedoStack`. It provides the following methods:
@@ -837,14 +837,14 @@ image::UndoAndRedo/redo.PNG[, 250]
 
 NOTE: All undoable commands objects stored in `RedoStack` are purged when the user executes another undoable command.
 
-The sequence diagram shows how *redo* work for `**AddExpenseCommand**`:
+The sequence diagram shows how *redo* works for `**AddExpenseCommand**`:
 
 .Sequence diagram of how `**RedoCommand**` is applied at the back-end
 image::UndoAndRedo/RedoAddExpenseSequenceDiagram.png[]
 // end::redo[]
 
 [[GeneralRedoSequence]]
-A general sequence diagram to illustrate how *redo* work for undoable commands:
+A general sequence diagram to illustrate how *redo* works for undoable commands:
 
 .General sequence diagram of how `**RedoCommand**` is applied at the back-end for undoable commands
 image::UndoAndRedo/RedoGeneralSequenceDiagram.png[]
@@ -878,7 +878,7 @@ an `**AddExpenseCommand**`, alternative 1 requires a time complexity of O(1), wh
 ** Cons:  Needs to manage the two stacks carefully. For example, you need to pop the command from one stack and push it into another stack.
 * Alternative 2: Use a list and a pointer to indicate the next command to undo.
 ** Pros: Makes the implementation easy to code.
-** Cons: Needs to manage the pointer carefully. For example, you need to ensure that the pointer stays within the size of an list.
+** Cons: Needs to manage the pointer carefully. For example, you need to ensure that the pointer stays within the size of a list.
 
 Alternative 1 was chosen because it provides a higher level of abstraction.
 Alternative 2 is using a list to implement a stack.

@@ -48,7 +48,7 @@ This section summarises my contributions to THRIFT.
 ** What it does: The undo command will undo the previous command while the redo command will redo the undone command.
 ** Justification: It offers users the ability to perform undo and redo multiple times in the event
 that they are unable to make a decision. For example, users cannot decide how much budget to set for this month.
-** Highlights: The implementation is challenging because I need to provide different implementations for each of the undoable commands
+** Highlights: The implementation is challenging because I need to provide different implementations for each command
 and ensure that it works correctly.
 
 * *Minor feature 1*: I added the monthly expense and income in the GUI.
