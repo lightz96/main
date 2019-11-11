@@ -1009,7 +1009,7 @@ The following sections will describe how we plan to implement this feature and t
 Adhering to the Open-Closed principle, we will not modify the existing architecture but extend it.
 The following class diagram illustrates how we propose to do it, by adding 2 new classes to the existing architecture:
 
-image::ai/AiClassDiagram.png[]
+image::ai/AIClassDiagram.png[]
 
 The new classes will have the following roles:
 
