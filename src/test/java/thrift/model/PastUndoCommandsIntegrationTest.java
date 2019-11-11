@@ -95,7 +95,7 @@ public class PastUndoCommandsIntegrationTest {
     }
 
     @Test
-    public void getCommandToUndo_getCommandsFromEmptyUndoStack_throwException() {
+    public void getCommandToUndo_emptyUndoStack_throwException() {
         try {
             pastUndoableCommands.getCommandToUndo();
         } catch (CommandException e) {
