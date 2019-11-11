@@ -8,27 +8,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import thrift.logic.commands.AddExpenseCommand;
-import thrift.logic.commands.AddIncomeCommand;
-import thrift.logic.commands.BudgetCommand;
-import thrift.logic.commands.CloneCommand;
-import thrift.logic.commands.DeleteCommand;
-import thrift.logic.commands.RedoCommand;
-import thrift.logic.commands.TagCommand;
-import thrift.logic.commands.UndoCommand;
 import thrift.logic.commands.Undoable;
-import thrift.logic.commands.UntagCommand;
-import thrift.logic.commands.UpdateCommand;
 import thrift.logic.commands.exceptions.CommandException;
-import thrift.model.transaction.Expense;
-import thrift.model.transaction.Income;
-import thrift.testutil.ExpenseBuilder;
-import thrift.testutil.IncomeBuilder;
-import thrift.testutil.TagSetBuilder;
-import thrift.testutil.TypicalIndexes;
-import thrift.testutil.TypicalOccurrences;
-import thrift.testutil.TypicalTransactions;
-import thrift.testutil.UpdateTransactionDescriptorBuilder;
 
 public class PastUndoCommandsTest {
 
