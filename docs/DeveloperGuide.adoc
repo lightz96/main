@@ -1255,7 +1255,7 @@ When a pull request has changes to AsciiDoc files, you can use https://www.netli
 Here are the steps to create a new release.
 
 .  Update the version number in link:{repoURL}/src/main/java/thrift/MainApp.java[`_MainApp.java_`].
-.  Generate a JAR file <<UsingGradle#creating-the-jar-file, using Gradle>>.
+.  Generate a JAR file link:https://ay1920s1-cs2103t-w12-2.github.io/main/UsingGradle.html#creating-the-jar-file[using Gradle]>>.
 .  Tag the repo with the version number. e.g. v0.1
 .  https://help.github.com/articles/creating-releases/[Create a new release using GitHub] and upload the JAR file you created.
 
